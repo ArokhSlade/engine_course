@@ -34,6 +34,7 @@ private:
 	ModelClass* m_Model;
 	ModelListClass* m_ModelList;
 	bool m_displayUI;
+	int m_ModelsRendered;
 };
 
 #endif
