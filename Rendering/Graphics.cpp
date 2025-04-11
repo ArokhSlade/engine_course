@@ -163,6 +163,9 @@ bool Graphics::Frame(D3DClass* Direct3D, InputClass* Input, ShaderManagerClass* 
 	float posX, posY, posZ, rotX, rotY, rotZ;
 
 	// Do the frame input processing.
+	if (Input->IsEscPressed()) {
+		return false;
+	}
 	HandleMovementInput(Input, frameTime);
 
 	// Get the view point position/rotation.

@@ -73,11 +73,12 @@ void SystemClass::Run()
 			DispatchMessage(&msg);
 		}
 
+		
 		// If windows signals to end the application then exit out.
 		if(msg.message == WM_QUIT)
 		{
 			done = true;
-		}
+		}		
 		else
 		{
 			// Otherwise do the frame processing.

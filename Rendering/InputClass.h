@@ -28,6 +28,7 @@ public:
 	bool IsZPressed();
 	bool IsPgUpPressed();
 	bool IsPgDownPressed();
+	bool IsEscPressed();
 
 	bool IsF1Toggled();
 	bool IsF2Toggled();

@@ -181,3 +181,9 @@ bool ApplicationClass::Frame()
 
 	return result;
 }
+
+
+bool ApplicationClass::WasShutdownRequested()
+{
+	return m_Input->IsEscPressed();
+}

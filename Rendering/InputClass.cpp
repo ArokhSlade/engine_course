@@ -355,3 +355,15 @@ bool InputClass::IsF2Toggled()
 
 	return false;
 }
+
+
+bool InputClass::IsEscPressed()
+{
+	// Do a bitwise and on the keyboard state to check if the key is currently being pressed.
+	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
