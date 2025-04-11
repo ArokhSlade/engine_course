@@ -276,12 +276,12 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 	// Get the number of models that will be rendered.
 	modelCount = m_ModelList->GetModelCount();
-	m_ModelsRendered = 0;
+	m_modelsRendered = 0;
 
 	// Go through all the models and render them only if they can be seen by the camera view.
 	for (index = 0; index<modelCount; index++)
 	{
-		m_ModelsRendered++;
+		m_modelsRendered++;
 
 		// Get the position and color of the sphere model at this index.
 		m_ModelList->GetData(index, positionX, positionY, positionZ, color);

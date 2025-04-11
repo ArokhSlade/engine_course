@@ -22,7 +22,7 @@ private:
 
 private:
 	FontClass* m_Font1;
-	TextClass *m_FpsString, *m_VideoStrings, *m_PositionStrings;
+	TextClass *m_FpsString, *m_VideoStrings, *m_PositionStrings, *m_RenderCountString;
 	int m_previousFps;
 	int m_previousPosition[6];
 };

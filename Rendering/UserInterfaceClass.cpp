@@ -37,6 +37,21 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
+	// Create the text object for the render count string.
+	m_RenderCountString = new TextClass;
+	if (!m_RenderCountString)
+	{
+		return false;
+	}
+
+	// Initialize the render count text string.
+	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1,
+		"Fps: 0", 10, 50, 0.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
 	// Create the text object for the fps string.
 	m_FpsString = new TextClass;
 	if (!m_FpsString)
@@ -46,7 +61,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 
 	// Initialize the fps text string.
 	result = m_FpsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-									 "Fps: 0", 10, 50, 0.0f, 1.0f, 0.0f);
+									 "Fps: 0", 10, 70, 0.0f, 1.0f, 0.0f);
 	if (!result)
 	{
 		return false;
@@ -263,7 +278,7 @@ bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceCont
 	strcpy_s(finalString, "count: ");
 	strcat_s(finalString, tempString);
 			
-	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.f, 1.f, 1.f);
+	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 0.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;
@@ -280,7 +295,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	bool result;
 
 	// Check if the fps from the previous frame was the same, if so don't need to update the text string.
-	if(m_previousFps == fps)
+	if (m_previousFps == fps)
 	{
 		return true;
 	}
@@ -289,7 +304,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	m_previousFps = fps;
 
 	// Truncate the fps to below 100,000.
-	if(fps > 99999)
+	if (fps > 99999)
 	{
 		fps = 99999;
 	}
@@ -302,7 +317,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	strcat_s(finalString, tempString);
 
 	// If fps is 60 or above set the fps color to green.
-	if(fps >= 60)
+	if (fps >= 60)
 	{
 		red = 0.0f;
 		green = 1.0f;
@@ -310,7 +325,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	}
 
 	// If fps is below 60 set the fps color to yellow.
-	if(fps < 60)
+	if (fps < 60)
 	{
 		red = 1.0f;
 		green = 1.0f;
@@ -318,7 +333,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	}
 
 	// If fps is below 30 set the fps color to red.
-	if(fps < 30)
+	if (fps < 30)
 	{
 		red = 1.0f;
 		green = 0.0f;
@@ -326,8 +341,8 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	}
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, red, green, blue);
-	if(!result)
+	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 300, red, green, blue);
+	if (!result)
 	{
 		return false;
 	}
