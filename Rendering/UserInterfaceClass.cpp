@@ -188,6 +188,14 @@ void UserInterfaceClass::Shutdown()
 		m_VideoStrings = 0;
 	}
 
+	// Release the render count string
+	if (m_RenderCountString)
+	{
+		m_RenderCountString->Shutdown();
+		delete[] m_RenderCountString;
+		m_VideoStrings = 0;
+	}
+
 
 	// Release the fps text string.
 	if(m_FpsString)
@@ -275,10 +283,10 @@ bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceCont
 	bool result;
 	
 	_itoa_s(renderCount, tempString, 10);
-	strcpy_s(finalString, "count: ");
+	strcpy_s(finalString, "Count: ");
 	strcat_s(finalString, tempString);
 			
-	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 0.f, 1.f, 1.f);
+	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 50, 1.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;
