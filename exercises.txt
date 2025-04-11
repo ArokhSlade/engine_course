@@ -1,0 +1,8 @@
+1. Implementiere das Beenden der Applikation mittels ESC-Taste.
+2. Momentan startet die Applikation im Window Mode. Ändere dies zum Fullscreen Mode. (WICHTIG:
+Vorher Aufgabe 1 unbedingt lösen!)
+3. Ändere die Initiale Position (bleibe aber im Raum von -100.0f bis 100.0f (für x, y und z)! )
+4. Erstelle 500 Spheres und positioniere jede davon zufällig in dem Umliegenden Raum
+5. Erweitere die Anzeige um die Anzahl der gerenderten Objekte. Die Anzeige soll unter der Fps Anzeige erscheinen und alles
+drunter soll weiter herunterrutschen, der Space also erhalten bleiben.
+ (NOTE: Die Anzahl wird, Status jetzt, exakt der Anzahl der erstellten Objekte sein!)
