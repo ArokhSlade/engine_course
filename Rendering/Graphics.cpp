@@ -53,7 +53,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	// Set the initial position and rotation.
-	m_Position->SetPosition(0.0f, 0.0f, 0.0f);
+	m_Position->SetPosition(100.f, 5.0f, 50.f);
 	m_Position->SetRotation(0.0f, 0.0f, 0.0f);
 
 	// Create the terrain object.
