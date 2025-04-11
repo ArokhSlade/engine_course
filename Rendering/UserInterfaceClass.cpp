@@ -263,7 +263,7 @@ bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceCont
 	strcpy_s(finalString, "count: ");
 	strcat_s(finalString, tempString);
 			
-	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 50, 1.f, 1.f, 1.f);
+	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;
@@ -359,7 +359,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionX, tempString, 10);
 		strcpy_s(finalString, "X: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
+		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, 120, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 		rowIdx += 20;
 	}
@@ -371,7 +371,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionY, tempString, 10);
 		strcpy_s(finalString, "Y: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
+		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, 140, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 		rowIdx += 20;
 	}
@@ -382,7 +382,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionZ, tempString, 10);
 		strcpy_s(finalString, "Z: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
+		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, 180, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 		rowIdx += 20;
 	}
@@ -393,7 +393,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationX, tempString, 10);
 		strcpy_s(finalString, "rX: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
+		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, 200, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 		rowIdx += 20;
 	}
@@ -404,7 +404,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationY, tempString, 10);
 		strcpy_s(finalString, "rY: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
+		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, 220, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 		rowIdx += 20;
 	}
@@ -415,7 +415,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationZ, tempString, 10);
 		strcpy_s(finalString, "rZ: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
+		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, 240, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 		rowIdx += 20;
 	}
