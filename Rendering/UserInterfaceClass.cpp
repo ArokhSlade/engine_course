@@ -198,21 +198,21 @@ bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCou
 {
 	bool result;
 
-	result = UpdateRenderCountString(deviceContext, renderCount);
+	result = UpdateRenderCountString(deviceContext, 50, renderCount);
 	if (!result)
 	{
 		return false;
 	}
 
 	// Update the fps string.
-	result = UpdateFpsString(deviceContext, fps);
+	result = UpdateFpsString(deviceContext, 70, fps);
 	if(!result)
 	{
 		return false;
 	}
 
 	// Update the position strings.
-	result = UpdatePositionStrings(deviceContext, posX, posY, posZ, rotX, rotY, rotZ);
+	result = UpdatePositionStrings(deviceContext, 100, posX, posY, posZ, rotX, rotY, rotZ);
 	if(!result)
 	{
 		return false;
@@ -252,7 +252,7 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 	return true;
 }
 
-bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceContext, int renderCount)
+bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceContext, int rowIdx, int renderCount)
 {
 	char tempString[16];
 	char finalString[16];
@@ -272,9 +272,8 @@ bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceCont
 	return true;
 }
 
-bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int fps)
+bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int rowIdx, int fps)
 {
-	return true;
 	char tempString[16];
 	char finalString[16];
 	float red, green, blue;
@@ -327,7 +326,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	}
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 50, red, green, blue);
+	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, red, green, blue);
 	if(!result)
 	{
 		return false;
@@ -336,7 +335,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	return true;
 }
 
-bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContext, float posX, float posY, float posZ, 
+bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContext, int rowIdx, float posX, float posY, float posZ, 
 											   float rotX, float rotY, float rotZ)
 {
 	int positionX, positionY, positionZ, rotationX, rotationY, rotationZ;
@@ -360,18 +359,21 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionX, tempString, 10);
 		strcpy_s(finalString, "X: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, 100, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
+		rowIdx += 20;
 	}
+	
 
 	if(positionY != m_previousPosition[1])
-	{
+	{		
 		m_previousPosition[1] = positionY;
 		_itoa_s(positionY, tempString, 10);
 		strcpy_s(finalString, "Y: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, 120, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
+		rowIdx += 20;
 	}
 
 	if(positionZ != m_previousPosition[2])
@@ -380,8 +382,9 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionZ, tempString, 10);
 		strcpy_s(finalString, "Z: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, 140, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
+		rowIdx += 20;
 	}
 
 	if(rotationX != m_previousPosition[3])
@@ -390,8 +393,9 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationX, tempString, 10);
 		strcpy_s(finalString, "rX: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, 180, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
+		rowIdx += 20;
 	}
 
 	if(rotationY != m_previousPosition[4])
@@ -400,8 +404,9 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationY, tempString, 10);
 		strcpy_s(finalString, "rY: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, 200, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
+		rowIdx += 20;
 	}
 
 	if(rotationZ != m_previousPosition[5])
@@ -410,8 +415,9 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationZ, tempString, 10);
 		strcpy_s(finalString, "rZ: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, 220, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, rowIdx, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
+		rowIdx += 20;
 	}
 
 	return true;
