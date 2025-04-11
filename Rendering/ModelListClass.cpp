@@ -39,9 +39,9 @@ bool ModelListClass::Initialize(int numModels)
 		m_ModelInfoList[i].color = XMFLOAT4(red, green, blue, 1.0f);
 
 		// Generate a random position in front of the viewer for the mode.
-		m_ModelInfoList[i].positionX = 0.0f;
-		m_ModelInfoList[i].positionY = 0.0f;
-		m_ModelInfoList[i].positionZ = 0.0f;
+		m_ModelInfoList[i].positionX = (float)rand() / RAND_MAX * 100.f;
+		m_ModelInfoList[i].positionY = (float)rand() / RAND_MAX * 100.f;
+		m_ModelInfoList[i].positionZ = (float)rand() / RAND_MAX * 100.f;
 	}
 
 	return true;

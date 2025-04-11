@@ -93,8 +93,9 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
+	const int modelCount = 500;
 	// Initialize the model list object.
-	result = m_ModelList->Initialize(1);
+	result = m_ModelList->Initialize(modelCount);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
