@@ -193,10 +193,16 @@ void UserInterfaceClass::Shutdown()
 	return;
 }
 
-bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int fps, float posX, float posY, float posZ, 
+bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCount, int fps, float posX, float posY, float posZ, 
 							   float rotX, float rotY, float rotZ)
 {
 	bool result;
+
+	result = UpdateRenderCountString(deviceContext, renderCount);
+	if (!result)
+	{
+		return false;
+	}
 
 	// Update the fps string.
 	result = UpdateFpsString(deviceContext, fps);
@@ -246,8 +252,29 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 	return true;
 }
 
+bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceContext, int renderCount)
+{
+	char tempString[16];
+	char finalString[16];
+	
+	bool result;
+	
+	_itoa_s(renderCount, tempString, 10);
+	strcpy_s(finalString, "count: ");
+	strcat_s(finalString, tempString);
+			
+	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 50, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int fps)
 {
+	return true;
 	char tempString[16];
 	char finalString[16];
 	float red, green, blue;

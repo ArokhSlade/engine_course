@@ -173,8 +173,11 @@ bool Graphics::Frame(D3DClass* Direct3D, InputClass* Input, ShaderManagerClass* 
 	m_Position->GetPosition(posX, posY, posZ);
 	m_Position->GetRotation(rotX, rotY, rotZ);
 
+	//TODO(Gerald): get proper value
+	int renderCount = 500;
+
 	// Do the frame processing for the user interface.
-	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), fps, posX, posY, posZ, rotX, rotY, rotZ);
+	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), renderCount, fps, posX, posY, posZ, rotX, rotY, rotZ);
 	if(!result)
 	{
 		return false;
@@ -277,6 +280,9 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	// Go through all the models and render them only if they can be seen by the camera view.
 	for (index = 0; index<modelCount; index++)
 	{
+		//TODO(Gerald):add member
+		//m_ModelsRendered++;
+
 		// Get the position and color of the sphere model at this index.
 		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
 
