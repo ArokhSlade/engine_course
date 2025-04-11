@@ -46,7 +46,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 
 	// Initialize the render count text string.
 	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1,
-		"Fps: 0", 10, 50, 0.0f, 1.0f, 0.0f);
+		"xD", 10, 50, 0.0f, 1.0f, 0.0f);
 	if (!result)
 	{
 		return false;
@@ -252,6 +252,9 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 	// Turn off the Z buffer and enable alpha blending to begin 2D rendering.
 	Direct3D->TurnZBufferOff();
 	Direct3D->EnableAlphaBlending();
+
+	// Render the fps string.
+	m_RenderCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 
 	// Render the fps string.
 	m_FpsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
