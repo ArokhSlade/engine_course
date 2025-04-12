@@ -6,3 +6,16 @@ Vorher Aufgabe 1 unbedingt lösen!)
 5. Erweitere die Anzeige um die Anzahl der gerenderten Objekte. Die Anzeige soll unter der Fps Anzeige erscheinen und alles
 drunter soll weiter herunterrutschen, der Space also erhalten bleiben.
  (NOTE: Die Anzahl wird, Status jetzt, exakt der Anzahl der erstellten Objekte sein!)
+ 
+ 
+ Cube + Rendering + UI + Pyramide
+1. Vervollständige die Cube Daten.
+2. Rendere den Würfel. Da der Cube sich änlich der ModelClass verhällt befinden sich alle
+Informationen wie das zu schaffen ist in der Grafics Klasse.
+3. Rendere zu gleichen Teilen Cubes und Spheres. Bsp: Bei 500 Models sollen dann 250 Spheres
+und 250 Cubes dargestellt werden.
+4. Erweitere die Anzeige vom UI: Neben der totalen Anzeige der gerenderten Objekte soll nun auch
+explizit dastehen wie viele Cubes und wie viele Spheres gerendert werden.
+5. Erstelle eine Pyramide + rendere die Pyramide + zu gleichen teilen rendern (750 = 250
+cubes + 250 spheres + 250 pyramides) + erweitere die UI Anzeige um die anzahl der
+gerenderten pyramides (Grundfläche der Pyramide is quadratisch!) 
