@@ -107,32 +107,32 @@ bool CubeModel::Initialize(ID3D11Device* device)
 
 	// Top
 	{
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
+		vertices[index].position = XMFLOAT3(1, 1, -1);
 		vertices[index].color = colorRed;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(-1, -1, -1);
+		vertices[index].position = XMFLOAT3(-1, 1, -1);
 		vertices[index].color = colorRed;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(1, -1, -1);
+		vertices[index].position = XMFLOAT3(-1, 1, 1);
 		vertices[index].color = colorRed;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(1, -1, -1);
+		vertices[index].position = XMFLOAT3(-1, 1, 1);
 		vertices[index].color = colorBlue;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
+		vertices[index].position = XMFLOAT3(1, 1, 1);
 		vertices[index].color = colorBlue;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
+		vertices[index].position = XMFLOAT3(1, 1, -1);
 		vertices[index].color = colorBlue;
 		indices[index] = index;
 		index++;
