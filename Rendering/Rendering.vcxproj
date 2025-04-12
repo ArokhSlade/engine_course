@@ -152,6 +152,7 @@
     <ClCompile Include="ApplicationClass.cpp" />
     <ClCompile Include="CameraClass.cpp" />
     <ClCompile Include="ColorShaderClass.cpp" />
+    <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="D3DClass.cpp" />
     <ClCompile Include="FontClass.cpp" />
     <ClCompile Include="FontShaderClass.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="ApplicationClass.h" />
     <ClInclude Include="CameraClass.h" />
     <ClInclude Include="ColorShaderClass.h" />
+    <ClInclude Include="CubeModel.h" />
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="FontClass.h" />
     <ClInclude Include="FontShaderClass.h" />
