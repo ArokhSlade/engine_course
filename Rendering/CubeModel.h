@@ -1,10 +1,8 @@
 #ifndef _CUBEMODEL_H_
 #define _CUBEMODEL_H_
 
-
-
-
 #include "d3d11.h"
+#include "CustomStruct.h"
 
 class CubeModel
 {
@@ -22,8 +20,6 @@ public:
 private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	int m_vertexCount, m_indexCount;
-	TextureClass* m_Texture;
-	ModelType* m_model;
 };
 
 #endif //_CUBEMODEL_H_
