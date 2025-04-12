@@ -17,12 +17,14 @@ public:
 
 private:
 	bool UpdateRenderCountString(ID3D11DeviceContext*, int, int);
+	bool UpdateSphereCountString(ID3D11DeviceContext*, int);
 	bool UpdateFpsString(ID3D11DeviceContext*, int, int);
 	bool UpdatePositionStrings(ID3D11DeviceContext*, int, float, float, float, float, float, float);
 
 private:
 	FontClass* m_Font1;
-	TextClass *m_FpsString, *m_VideoStrings, *m_PositionStrings, *m_RenderCountString;
+	TextClass* m_FpsString, * m_VideoStrings, * m_PositionStrings, * m_RenderCountString,
+		*m_SphereCountString, *m_CubeCountString;
 	int m_previousFps;
 	int m_previousPosition[6];
 };

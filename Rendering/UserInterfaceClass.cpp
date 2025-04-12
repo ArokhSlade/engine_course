@@ -52,6 +52,19 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
+
+	m_SphereCountString = new TextClass;
+	if (!m_SphereCountString) {
+		return false;
+	}
+
+	result = m_SphereCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"SphereCount: 999", 10, 70, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
 	// Create the text object for the fps string.
 	m_FpsString = new TextClass;
 	if (!m_FpsString)
@@ -61,7 +74,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 
 	// Initialize the fps text string.
 	result = m_FpsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-									 "Fps: 0", 10, 70, 0.0f, 1.0f, 0.0f);
+									 "Fps: 0", 10, 130, 0.0f, 1.0f, 0.0f);
 	if (!result)
 	{
 		return false;
@@ -193,9 +206,16 @@ void UserInterfaceClass::Shutdown()
 	{
 		m_RenderCountString->Shutdown();
 		delete[] m_RenderCountString;
-		m_VideoStrings = 0;
+		m_RenderCountString = 0;
 	}
 
+
+	if (m_SphereCountString)
+	{
+		m_SphereCountString->Shutdown();
+		delete[] m_SphereCountString;
+		m_SphereCountString = 0;
+	}
 
 	// Release the fps text string.
 	if(m_FpsString)
@@ -255,6 +275,7 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 
 	// Render the fps string.
 	m_RenderCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_SphereCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 
 	// Render the fps string.
 	m_FpsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
@@ -290,6 +311,25 @@ bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceCont
 	strcat_s(finalString, tempString);
 			
 	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 50, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateSphereCountString(ID3D11DeviceContext* deviceContext, int sphereCount)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	_itoa_s(sphereCount, tempString, 10);
+	strcpy_s(finalString, "Sphere Count: ");
+	strcat_s(finalString, tempString);
+
+	result = m_SphereCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 90, 1.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;
