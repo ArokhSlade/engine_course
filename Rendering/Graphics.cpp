@@ -8,6 +8,7 @@ Graphics::Graphics()
 	m_Terrain = 0;
 	m_Model = 0;
 	m_ModelList = 0;
+	m_Frustum = 0;
 }
 
 Graphics::~Graphics()
@@ -101,6 +102,13 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
 		return false;
 	}
+
+	m_Frustum = new Frustum;
+	if (!m_Frustum) {
+		return false;
+	}
+
+	m_Frustum->Initialize(screenDepth);
 
 	// Set the UI to display by default.
 	m_displayUI = true;
@@ -261,6 +269,8 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	Direct3D->GetProjectionMatrix(projectionMatrix);
 	m_Camera->GetBaseViewMatrix(baseViewMatrix);
 	Direct3D->GetOrthoMatrix(orthoMatrix);
+
+	m_Frustum->ConstructFrustum(projectionMatrix, viewMatrix);
 	
 	// Clear the buffers to begin the scene.
 	Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
@@ -278,24 +288,29 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	modelCount = m_ModelList->GetModelCount();
 	m_modelsRendered = 0;
 
+	bool isInsideFrustum;
 	// Go through all the models and render them only if they can be seen by the camera view.
 	for (index = 0; index<modelCount; index++)
 	{
-		m_modelsRendered++;
-
 		// Get the position and color of the sphere model at this index.
 		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
 
-		// Set the radius of the sphere to 1.0 since this is already known.
-		radius = 1.0f;
+		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
+		if (isInsideFrustum) {
+			m_modelsRendered++;
 
-		// Move the model to the location it should be rendered at.
-		worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+			// Set the radius of the sphere to 1.0 since this is already known.
+			radius = 1.0f;
+
+			// Move the model to the location it should be rendered at.
+			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 		
-		// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-		m_Model->Render(Direct3D->GetDeviceContext());
+			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+			m_Model->Render(Direct3D->GetDeviceContext());
 
-		ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);			
+		}
+
 
 		// Reset to the original world matrix.
 		Direct3D->GetWorldMatrix(worldMatrix);

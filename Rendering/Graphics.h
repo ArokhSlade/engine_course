@@ -11,6 +11,7 @@
 #include "TerrainClass.h"
 #include "ModelClass.h"
 #include "ModelListClass.h"
+#include "Frustum.h"
 
 class Graphics
 {
@@ -33,6 +34,7 @@ private:
 	TerrainClass* m_Terrain;
 	ModelClass* m_Model;
 	ModelListClass* m_ModelList;
+	Frustum* m_Frustum;
 	bool m_displayUI;
 
 	int m_modelsRendered;
