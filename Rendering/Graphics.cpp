@@ -313,6 +313,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		// Get the position and color of the sphere model at this index.
 		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
 
+		//TODO(Gerald): IsCubeInsideFrustum?
 		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		if (isInsideFrustum) {
 			m_modelsRendered++;
@@ -324,7 +325,12 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			m_Model->Render(Direct3D->GetDeviceContext());
+			switch (index % 2) {
+			break;case 0:
+				m_Model->Render(Direct3D->GetDeviceContext());
+			break;case 1:
+				m_CubeModel->Render(Direct3D->GetDeviceContext());
+			}
 
 			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);			
 		}
