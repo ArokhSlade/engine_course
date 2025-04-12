@@ -74,6 +74,7 @@ void Frustum::ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)
 		m_planes[i][0] /= length;
 		m_planes[i][1] /= length;
 		m_planes[i][2] /= length;
+		m_planes[i][3] /= length;
 	}
 
 
@@ -81,5 +82,18 @@ void Frustum::ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)
 
 bool Frustum::IsSphereInsideFrustum(float x, float y, float z, float radius)
 {
+	float dotProduct;
+	for (int i = 0; i < 6; ++i) {
+		dotProduct = (	(m_planes[i][0] * x) +
+						(m_planes[i][1] * y) +
+						(m_planes[i][2] * z) +
+						m_planes[i][0]);
+
+		if (dotProduct < -radius)
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
