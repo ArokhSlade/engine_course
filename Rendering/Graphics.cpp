@@ -324,7 +324,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	// Get the number of models that will be rendered.
 	modelCount = m_ModelList->GetModelCount();
 
-	m_renderCount = m_sphereCount = m_cubeCount = 0;
+	m_renderCount = m_sphereCount = m_cubeCount = m_pyramidCount = 0;
 
 	bool isInsideFrustum;
 	// Go through all the models and render them only if they can be seen by the camera view.
@@ -345,13 +345,16 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			switch (index % 2) {
+			switch (index % 3) {
 			break;case 0:
 				m_Model->Render(Direct3D->GetDeviceContext());
 				m_sphereCount++;
 			break;case 1:
 				m_CubeModel->Render(Direct3D->GetDeviceContext());
 				m_cubeCount++;
+			break; case 2:
+				m_PyramidModel->Render(Direct3D->GetDeviceContext());
+				m_pyramidCount++;
 			}
 
 			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);			

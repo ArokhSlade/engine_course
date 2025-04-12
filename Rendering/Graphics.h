@@ -41,7 +41,7 @@ private:
 	PyramidModel* m_PyramidModel;
 	bool m_displayUI;
 
-	int m_renderCount, m_sphereCount, m_cubeCount;
+	int m_renderCount, m_sphereCount, m_cubeCount, m_pyramidCount;
 
 };
 
