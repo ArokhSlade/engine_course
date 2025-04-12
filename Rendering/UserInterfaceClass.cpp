@@ -59,7 +59,21 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	}
 
 	result = m_SphereCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
-		"SphereCount: 999", 10, 70, 1.f, 1.f, 1.f);
+		"Sphere Count: 999", 10, 70, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	m_CubeCountString = new TextClass;
+	if (!m_CubeCountString) {
+		return false;
+	}
+
+	
+
+	result = m_CubeCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Cube Count: 999", 10, 90, 1.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;
@@ -217,6 +231,13 @@ void UserInterfaceClass::Shutdown()
 		m_SphereCountString = 0;
 	}
 
+	if (m_CubeCountString)
+	{
+		m_CubeCountString->Shutdown();
+		delete[] m_CubeCountString;
+		m_CubeCountString = 0;
+	}
+
 	// Release the fps text string.
 	if(m_FpsString)
 	{
@@ -236,7 +257,7 @@ void UserInterfaceClass::Shutdown()
 	return;
 }
 
-bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCount, int fps, float posX, float posY, float posZ, 
+bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int cubeCount, int sphereCount, int renderCount, int fps, float posX, float posY, float posZ, 
 							   float rotX, float rotY, float rotZ)
 {
 	bool result;
@@ -247,8 +268,20 @@ bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCou
 		return false;
 	}
 
+	result = UpdateSphereCountString(deviceContext, sphereCount);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateCubeCountString(deviceContext, cubeCount);
+	if (!result)
+	{
+		return false;
+	}
+
 	// Update the fps string.
-	result = UpdateFpsString(deviceContext, 70, fps);
+	result = UpdateFpsString(deviceContext, 300, fps);
 	if(!result)
 	{
 		return false;
@@ -276,6 +309,7 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 	// Render the fps string.
 	m_RenderCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 	m_SphereCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_CubeCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 
 	// Render the fps string.
 	m_FpsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
@@ -329,7 +363,26 @@ bool UserInterfaceClass::UpdateSphereCountString(ID3D11DeviceContext* deviceCont
 	strcpy_s(finalString, "Sphere Count: ");
 	strcat_s(finalString, tempString);
 
-	result = m_SphereCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 90, 1.f, 1.f, 1.f);
+	result = m_SphereCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 70, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateCubeCountString(ID3D11DeviceContext* deviceContext, int cubeCount)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	_itoa_s(cubeCount, tempString, 10);
+	strcpy_s(finalString, "Cube Count: ");
+	strcat_s(finalString, tempString);
+
+	result = m_CubeCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 90, 1.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;

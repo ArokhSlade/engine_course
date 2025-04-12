@@ -9,6 +9,7 @@ Graphics::Graphics()
 	m_Model = 0;
 	m_ModelList = 0;
 	m_Frustum = 0;
+	m_renderCount = m_sphereCount = m_cubeCount = 0;
 }
 
 Graphics::~Graphics()
@@ -203,7 +204,7 @@ bool Graphics::Frame(D3DClass* Direct3D, InputClass* Input, ShaderManagerClass* 
 
 
 	// Do the frame processing for the user interface.
-	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_modelsRendered, fps, posX, posY, posZ, rotX, rotY, rotZ);
+	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_cubeCount, m_sphereCount, m_renderCount, fps, posX, posY, posZ, rotX, rotY, rotZ);
 	if(!result)
 	{
 		return false;
@@ -304,7 +305,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 	// Get the number of models that will be rendered.
 	modelCount = m_ModelList->GetModelCount();
-	m_modelsRendered = 0;
+	m_renderCount = 0;
 
 	bool isInsideFrustum;
 	// Go through all the models and render them only if they can be seen by the camera view.
@@ -316,7 +317,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		//TODO(Gerald): IsCubeInsideFrustum?
 		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		if (isInsideFrustum) {
-			m_modelsRendered++;
+			m_renderCount++;
 
 			// Set the radius of the sphere to 1.0 since this is already known.
 			radius = 1.0f;

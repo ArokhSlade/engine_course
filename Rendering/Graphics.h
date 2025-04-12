@@ -39,7 +39,8 @@ private:
 	CubeModel* m_CubeModel;
 	bool m_displayUI;
 
-	int m_modelsRendered;
+	int m_renderCount, m_sphereCount, m_cubeCount;
+
 };
 
 #endif
