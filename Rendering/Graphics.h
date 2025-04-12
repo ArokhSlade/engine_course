@@ -13,6 +13,7 @@
 #include "ModelListClass.h"
 #include "Frustum.h"
 #include "CubeModel.h"
+#include "PyramidModel.h"
 
 class Graphics
 {
@@ -37,6 +38,7 @@ private:
 	ModelListClass* m_ModelList;
 	Frustum* m_Frustum;
 	CubeModel* m_CubeModel;
+	PyramidModel* m_PyramidModel;
 	bool m_displayUI;
 
 	int m_renderCount, m_sphereCount, m_cubeCount;

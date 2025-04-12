@@ -101,6 +101,17 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
+	
+	m_PyramidModel = new PyramidModel;
+	if (!m_PyramidModel) {
+		return false;
+	}
+	result = m_PyramidModel->Initialize(Direct3D->GetDevice());
+	if (!result) {
+		MessageBox(hwnd, L"Could not initialize PyramidModel object.", L"Error", MB_OK);
+		return false;
+	}
+
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
 	if (!m_ModelList)
@@ -153,6 +164,13 @@ void Graphics::Shutdown()
 		m_CubeModel->Shutdown();
 		delete m_CubeModel;
 		m_CubeModel = 0;
+	}
+
+	if (m_PyramidModel)
+	{
+		m_PyramidModel->Shutdown();
+		delete m_PyramidModel;
+		m_PyramidModel = 0;
 	}
 
 	if (m_ModelList)
