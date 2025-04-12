@@ -7,7 +7,7 @@ void Frustum::Initialize(float screenDepth)
 	m_screenDepth = screenDepth;
 }
 
-void ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix) 
+void Frustum::ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)
 {
 	XMFLOAT4X4 proMatrix; //projectionMatrix in another format
 	XMFLOAT4X4 frustumMatrix;
@@ -17,6 +17,11 @@ void ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)
 
 	XMStoreFloat4x4(&proMatrix, projectionMatrix);
 
+	// reverse projection matrix
+	zMin = -proMatrix._43 / proMatrix._33; // get near plane distance
+	zMax = m_screenDepth / (m_screenDepth - zMin); // get near plane distance
+	proMatrix._33 = zMax;
+	proMatrix._43 = -zMax * zMin;
 
 
 
@@ -24,6 +29,7 @@ void ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)
 	finalMatrix = XMMatrixMultiply(viewMatrix, projectionMatrix);
 
 	XMStoreFloat4x4(&frustumMatrix, finalMatrix);
+
 	// near plane
 
 	// far plane
@@ -40,7 +46,7 @@ void ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)
 
 }
 
-bool IsSphereInsideFrustum(float x, float y, float z, float radius) 
+bool Frustum::IsSphereInsideFrustum(float x, float y, float z, float radius)
 {
 
 }
