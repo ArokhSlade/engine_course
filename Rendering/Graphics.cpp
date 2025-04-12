@@ -87,6 +87,19 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
+	// Create cube model
+	m_CubeModel = new CubeModel;
+	if (!m_CubeModel) {
+		return false;
+	}
+
+	// Initialize cube model
+	result = m_CubeModel->Initialize(Direct3D->GetDevice());
+	if (!result) {
+		MessageBox(hwnd, L"Could not initialize CubeModel object.", L"Error", MB_OK);
+		return false;
+	}
+
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
 	if (!m_ModelList)
@@ -132,6 +145,13 @@ void Graphics::Shutdown()
 		m_Model->Shutdown();
 		delete m_Model;
 		m_Model = 0;
+	}
+
+	if (m_CubeModel)
+	{
+		m_CubeModel->Shutdown();
+		delete m_CubeModel;
+		m_CubeModel = 0;
 	}
 
 	if (m_ModelList)

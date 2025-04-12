@@ -12,6 +12,7 @@
 #include "ModelClass.h"
 #include "ModelListClass.h"
 #include "Frustum.h"
+#include "CubeModel.h"
 
 class Graphics
 {
@@ -35,6 +36,7 @@ private:
 	ModelClass* m_Model;
 	ModelListClass* m_ModelList;
 	Frustum* m_Frustum;
+	CubeModel* m_CubeModel;
 	bool m_displayUI;
 
 	int m_modelsRendered;
