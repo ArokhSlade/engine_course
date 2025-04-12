@@ -177,6 +177,7 @@
     <ClInclude Include="CameraClass.h" />
     <ClInclude Include="ColorShaderClass.h" />
     <ClInclude Include="CubeModel.h" />
+    <ClInclude Include="CustomStruct.h" />
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="FontClass.h" />
     <ClInclude Include="FontShaderClass.h" />
