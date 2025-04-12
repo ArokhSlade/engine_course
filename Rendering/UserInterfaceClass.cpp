@@ -45,7 +45,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	}
 
 	// Initialize the render count text string.
-	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1,
+	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
 		"xD", 10, 50, 0.0f, 1.0f, 0.0f);
 	if (!result)
 	{
@@ -280,8 +280,8 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 
 bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceContext, int rowIdx, int renderCount)
 {
-	char tempString[16];
-	char finalString[16];
+	char tempString[32];
+	char finalString[32];
 	
 	bool result;
 	

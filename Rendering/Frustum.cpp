@@ -87,7 +87,7 @@ bool Frustum::IsSphereInsideFrustum(float x, float y, float z, float radius)
 		dotProduct = (	(m_planes[i][0] * x) +
 						(m_planes[i][1] * y) +
 						(m_planes[i][2] * z) +
-						m_planes[i][0]);
+						m_planes[i][3]);
 
 		if (dotProduct < -radius)
 		{
