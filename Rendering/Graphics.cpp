@@ -119,7 +119,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	const int modelCount = 500;
+	const int modelCount = 750;
 	// Initialize the model list object.
 	result = m_ModelList->Initialize(modelCount);
 	if (!result)
