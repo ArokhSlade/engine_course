@@ -31,11 +31,11 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 	int modelCounts[modelTypeCount] = { numSpheres, numCubes, numPyramids };
 	// Go through all the models and randomly generate the model color and position.
 	int totalModelIndex = 0;
-	for (int modelTypeIndex = 0 ; modelTypeIndex < modelTypeCount ; modelTypeIndex++)
+	for (int i_modelTypeIndex = 0 ; i_modelTypeIndex < modelTypeCount ; i_modelTypeIndex++)
 	{
-		for (int modelIndex = 0 ; modelIndex < modelCounts[modelTypeIndex]; modelIndex++, totalModelIndex++)
+		for (int j_modelIndex = 0 ; j_modelIndex < modelCounts[i_modelTypeIndex]; j_modelIndex++, totalModelIndex++)
 		{
-			m_ModelInfoList[totalModelIndex].modelType = static_cast<ModelType>(modelTypeIndex);
+			m_ModelInfoList[totalModelIndex].modelType = static_cast<ModelType>(i_modelTypeIndex);
 
 			// Generate a random color for the model.
 			red = (float)rand() / RAND_MAX;

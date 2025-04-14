@@ -60,7 +60,7 @@ void AxisAlignedBoundingBox::CalculateDimensions()
 
 bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* Device)
 {
-    
+	return true;
 }
 
 bool AxisAlignedBoundingBox::Initialize(ID3D11Device* device, VectorType* vertexList, int vertexCount)
