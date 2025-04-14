@@ -33,7 +33,7 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 	int totalModelIndex = 0;
 	for (int modelTypeIndex = 0 ; modelTypeIndex < modelTypeCount ; modelTypeIndex++)
 	{
-		for (int modelIndex = 0 ; modelIndex < modelCounts[modelIndex]; modelIndex++, totalModelIndex++)
+		for (int modelIndex = 0 ; modelIndex < modelCounts[modelTypeIndex]; modelIndex++, totalModelIndex++)
 		{
 			m_ModelInfoList[totalModelIndex].modelType = static_cast<ModelType>(modelTypeIndex);
 
