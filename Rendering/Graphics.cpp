@@ -119,9 +119,11 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	const int modelCount = 750;
+	const int sphereCount = 250;
+	const int cubeCount = 250;
+	const int pyramidCount = 250;
 	// Initialize the model list object.
-	result = m_ModelList->Initialize(modelCount);
+	result = m_ModelList->Initialize(sphereCount, cubeCount, pyramidCount);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
