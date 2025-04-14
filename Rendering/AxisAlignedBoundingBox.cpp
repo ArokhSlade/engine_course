@@ -76,5 +76,5 @@ void AxisAlignedBoundingBox::Render(ID3D11DeviceContext* deviceContext)
 
 int AxisAlignedBoundingBox::GetIndexCount()
 {
-    return 0;
+	return m_indexCount;
 }
