@@ -23,6 +23,7 @@ bool CubeModel::Initialize(ID3D11Device* device)
 	int index, vertexCount, indexCount;
 	XMFLOAT4 colorRed = XMFLOAT4(1.f,0.f,0.f,1.f);
 	XMFLOAT4 colorBlue = XMFLOAT4(0.f, 0.f, 1.f, 1.f);
+	XMFLOAT4 colorGreen = XMFLOAT4(0.f, 1.f, 0.f, 1.f);
 	vertexCount = 36;
 	m_vertexCount = vertexCount;
 	indexCount = vertexCount;
@@ -138,35 +139,68 @@ bool CubeModel::Initialize(ID3D11Device* device)
 		index++;
 	}
 
+	//// Front
+	//{
+	//	vertices[index].position = XMFLOAT3(-1, 1, -1);
+	//	vertices[index].color = colorRed;
+	//	indices[index] = index;
+	//	index++;
+
+	//	vertices[index].position = XMFLOAT3(1, 1, -1);
+	//	vertices[index].color = colorRed;
+	//	indices[index] = index;
+	//	index++;
+
+	//	vertices[index].position = XMFLOAT3(1, -1, -1);
+	//	vertices[index].color = colorRed;
+	//	indices[index] = index;
+	//	index++;
+
+	//	vertices[index].position = XMFLOAT3(1, -1, -1);
+	//	vertices[index].color = colorBlue;
+	//	indices[index] = index;
+	//	index++;
+
+	//	vertices[index].position = XMFLOAT3(-1, -1, -1);
+	//	vertices[index].color = colorBlue;
+	//	indices[index] = index;
+	//	index++;
+
+	//	vertices[index].position = XMFLOAT3(-1, 1, -1);
+	//	vertices[index].color = colorBlue;
+	//	indices[index] = index;
+	//	index++;
+	//}
+
 	// Front
 	{
-		vertices[index].position = XMFLOAT3(-1, 1, -1);
-		vertices[index].color = colorRed;
-		indices[index] = index;
-		index++;
-
 		vertices[index].position = XMFLOAT3(1, 1, -1);
-		vertices[index].color = colorRed;
+		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
 		vertices[index].position = XMFLOAT3(1, -1, -1);
-		vertices[index].color = colorRed;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(1, -1, -1);
-		vertices[index].color = colorBlue;
+		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
 		vertices[index].position = XMFLOAT3(-1, -1, -1);
-		vertices[index].color = colorBlue;
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(-1, -1, -1);
+		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
 		vertices[index].position = XMFLOAT3(-1, 1, -1);
-		vertices[index].color = colorBlue;
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(1, 1, -1);
+		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 	}

@@ -31,6 +31,8 @@ bool ModelListClass::Initialize(int numModels)
 	// Go through all the models and randomly generate the model color and position.
 	for (i = 0; i<m_modelCount; i++)
 	{
+		m_ModelInfoList[i].modelType = static_cast<ModelType>(i % static_cast<int>(ModelType::ENUM_SIZE));
+
 		// Generate a random color for the model.
 		red = (float)rand() / RAND_MAX;
 		green = (float)rand() / RAND_MAX;
@@ -67,7 +69,7 @@ int ModelListClass::GetModelCount()
 }
 
 
-void ModelListClass::GetData(int index, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color)
+void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color)
 {
 	positionX = m_ModelInfoList[index].positionX;
 	positionY = m_ModelInfoList[index].positionY;
@@ -75,5 +77,6 @@ void ModelListClass::GetData(int index, float& positionX, float& positionY, floa
 
 	color = m_ModelInfoList[index].color;
 
+	modelType = m_ModelInfoList[index].modelType;
 	return;
 }

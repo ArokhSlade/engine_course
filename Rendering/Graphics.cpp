@@ -296,6 +296,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	int modelCount, index;
 	float positionX, positionY, positionZ, radius;
 	XMFLOAT4 color;
+	ModelType modelType;
 	
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
@@ -328,19 +329,17 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 	bool isInsideFrustum;
 	// Go through all the models and render them only if they can be seen by the camera view.
-	for (index = 0; index<modelCount; index++)
+	for (index = 0; index < modelCount; index++)
 	{
 		// Get the position and color of the sphere model at this index.
-		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
+		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, color);
 
-		//TODO(Gerald): IsCubeInsideFrustum?
-
-		switch (index % 3) {
-			break; case 0:
+		switch (modelType) {
+			break; case ModelType::SPHERE:
 				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case 1:
+			break; case ModelType::CUBE:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case 2:
+			break; case ModelType::PYRAMID:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		}
 
@@ -354,14 +353,14 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			switch (index % 3) {
-			break;case 0:
+			switch (modelType) {
+			break; case ModelType::SPHERE:
 				m_Model->Render(Direct3D->GetDeviceContext());
 				m_sphereCount++;
-			break;case 1:
+			break; case ModelType::CUBE:
 				m_CubeModel->Render(Direct3D->GetDeviceContext());
 				m_cubeCount++;
-			break; case 2:
+			break; case ModelType::PYRAMID:
 				m_PyramidModel->Render(Direct3D->GetDeviceContext());
 				m_pyramidCount++;
 			}

@@ -7,6 +7,14 @@
 #include <directxmath.h>
 using namespace DirectX;
 
+enum class ModelType {
+	INVALID = -1,
+	SPHERE,
+	CUBE,
+	PYRAMID,
+	ENUM_SIZE
+};
+
 class ModelListClass
 {
 private:
@@ -14,6 +22,7 @@ private:
 	{
 		XMFLOAT4 color;
 		float positionX, positionY, positionZ;
+		ModelType modelType;
 	};
 
 public:
@@ -24,7 +33,7 @@ public:
 	void Shutdown();
 
 	int GetModelCount();
-	void GetData(int, float&, float&, float&, XMFLOAT4&);
+	void GetData(int, ModelType&, float&, float&, float&, XMFLOAT4&);
 
 private:
 	int m_modelCount;
