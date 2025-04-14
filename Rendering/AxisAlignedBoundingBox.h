@@ -8,14 +8,14 @@ public:
 	AxisAlignedBoundingBox();
 	~AxisAlignedBoundingBox();
 
-	bool Initialize(ID3D11Device* device);
+	bool Initialize(ID3D11Device* device, VectorType* vertexList, int vertexCount);
 	void Shutdown();
 	void Render(ID3D11DeviceContext* deviceContext);
 
 	int GetIndexCount();
 
 private: 
-	void CalculateDimesions();
+	void CalculateDimensions();
 	bool BuildLineBuffers(ID3D11Device* Device);
 
 private:
@@ -26,4 +26,6 @@ private:
 	float m_minX, m_minY, m_minZ;
 
 	float m_posX, m_posY, m_posZ;
+
+	VectorType* m_vertexList;
 };
