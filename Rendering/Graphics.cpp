@@ -334,7 +334,16 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
 
 		//TODO(Gerald): IsCubeInsideFrustum?
-		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
+
+		switch (index % 3) {
+			break; case 0:
+				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
+			break; case 1:
+				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
+			break; case 2:
+				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
+		}
+
 		if (isInsideFrustum) {
 			m_renderCount++;
 

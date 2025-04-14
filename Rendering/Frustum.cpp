@@ -97,3 +97,44 @@ bool Frustum::IsSphereInsideFrustum(float x, float y, float z, float radius)
 
 	return true;
 }
+
+bool Frustum::IsCubeInsideFrustum(float x, float y, float z, float radius)
+{
+	float dotProduct;
+	float cubeVertices[8][3]{
+		{-radius, radius, radius},
+		{-radius,-radius, radius},
+		{ radius, radius, radius},
+		{ radius,-radius, radius},
+
+		{-radius, radius,-radius},
+		{-radius,-radius,-radius},
+		{ radius, radius,-radius},
+		{ radius,-radius,-radius},
+	};
+
+	for (float* vertex = *cubeVertices; vertex < *cubeVertices + (3 * 8); vertex += 3) {
+		vertex[0] += x;
+		vertex[1] += y;
+		vertex[2] += z;
+	}
+
+	for (int vertexIdx = 0; vertexIdx < 8; ++vertexIdx) 
+	{
+		
+		for (int i = 0; i < 6; ++i) {
+			dotProduct = ((m_planes[i][0] * cubeVertices[vertexIdx][0]) +
+				(m_planes[i][1] * cubeVertices[vertexIdx][1]) +
+				(m_planes[i][2] * cubeVertices[vertexIdx][2]) +
+				m_planes[i][3]);
+
+			if (dotProduct < 0.f)
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
