@@ -22,7 +22,7 @@ private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 
-	float m_maxX, m_maxY, m_minZ;
+	float m_maxX, m_maxY, m_maxZ;
 	float m_minX, m_minY, m_minZ;
 
 	float m_posX, m_posY, m_posZ;

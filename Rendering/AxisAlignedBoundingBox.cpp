@@ -1,4 +1,5 @@
 #include "AxisAlignedBoundingBox.h"
+#include<limits>
 
 AxisAlignedBoundingBox::AxisAlignedBoundingBox()
 {
@@ -13,6 +14,48 @@ AxisAlignedBoundingBox::~AxisAlignedBoundingBox()
 
 void AxisAlignedBoundingBox::CalculateDimensions()
 {
+	float currentX, currentY, currentZ;
+	auto first = m_vertexList[0];
+	m_minX = m_minY = m_minZ = std::numeric_limits<float>::infinity();
+	m_maxX = m_maxY = m_maxZ = std::numeric_limits<float>::infinity();
+
+
+	for (int i = 0; i < m_vertexCount; ++i)
+	{
+		currentX = m_vertexList[i].x;
+		currentY = m_vertexList[i].y;
+		currentZ = m_vertexList[i].z;
+
+		if (currentX > m_maxX) 
+		{
+			m_maxX = currentX;
+		}
+		if (currentY > m_maxY)
+		{
+			m_maxY = currentY;
+		}
+		if (currentZ > m_maxZ)
+		{
+			m_maxZ = currentZ;
+		}
+
+		if (currentX < m_minX)
+		{
+			m_minX = currentX;
+		}
+		if (currentY < m_minY)
+		{
+			m_minY = currentY;
+		}
+		if (currentZ < m_minZ)
+		{
+			m_minZ = currentZ;
+		}
+
+		m_posX = m_minX + (m_maxX - m_minX) / 2.f;
+		m_posY = m_minY + (m_maxY - m_minY) / 2.f;
+		m_posZ = m_minZ + (m_maxZ - m_minZ) / 2.f;
+	}
 }
 
 bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* Device)
