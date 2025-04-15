@@ -43,7 +43,7 @@ private:
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
 
-	AxisAlignedBoundingBox* m_aabb;
+	AxisAlignedBoundingBox* m_SphereAABB, *m_CubeAABB, *m_PyramidAABB;
 	bool m_displayAABBs;
 
 	int m_renderCount, m_sphereCount, m_cubeCount, m_pyramidCount;

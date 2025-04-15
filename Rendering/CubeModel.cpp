@@ -324,6 +324,13 @@ bool CubeModel::Initialize(ID3D11Device* device)
 		return false;
 	}
 
+	m_vertexList = new VectorType[m_vertexCount];
+	for (int vertex_index = 0; vertex_index < m_vertexCount; ++vertex_index) {
+		m_vertexList[vertex_index].x = vertices[vertex_index].position.x;
+		m_vertexList[vertex_index].y = vertices[vertex_index].position.y;
+		m_vertexList[vertex_index].z = vertices[vertex_index].position.z;
+	}
+
 	// Release the arrays now that the vertex and index buffers have been created and loaded.
 	delete[] vertices;
 	vertices = 0;
@@ -348,6 +355,12 @@ void CubeModel::Shutdown()
 	{
 		m_vertexBuffer->Release();
 		m_vertexBuffer = 0;
+	}
+
+	if (m_vertexList)
+	{
+		delete[] m_vertexList;
+		m_vertexList = 0;
 	}
 
 	return;
@@ -375,4 +388,14 @@ void CubeModel::Render(ID3D11DeviceContext* deviceContext)
 int CubeModel::GetIndexCount()
 {
 	return m_indexCount;
+}
+
+VectorType* CubeModel::GetVertexList()
+{
+	return m_vertexList;
+}
+
+int CubeModel::GetVertexCount()
+{
+	return m_vertexCount;
 }

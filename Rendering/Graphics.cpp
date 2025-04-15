@@ -11,7 +11,7 @@ Graphics::Graphics()
 	m_Frustum = 0;
 	m_renderCount = m_sphereCount = m_cubeCount = 0;
 
-	m_aabb = 0;
+	m_SphereAABB = m_CubeAABB = m_PyramidAABB = 0;
 }
 
 Graphics::~Graphics()
@@ -90,12 +90,12 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	m_aabb = new AxisAlignedBoundingBox;
-	if (!m_aabb)
+	m_SphereAABB = new AxisAlignedBoundingBox;
+	if (!m_SphereAABB)
 	{
 		return false;
 	}
-	result = m_aabb->Initialize(Direct3D->GetDevice(), m_Model->GetVertexList(), m_Model->GetVertexCount());
+	result = m_SphereAABB->Initialize(Direct3D->GetDevice(), m_Model->GetVertexList(), m_Model->GetVertexCount());
 
 
 	// Create cube model
@@ -110,6 +110,13 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		MessageBox(hwnd, L"Could not initialize CubeModel object.", L"Error", MB_OK);
 		return false;
 	}
+
+	m_CubeAABB = new AxisAlignedBoundingBox;
+	if (!m_CubeAABB)
+	{
+		return false;
+	}
+	result = m_CubeAABB->Initialize(Direct3D->GetDevice(), m_CubeModel->GetVertexList(), m_CubeModel->GetVertexCount());
 
 	
 	m_PyramidModel = new PyramidModel;
@@ -390,8 +397,8 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 			if (m_displayAABBs)
 			{
-				m_aabb->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabb->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				m_SphereAABB->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 			}
 		}
 
