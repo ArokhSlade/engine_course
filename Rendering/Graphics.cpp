@@ -298,6 +298,12 @@ void Graphics::HandleMovementInput(InputClass* Input, float frameTime)
 		m_displayUI = !m_displayUI;
 	}
 
+	// Determine if the user interface should be displayed or not.
+	if (Input->IsF2Toggled())
+	{
+		m_displayAABBs = !m_displayAABBs;
+	}
+
 	return;
 }
 
