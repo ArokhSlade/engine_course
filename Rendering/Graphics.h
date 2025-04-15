@@ -14,6 +14,7 @@
 #include "Frustum.h"
 #include "CubeModel.h"
 #include "PyramidModel.h"
+#include "AxisAlignedBoundingBox.h"
 
 class Graphics
 {
@@ -35,11 +36,14 @@ private:
 	PositionClass* m_Position;
 	TerrainClass* m_Terrain;
 	ModelClass* m_Model;
-	ModelListClass* m_ModelList;
+	ModelListClass* m_ModelList;	
+	bool m_displayUI;
+
 	Frustum* m_Frustum;
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
-	bool m_displayUI;
+
+	AxisAlignedBoundingBox* m_aabb;
 
 	int m_renderCount, m_sphereCount, m_cubeCount, m_pyramidCount;
 

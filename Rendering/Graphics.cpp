@@ -10,6 +10,8 @@ Graphics::Graphics()
 	m_ModelList = 0;
 	m_Frustum = 0;
 	m_renderCount = m_sphereCount = m_cubeCount = 0;
+
+	m_aabb = 0;
 }
 
 Graphics::~Graphics()
@@ -87,6 +89,14 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		MessageBox(hwnd, L"Could not initialize the Model object.", L"Error", MB_OK);
 		return false;
 	}
+
+	m_aabb = new AxisAlignedBoundingBox;
+	if (m_aabb)
+	{
+		return false;
+	}
+	result = m_aabb->Initialize(Direct3D->GetDevice(), m_Model->GetVertexList(), m_Model->GetVertexCount());
+
 
 	// Create cube model
 	m_CubeModel = new CubeModel;
