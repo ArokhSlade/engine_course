@@ -62,9 +62,19 @@ void ModelClass::Render(ID3D11DeviceContext* device)
 	return;
 }
 
+int ModelClass::GetVertexCount()
+{
+	return m_vertexCount;
+}
+
 int ModelClass::GetIndexCount()
 {
 	return m_indexCount;
+}
+
+VectorType* ModelClass::GetVertexList()
+{
+	return m_vertexList;
 }
 
 ID3D11ShaderResourceView* ModelClass::GetTexture()
@@ -91,6 +101,12 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	// Create the index array.
 	indices = new unsigned long[m_indexCount];
 	if (!indices)
+	{
+		return false;
+	}
+
+	m_vertexList = new VectorType[m_vertexCount];
+	if (!m_vertexList) 
 	{
 		return false;
 	}

@@ -6,8 +6,7 @@
 using namespace std;
 
 #include "TextureClass.h"
-#include <directxmath.h>
-using namespace DirectX;
+#include "CustomStruct.h"
 
 class ModelClass
 {
@@ -34,7 +33,9 @@ public:
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
+	int GetVertexCount();
 	int GetIndexCount();
+	VectorType* GetVertexList();
 	ID3D11ShaderResourceView* GetTexture();
 
 private:
@@ -53,6 +54,8 @@ private:
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
 	ModelType* m_model;
+
+	VectorType* m_vertexList;
 };
 
 #endif
