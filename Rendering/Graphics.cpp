@@ -414,10 +414,6 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 			}			
-
-						
-
-			
 		}
 
 
