@@ -100,9 +100,9 @@ void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, 
 	}
 	model.ratio = clamp(model.ratio, 0.f, 1.f);
 
-	positionX = lerp(model.posA.x, model.posB.x, .5f);
-	positionY = lerp(model.posA.y, model.posB.y, .5f);
-	positionZ = lerp(model.posA.z, model.posB.z, .5f);
+	positionX = lerp(model.posA.x, model.posB.x, model.ratio);
+	positionY = lerp(model.posA.y, model.posB.y, model.ratio);
+	positionZ = lerp(model.posA.z, model.posB.z, model.ratio);
 
 	color = m_ModelInfoList[index].color;
 
