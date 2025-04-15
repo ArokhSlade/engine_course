@@ -134,12 +134,25 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Near Top
 	{
+		vertices[index].position = XMFLOAT3(m_minX, m_maxY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_maxY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Near Left
+	{
 		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_minX, m_maxY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -147,38 +160,26 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Near Right
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_maxY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 	}
 
-	// Far Right
-	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
-		vertices[index].color = colorGreen;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
-		vertices[index].color = colorGreen;
-		indices[index] = index;
-		index++;
-	}
 
 	// Far Bottom
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -186,12 +187,25 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Far Top
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_minX, m_maxY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_maxY, m_maxZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Far Left
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_maxZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_minX, m_maxY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -199,25 +213,12 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Far Right
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
-		vertices[index].color = colorGreen;
-		indices[index] = index;
-		index++;
-	}
-
-	// Far Right
-	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
-		vertices[index].color = colorGreen;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_maxY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -230,7 +231,7 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -238,12 +239,12 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Left Top
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_minX, m_maxY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_minX, m_maxY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -251,12 +252,12 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Right Bottom
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
@@ -264,12 +265,12 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	// Right Top
 	{
-		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_maxY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].position = XMFLOAT3(m_maxX, m_maxY, m_maxZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;
