@@ -91,7 +91,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	m_aabb = new AxisAlignedBoundingBox;
-	if (m_aabb)
+	if (!m_aabb)
 	{
 		return false;
 	}
