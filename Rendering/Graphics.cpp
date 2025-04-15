@@ -368,7 +368,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			switch (modelType) {
 			break; case ModelType::SPHERE:
 				m_Model->Render(Direct3D->GetDeviceContext());
-				m_aabb->Render(Direct3D->GetDeviceContext());
+				
 				m_sphereCount++;
 			break; case ModelType::CUBE:
 				m_CubeModel->Render(Direct3D->GetDeviceContext());
@@ -377,6 +377,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 				m_PyramidModel->Render(Direct3D->GetDeviceContext());
 				m_pyramidCount++;
 			}
+			m_aabb->Render(Direct3D->GetDeviceContext());
 
 			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);			
 		}
