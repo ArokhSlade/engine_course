@@ -382,10 +382,15 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			break; case ModelType::PYRAMID:
 				m_PyramidModel->Render(Direct3D->GetDeviceContext());
 				m_pyramidCount++;
-			}
-			m_aabb->Render(Direct3D->GetDeviceContext());
+			}			
 
 			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);			
+
+			if (m_displayAABBs)
+			{
+				m_aabb->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabb->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+			}
 		}
 
 
