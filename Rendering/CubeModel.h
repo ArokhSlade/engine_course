@@ -14,7 +14,6 @@ public:
 	bool Initialize(ID3D11Device* device);
 	void Shutdown();
 	void Render(ID3D11DeviceContext* deviceContext);
-	void Rotate(VectorType, float);
 
 	int GetIndexCount();
 	VectorType*GetVertexList();
