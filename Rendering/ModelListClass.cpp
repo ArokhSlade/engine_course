@@ -85,9 +85,22 @@ int ModelListClass::GetModelCount()
 void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color)
 {
 	auto& model = m_ModelInfoList[index];
+
+	const float speed = 1.f;
+
+	//TODO(Gerald) get fps
+	float secondsPerFrame = 1.f / 60.f;
+	model.ratio += speed * secondsPerFrame * (model.movingBackward ? -1.f : 1.f);
+	if (model.ratio > 1.f || model.ratio < 0.f) {
+		model.movingBackward = !model.movingBackward;
+	}
+	model.ratio = clamp(model.ratio, 0.f, 1.f);
+
 	positionX = lerp(model.posA.x, model.posB.x, model.ratio);
 	positionY = lerp(model.posA.y, model.posB.y, model.ratio);
 	positionZ = lerp(model.posA.z, model.posB.z, model.ratio);
+
+	
 
 	color = m_ModelInfoList[index].color;
 
