@@ -119,9 +119,157 @@ bool AxisAlignedBoundingBox::BuildLineBuffers(ID3D11Device* device)
 
 	index = 0;
 
-	// Bottom
+	// Near Bottom
 	{
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Near Top
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Near Right
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Far Right
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Far Bottom
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Far Top
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Far Right
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Far Right
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Left Bottom
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Left Top
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Right Bottom
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+	}
+
+	// Right Top
+	{
+		vertices[index].position = XMFLOAT3(m_minX, m_minY, m_minZ);
+		vertices[index].color = colorGreen;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(m_maxX, m_minY, m_minZ);
 		vertices[index].color = colorGreen;
 		indices[index] = index;
 		index++;

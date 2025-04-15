@@ -19,3 +19,9 @@ explizit dastehen wie viele Cubes und wie viele Spheres gerendert werden.
 5. Erstelle eine Pyramide + rendere die Pyramide + zu gleichen teilen rendern (750 = 250
 cubes + 250 spheres + 250 pyramides) + erweitere die UI Anzeige um die anzahl der
 gerenderten pyramides (Grundfläche der Pyramide is quadratisch!) 
+
+
+1. Vervollständige die Line Daten für die AABB und Rendere die AABB für die Spheres.
+2. Rendere die AABB für alle anderen Objekte (außer Terrain!)
+3. Ermögliche es mittels der F2 Taste sämtliche AABBs an und auszuschalten (wird gerendert / wird
+nicht gerendert)
