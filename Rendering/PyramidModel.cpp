@@ -251,3 +251,13 @@ int PyramidModel::GetIndexCount()
 {
 	return m_indexCount;
 }
+
+VectorType* PyramidModel::GetVertexList()
+{
+	return m_vertexList;
+}
+
+int PyramidModel::GetVertexCount()
+{
+	return m_vertexCount;
+}
