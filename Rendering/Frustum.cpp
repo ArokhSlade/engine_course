@@ -120,8 +120,8 @@ bool Frustum::IsCubeInsideFrustum(float x, float y, float z, float radius)
 	}
 
 	for (int vertexIdx = 0; vertexIdx < 8; ++vertexIdx) 
-	{
-		
+	{		
+		bool vertexIsInsideFrustum = true;
 		for (int i = 0; i < 6; ++i) {
 			dotProduct = (
 				(m_planes[i][0] * cubeVertices[vertexIdx][0]) +
@@ -129,10 +129,14 @@ bool Frustum::IsCubeInsideFrustum(float x, float y, float z, float radius)
 				(m_planes[i][2] * cubeVertices[vertexIdx][2]) +
 				m_planes[i][3]);
 
-			if (dotProduct > 0.f)
+			if (dotProduct < 0.f)
 			{
-				return true;
+				vertexIsInsideFrustum = false;
+				break;
 			}
+		}
+		if (vertexIsInsideFrustum) {
+			return true;
 		}
 	}
 
