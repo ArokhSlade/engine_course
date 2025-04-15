@@ -55,6 +55,7 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 			m_ModelInfoList[totalModelIndex].posB.z = (float)rand() / RAND_MAX * 100.f;
 
 			m_ModelInfoList[totalModelIndex].ratio = .5f;
+			m_ModelInfoList[totalModelIndex].movingBackward = false;
 		}
 	}
 

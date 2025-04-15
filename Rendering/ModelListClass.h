@@ -25,6 +25,7 @@ private:
 		VectorType posA, posB;
 		ModelType modelType;
 		float ratio;
+		bool movingBackward;
 	};
 
 public:
