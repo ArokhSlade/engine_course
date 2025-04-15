@@ -1,4 +1,5 @@
 #include "ModelListClass.h"
+#include "CustomMath.h"
 
 ModelListClass::ModelListClass()
 {
@@ -45,9 +46,15 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 			m_ModelInfoList[totalModelIndex].color = XMFLOAT4(red, green, blue, 1.0f);
 
 			// Generate a random position in front of the viewer for the mode.
-			m_ModelInfoList[totalModelIndex].positionX = (float)rand() / RAND_MAX * 100.f;
-			m_ModelInfoList[totalModelIndex].positionY = (float)rand() / RAND_MAX * 100.f;
-			m_ModelInfoList[totalModelIndex].positionZ = (float)rand() / RAND_MAX * 100.f;
+			m_ModelInfoList[totalModelIndex].posA.x = (float)rand() / RAND_MAX * 100.f;
+			m_ModelInfoList[totalModelIndex].posA.y = (float)rand() / RAND_MAX * 100.f;
+			m_ModelInfoList[totalModelIndex].posA.z = (float)rand() / RAND_MAX * 100.f;
+
+			m_ModelInfoList[totalModelIndex].posB.x = (float)rand() / RAND_MAX * 100.f;
+			m_ModelInfoList[totalModelIndex].posB.y = (float)rand() / RAND_MAX * 100.f;
+			m_ModelInfoList[totalModelIndex].posB.z = (float)rand() / RAND_MAX * 100.f;
+
+			m_ModelInfoList[totalModelIndex].ratio = .5f;
 		}
 	}
 
@@ -76,9 +83,10 @@ int ModelListClass::GetModelCount()
 
 void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color)
 {
-	positionX = m_ModelInfoList[index].positionX;
-	positionY = m_ModelInfoList[index].positionY;
-	positionZ = m_ModelInfoList[index].positionZ;
+	auto& model = m_ModelInfoList[index];
+	positionX = lerp(model.posA.x, model.posB.x, model.ratio);
+	positionY = lerp(model.posA.y, model.posB.y, model.ratio);
+	positionZ = lerp(model.posA.z, model.posB.z, model.ratio);
 
 	color = m_ModelInfoList[index].color;
 

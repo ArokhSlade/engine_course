@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include "CustomStruct.h"
 #include <directxmath.h>
 using namespace DirectX;
 
@@ -21,8 +22,9 @@ private:
 	struct ModelInfoType
 	{
 		XMFLOAT4 color;
-		float positionX, positionY, positionZ;
+		VectorType posA, posB;
 		ModelType modelType;
+		float ratio;
 	};
 
 public:
