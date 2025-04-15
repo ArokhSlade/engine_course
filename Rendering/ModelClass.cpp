@@ -185,6 +185,12 @@ void ModelClass::ShutdownBuffers()
 		m_vertexBuffer = 0;
 	}
 
+	if (m_vertexList)
+	{
+		delete[] m_vertexList;
+		m_vertexList = 0;
+	}
+
 	return;
 }
 
