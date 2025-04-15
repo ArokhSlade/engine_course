@@ -1,5 +1,6 @@
 #include "ModelListClass.h"
 #include "CustomMath.h"
+#include "D3DClass.h"
 
 ModelListClass::ModelListClass()
 {
@@ -82,7 +83,7 @@ int ModelListClass::GetModelCount()
 }
 
 
-void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color)
+void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, float& positionY, float& positionZ, float& rotationY, XMFLOAT4& color)
 {
 	auto& model = m_ModelInfoList[index];
 
@@ -100,10 +101,11 @@ void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, 
 	positionY = lerp(model.posA.y, model.posB.y, model.ratio);
 	positionZ = lerp(model.posA.z, model.posB.z, model.ratio);
 
-	
-
 	color = m_ModelInfoList[index].color;
 
 	modelType = m_ModelInfoList[index].modelType;
+
+	rotationY = model.ratio * 360.f * 0.0174532925f;
+
 	return;
 }

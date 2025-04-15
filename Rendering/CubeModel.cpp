@@ -385,6 +385,44 @@ void CubeModel::Render(ID3D11DeviceContext* deviceContext)
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
+void CubeModel::Rotate(VectorType in_position, float rotationY)
+{
+	XMFLOAT3 up, position, lookAt;
+	XMVECTOR upVector, positionVector, lookAtVector;
+	float yaw, pitch, roll;
+	XMMATRIX rotationMatrix;
+
+	up.x = 0.0f;
+	up.y = 1.0f;
+	up.z = 0.0f;	
+	upVector = XMLoadFloat3(&up);
+
+	position.x = in_position.x;
+	position.y = in_position.y;
+	position.z = in_position.z;
+	positionVector = XMLoadFloat3(&position);
+
+	lookAt.x = 0.0f;
+	lookAt.y = 0.0f;
+	lookAt.z = 1.0f;
+	lookAtVector = XMLoadFloat3(&lookAt);
+
+	rotationMatrix = XMMatrixRotationRollPitchYaw(0.f, rotationY, 0.f);
+		
+	lookAtVector = XMVector3TransformCoord(lookAtVector, rotationMatrix);
+	upVector = XMVector3TransformCoord(upVector, rotationMatrix);
+
+	lookAtVector = XMVectorAdd(positionVector, lookAtVector);
+
+	XMMATRIX m_baseViewMatrix = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
+
+	//for (int i = 0; i < m_vertexCount; ++i) {
+	//	XMVECTOR xmVector;
+	//	xmVector.x = m_vertexList[i].x;
+	//	XMVector3TransformCoord()
+	//}
+}
+
 int CubeModel::GetIndexCount()
 {
 	return m_indexCount;

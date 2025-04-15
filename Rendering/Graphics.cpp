@@ -326,7 +326,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, baseViewMatrix, orthoMatrix;
 	bool result;
 	int modelCount, index;
-	float positionX, positionY, positionZ, radius;
+	float positionX, positionY, positionZ, rotationY, radius;
 	XMFLOAT4 color;
 	ModelType modelType;
 	
@@ -364,7 +364,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	for (index = 0; index < modelCount; index++)
 	{
 		// Get the position and color of the sphere model at this index.
-		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, color);
+		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, color);
 
 		switch (modelType) {
 			break; case ModelType::SPHERE:
@@ -382,7 +382,9 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			radius = 1.0f;
 
 			// Move the model to the location it should be rendered at.
-			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+			worldMatrix = XMMatrixRotationY(rotationY);
+			XMMATRIX translationMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+			worldMatrix = XMMatrixMultiply(worldMatrix, translationMatrix);
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 			switch (modelType) {
@@ -396,11 +398,12 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 			break; case ModelType::CUBE:
+				//m_CubeModel->Rotate(rotationY);
 				m_CubeModel->Render(Direct3D->GetDeviceContext());
 				m_cubeCount++;
 				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				if (m_displayAABBs)
-				{
+				{					
 					m_CubeAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
