@@ -129,6 +129,13 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
+	m_PyramidAABB = new AxisAlignedBoundingBox;
+	if (!m_PyramidAABB)
+	{
+		return false;
+	}
+	result = m_PyramidAABB->Initialize(Direct3D->GetDevice(), m_PyramidModel->GetVertexList(), m_PyramidModel->GetVertexCount());
+
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
 	if (!m_ModelList)
