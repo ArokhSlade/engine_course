@@ -37,26 +37,29 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 	{
 		for (int j_modelIndex = 0 ; j_modelIndex < modelCounts[i_modelTypeIndex]; j_modelIndex++, totalModelIndex++)
 		{
-			m_ModelInfoList[totalModelIndex].modelType = static_cast<ModelType>(i_modelTypeIndex);
+			auto& currentModel = m_ModelInfoList[totalModelIndex];
+			currentModel.modelType = static_cast<ModelType>(i_modelTypeIndex);
 
 			// Generate a random color for the model.
 			red = (float)rand() / RAND_MAX;
 			green = (float)rand() / RAND_MAX;
 			blue = (float)rand() / RAND_MAX;
 
-			m_ModelInfoList[totalModelIndex].color = XMFLOAT4(red, green, blue, 1.0f);
+			currentModel.color = XMFLOAT4(red, green, blue, 1.0f);
 
 			// Generate a random position in front of the viewer for the mode.
-			m_ModelInfoList[totalModelIndex].posA.x = (float)rand() / RAND_MAX * 100.f;
-			m_ModelInfoList[totalModelIndex].posA.y = (float)rand() / RAND_MAX * 100.f;
-			m_ModelInfoList[totalModelIndex].posA.z = (float)rand() / RAND_MAX * 100.f;
+			currentModel.posA.x = (float)rand() / RAND_MAX * 100.f;
+			currentModel.posA.y = (float)rand() / RAND_MAX * 100.f;
+			currentModel.posA.z = (float)rand() / RAND_MAX * 100.f;
 
-			m_ModelInfoList[totalModelIndex].posB.x = (float)rand() / RAND_MAX * 100.f;
-			m_ModelInfoList[totalModelIndex].posB.y = (float)rand() / RAND_MAX * 100.f;
-			m_ModelInfoList[totalModelIndex].posB.z = (float)rand() / RAND_MAX * 100.f;
+			currentModel.posB.x = (float)rand() / RAND_MAX * 100.f;
+			currentModel.posB.y = (float)rand() / RAND_MAX * 100.f;
+			currentModel.posB.z = (float)rand() / RAND_MAX * 100.f;
 
-			m_ModelInfoList[totalModelIndex].ratio = .5f;
-			m_ModelInfoList[totalModelIndex].movingBackward = false;
+			currentModel.ratio = .5f;
+			currentModel.movingBackward = false;
+
+			currentModel.rotationY = 0.f;
 		}
 	}
 
@@ -89,7 +92,7 @@ void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, 
 
 	const float speed = 1.f;
 
-	//TODO(Gerald) get fps
+	//TODO(Gerald) get actual frame time
 	float secondsPerFrame = 1.f / 60.f;
 	model.ratio += speed * secondsPerFrame * (model.movingBackward ? -1.f : 1.f);
 	if (model.ratio > 1.f || model.ratio < 0.f) {
@@ -97,15 +100,17 @@ void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, 
 	}
 	model.ratio = clamp(model.ratio, 0.f, 1.f);
 
-	positionX = lerp(model.posA.x, model.posB.x, model.ratio);
-	positionY = lerp(model.posA.y, model.posB.y, model.ratio);
-	positionZ = lerp(model.posA.z, model.posB.z, model.ratio);
+	positionX = lerp(model.posA.x, model.posB.x, .5f);
+	positionY = lerp(model.posA.y, model.posB.y, .5f);
+	positionZ = lerp(model.posA.z, model.posB.z, .5f);
 
 	color = m_ModelInfoList[index].color;
 
 	modelType = m_ModelInfoList[index].modelType;
-
-	rotationY = model.ratio * 360.f * 0.0174532925f;
+		
+	model.rotationY += 360.f * secondsPerFrame;
+	if (model.rotationY > 360.f) model.rotationY -= 360.f;
+	rotationY = model.rotationY;
 
 	return;
 }

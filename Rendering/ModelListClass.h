@@ -26,6 +26,7 @@ private:
 		ModelType modelType;
 		float ratio;
 		bool movingBackward;
+		float rotationY;
 	};
 
 public:

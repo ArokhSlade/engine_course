@@ -365,6 +365,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	{
 		// Get the position and color of the sphere model at this index.
 		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, color);
+		rotationY *= 0.0174532925f;
 
 		switch (modelType) {
 			break; case ModelType::SPHERE:
