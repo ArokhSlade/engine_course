@@ -390,6 +390,11 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 				m_Model->Render(Direct3D->GetDeviceContext());				
 				m_sphereCount++;
 				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				if (m_displayAABBs)
+				{
+					m_SphereAABB->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
 			break; case ModelType::CUBE:
 				m_CubeModel->Render(Direct3D->GetDeviceContext());
 				m_cubeCount++;
@@ -402,11 +407,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 						
 
-			if (m_displayAABBs)
-			{
-				m_SphereAABB->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-			}
+			
 		}
 
 
