@@ -183,6 +183,7 @@
     <ClInclude Include="CameraClass.h" />
     <ClInclude Include="ColorShaderClass.h" />
     <ClInclude Include="CubeModel.h" />
+    <ClInclude Include="CustomConstants.h" />
     <ClInclude Include="CustomEnum.h" />
     <ClInclude Include="CustomStruct.h" />
     <ClInclude Include="CylinderModel.h" />
