@@ -6,6 +6,9 @@ enum class PrimitiveType {
 	SPHERE,
 	CUBE,
 	PYRAMID,
+	CYLINDER,
+	HOUSE,
+	DIAMOND,
 	ENUM_SIZE
 };
 
