@@ -156,6 +156,7 @@
     <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="CylinderModel.cpp" />
     <ClCompile Include="D3DClass.cpp" />
+    <ClCompile Include="DiamondModel.cpp" />
     <ClCompile Include="FontClass.cpp" />
     <ClCompile Include="FontShaderClass.cpp" />
     <ClCompile Include="FpsClass.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="CustomStruct.h" />
     <ClInclude Include="CylinderModel.h" />
     <ClInclude Include="D3DClass.h" />
+    <ClInclude Include="DiamondModel.h" />
     <ClInclude Include="FontClass.h" />
     <ClInclude Include="FontShaderClass.h" />
     <ClInclude Include="FpsClass.h" />
