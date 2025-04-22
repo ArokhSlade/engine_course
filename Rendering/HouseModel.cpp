@@ -279,7 +279,7 @@ bool HouseModel::Initialize(ID3D11Device* device)
 		indices[index] = index;
 		index++;
 
-		vertices[index].position = XMFLOAT3(-1, 11, -1);
+		vertices[index].position = XMFLOAT3(-1, 1, -1);
 		vertices[index].color = COLOR_RED;
 		indices[index] = index;
 		index++;

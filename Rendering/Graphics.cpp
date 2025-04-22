@@ -543,7 +543,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					m_HouseAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_HouseAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
-			break; case PrimitiveType::DIAMOND:
+			break; case PrimitiveType::DIAMOND:break;
 				//m_DiamondModel->Render(Direct3D->GetDeviceContext());
 				m_diamondCount++;
 				//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_DiamondModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
