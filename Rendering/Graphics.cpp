@@ -200,12 +200,12 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	const int sphereCount = 250;
-	const int cubeCount = 250;
-	const int pyramidCount = 250;
-	const int cylinderCount = 250;
-	const int houseCount = 250;
-	const int diamondCount = 250;
+	const int sphereCount = 50;
+	const int cubeCount = 50;
+	const int pyramidCount = 50;
+	const int cylinderCount = 50;
+	const int houseCount = 50;
+	const int diamondCount = 50;
 	// Initialize the model list object.
 	result = m_ModelList->Initialize(sphereCount, cubeCount, pyramidCount, cylinderCount, houseCount, diamondCount);
 	if (!result)
@@ -543,7 +543,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					m_HouseAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_HouseAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
-			break; case PrimitiveType::DIAMOND:break;
+			break; case PrimitiveType::DIAMOND:
 				m_DiamondModel->Render(Direct3D->GetDeviceContext());
 				m_diamondCount++;
 				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_DiamondModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
