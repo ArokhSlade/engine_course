@@ -156,6 +156,43 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 	result = m_CylinderAABB->Initialize(Direct3D->GetDevice(), m_CylinderModel->GetVertexList(), m_CylinderModel->GetVertexCount());
 
+	m_HouseModel = new HouseModel;
+	if (!m_HouseModel) {
+		return false;
+	}
+	result = m_HouseModel->Initialize(Direct3D->GetDevice());
+	if (!result) {
+		MessageBox(hwnd, L"Could not initialize HouseModel object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_HouseAABB = new AxisAlignedBoundingBox;
+	if (!m_HouseAABB)
+	{
+		return false;
+	}
+	result = m_HouseAABB->Initialize(Direct3D->GetDevice(), m_HouseModel->GetVertexList(), m_HouseModel->GetVertexCount());
+
+
+	//m_DiamondModel = new DiamondModel;
+	//if (!m_DiamondModel) {
+	//	return false;
+	//}
+	//result = m_DiamondModel->Initialize(Direct3D->GetDevice());
+	//if (!result) {
+	//	MessageBox(hwnd, L"Could not initialize DiamondModel object.", L"Error", MB_OK);
+	//	return false;
+	//}
+
+	m_DiamondAABB = new AxisAlignedBoundingBox;
+	if (!m_DiamondAABB)
+	{
+		return false;
+	}
+	//result = m_DiamondAABB->Initialize(Direct3D->GetDevice(), m_DiamondModel->GetVertexList(), m_DiamondModel->GetVertexCount());
+
+
+
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
 	if (!m_ModelList)

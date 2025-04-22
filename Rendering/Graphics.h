@@ -17,6 +17,8 @@
 #include "AxisAlignedBoundingBox.h"
 #include "SkyDome.h"
 #include "CylinderModel.h"
+#include "HouseModel.h"
+//#include "DiamondModel.h"
 
 class Graphics
 {
@@ -45,8 +47,11 @@ private:
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
 	CylinderModel* m_CylinderModel;
+	HouseModel* m_HouseModel;
+	//DiamondModel* m_DiamondModel;
 
-	AxisAlignedBoundingBox* m_SphereAABB, *m_CubeAABB, *m_PyramidAABB, *m_CylinderAABB;
+	AxisAlignedBoundingBox* m_SphereAABB, *m_CubeAABB, *m_PyramidAABB, *m_CylinderAABB,
+		* m_HouseAABB, * m_DiamondAABB;
 	bool m_displayAABBs;
 
 	int m_renderCount, m_sphereCount, m_cubeCount, m_pyramidCount, m_cylinderCount, m_houseCount, m_diamondCount;
