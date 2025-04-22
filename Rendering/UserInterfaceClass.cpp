@@ -271,7 +271,7 @@ void UserInterfaceClass::Shutdown()
 	return;
 }
 
-bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int pyramidCount, int cubeCount, int sphereCount, int renderCount, int fps, float posX, float posY, float posZ, 
+bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int m_diamondCount, int m_houseCount, int m_cylinderCount, int pyramidCount, int cubeCount, int sphereCount, int renderCount, int fps, float posX, float posY, float posZ,
 							   float rotX, float rotY, float rotZ)
 {
 	bool result;

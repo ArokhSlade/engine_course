@@ -299,7 +299,7 @@ bool Graphics::Frame(D3DClass* Direct3D, InputClass* Input, ShaderManagerClass* 
 
 
 	// Do the frame processing for the user interface.
-	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_pyramidCount, m_cubeCount, m_sphereCount, m_renderCount, fps, posX, posY, posZ, rotX, rotY, rotZ);
+	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_diamondCount, m_houseCount, m_cylinderCount, m_pyramidCount, m_cubeCount, m_sphereCount, m_renderCount, fps, posX, posY, posZ, rotX, rotY, rotZ);
 	if(!result)
 	{
 		return false;

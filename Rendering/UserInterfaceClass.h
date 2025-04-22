@@ -12,7 +12,7 @@ public:
 	bool Initialize(D3DClass*, int, int);
 	void Shutdown();
 
-	bool Frame(ID3D11DeviceContext*, int, int, int, int, int, float, float, float, float, float, float);
+	bool Frame(ID3D11DeviceContext*, int, int, int, int, int, int, int, int, float, float, float, float, float, float);
 	bool Render(D3DClass*, ShaderManagerClass*, XMMATRIX, XMMATRIX, XMMATRIX);
 
 private:
