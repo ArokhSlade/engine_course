@@ -86,6 +86,42 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
+
+	m_CylinderCountString = new TextClass;
+	if (!m_CylinderCountString) {
+		return false;
+	}
+
+	result = m_CylinderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Cylinder Count: 999", 10, 130, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	m_HouseCountString = new TextClass;
+	if (!m_HouseCountString) {
+		return false;
+	}
+	result = m_HouseCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"House Count: 999", 10, 150, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	m_DiamondCountString = new TextClass;
+	if (!m_DiamondCountString) {
+		return false;
+	}
+	result = m_DiamondCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Diamond Count: 999", 10, 170, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+
 	// Create the text object for the fps string.
 	m_FpsString = new TextClass;
 	if (!m_FpsString)
@@ -252,6 +288,27 @@ void UserInterfaceClass::Shutdown()
 		m_PyramidCountString = 0;
 	}
 
+	if (m_CylinderCountString)
+	{
+		m_CylinderCountString->Shutdown();
+		delete[] m_CylinderCountString;
+		m_CylinderCountString = 0;
+	}
+
+	if (m_HouseCountString)
+	{
+		m_HouseCountString->Shutdown();
+		delete[] m_HouseCountString;
+		m_HouseCountString = 0;
+	}
+
+	if (m_DiamondCountString)
+	{
+		m_DiamondCountString->Shutdown();
+		delete[] m_DiamondCountString;
+		m_DiamondCountString = 0;
+	}
+
 	// Release the fps text string.
 	if(m_FpsString)
 	{
@@ -300,6 +357,24 @@ bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int m_diamond
 		return false;
 	}
 
+	result = UpdateCylinderCountString(deviceContext, pyramidCount);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateHouseCountString(deviceContext, pyramidCount);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateDiamondCountString(deviceContext, pyramidCount);
+	if (!result)
+	{
+		return false;
+	}
+
 	// Update the fps string.
 	result = UpdateFpsString(deviceContext, 300, fps);
 	if(!result)
@@ -331,6 +406,9 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 	m_SphereCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 	m_CubeCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 	m_PyramidCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_CylinderCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_HouseCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_DiamondCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 
 	// Render the fps string.
 	m_FpsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
@@ -423,6 +501,63 @@ bool UserInterfaceClass::UpdatePyramidCountString(ID3D11DeviceContext* deviceCon
 	strcat_s(finalString, tempString);
 
 	result = m_PyramidCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 110, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateCylinderCountString(ID3D11DeviceContext* deviceContext, int cylinderCount)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	_itoa_s(cylinderCount, tempString, 10);
+	strcpy_s(finalString, "Cylinder Count: ");
+	strcat_s(finalString, tempString);
+
+	result = m_PyramidCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 130, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateHouseCountString(ID3D11DeviceContext* deviceContext, int houseCount)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	_itoa_s(houseCount, tempString, 10);
+	strcpy_s(finalString, "House Count: ");
+	strcat_s(finalString, tempString);
+
+	result = m_PyramidCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 150, 1.f, 1.f, 1.f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateDiamondCountString(ID3D11DeviceContext* deviceContext, int diamondCount)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	_itoa_s(diamondCount, tempString, 10);
+	strcpy_s(finalString, "Diamond Count: ");
+	strcat_s(finalString, tempString);
+
+	result = m_PyramidCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 170, 1.f, 1.f, 1.f);
 	if (!result)
 	{
 		return false;
