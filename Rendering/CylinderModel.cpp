@@ -148,8 +148,8 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 	}
 
 	{
-		phi = 0.f;
-		nextPhi = phi + angle_segment;
+		phi = XM_2PI;
+		nextPhi = phi - angle_segment;
 
 		//TODO(Gerald):last vertex separately
 		for (int i = 0; i < circleVertexCount; ++i)
@@ -193,7 +193,7 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 
 
 			phi = nextPhi;
-			nextPhi += angle_segment;
+			nextPhi -= angle_segment;
 		}
 	}
 
