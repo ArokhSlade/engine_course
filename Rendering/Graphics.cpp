@@ -443,8 +443,6 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		switch (modelType) {
 			break; case PrimitiveType::SPHERE:
 				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case PrimitiveType::CYLINDER:
-				isInsideFrustum = true;
 			break; default:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		}
@@ -499,7 +497,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					m_CylinderAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CylinderAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
-			}			
+			}
 		}
 
 
