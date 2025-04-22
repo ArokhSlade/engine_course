@@ -10,7 +10,6 @@ using namespace std;
 
 class SkyDome
 {
-
 public:
 	SkyDome();
 	~SkyDome();

@@ -8,6 +8,11 @@ struct VectorType
 	float x, y, z;
 };
 
+struct VertexPositionType //DirectX expects values to be wrapped in a struct
+{
+	XMFLOAT3 position;
+};
+
 struct ColorVertexType
 {
 	XMFLOAT3 position;

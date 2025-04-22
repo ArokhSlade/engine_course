@@ -47,7 +47,6 @@ private:
 	bool m_displayAABBs;
 
 	int m_renderCount, m_sphereCount, m_cubeCount, m_pyramidCount;
-
 };
 
 #endif
