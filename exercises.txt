@@ -25,3 +25,7 @@ gerenderten pyramides (Grundfläche der Pyramide is quadratisch!)
 2. Rendere die AABB für alle anderen Objekte (außer Terrain!)
 3. Ermögliche es mittels der F2 Taste sämtliche AABBs an und auszuschalten (wird gerendert / wird
 nicht gerendert)
+
+Bonus: Aktuell sind unsere Objekte statisch an der gegebenen Position gebunden. Das soll sich nun ändern.
+Bewegt die Objekte zwischen zwei Punkten (oder Zufällig) hin und her. 
+Lasst die Objekte sich um ihre eigene Achse rotieren.
