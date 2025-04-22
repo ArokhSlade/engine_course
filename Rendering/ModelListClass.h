@@ -4,8 +4,10 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include "CustomStruct.h"
 #include <directxmath.h>
+#include "CustomEnum.h"
+#include "CustomStruct.h"
+
 using namespace DirectX;
 
 class ModelListClass
