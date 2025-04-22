@@ -19,14 +19,15 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 	HRESULT result;
 
-
 	int index, vertexCount, indexCount;
 	
-	vertexCount = 18;
+	const int circleVertexCount = 32;
+
+	
+	vertexCount = 32*2 + 32*2; //32 triangles top & bottom + 32 quads
 	m_vertexCount = vertexCount;
 	indexCount = vertexCount;
 	m_indexCount = indexCount;
-
 
 	// Create the vertex array.
 	vertices = new ColorVertexType[m_vertexCount];
@@ -63,9 +64,6 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 
 	// Give the subresource structure a pointer to the index data.
 	indexData.pSysMem = indices;
-
-
-
 
 	// FUN STARTS HERE :)
 
