@@ -48,6 +48,11 @@ XMFLOAT4 SkyDome::GetApexColor()
 	return m_apexColor;
 }
 
+XMFLOAT4 SkyDome::GetCenterColor()
+{
+	return m_centerColor;
+}
+
 bool SkyDome::InitializeBuffers(ID3D11Device* device)
 {
 	VertexPositionType* vertices;

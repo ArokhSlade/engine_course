@@ -25,3 +25,17 @@ struct ModelType
 	float tu, tv;
 	float nx, ny, nz;
 };
+
+struct MatrixBufferType
+{
+	XMMATRIX world;
+	XMMATRIX view;
+	XMMATRIX projection;
+};
+
+// data format for skydome (and spheres maybe) colors
+struct ColorBufferType
+{
+	XMFLOAT4 apexColor;
+	XMFLOAT4 centerColor;
+};

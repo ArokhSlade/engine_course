@@ -19,6 +19,7 @@ public:
 		
 	int GetIndexCount();
 	XMFLOAT4 GetApexColor();
+	XMFLOAT4 GetCenterColor();
 
 private:
 	bool InitializeBuffers(ID3D11Device* device);
