@@ -6,6 +6,7 @@
 
 class CylinderModel
 {
+public:
 	CylinderModel();
 	~CylinderModel();
 

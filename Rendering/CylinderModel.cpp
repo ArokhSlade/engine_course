@@ -24,7 +24,7 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 	const int circleVertexCount = 32;
 
 	
-	vertexCount = 32*2 + 32*2; //32 triangles top & bottom + 32 quads
+	vertexCount = 3 * (circleVertexCount *2 + circleVertexCount *2); //32 triangles top & bottom + 32 quads
 	m_vertexCount = vertexCount;
 	indexCount = vertexCount;
 	m_indexCount = indexCount;

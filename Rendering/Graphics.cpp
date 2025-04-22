@@ -9,8 +9,8 @@ Graphics::Graphics()
 	m_Model = 0;
 	m_ModelList = 0;
 	m_Frustum = 0;
-	m_renderCount = m_sphereCount = m_cubeCount = 0;
-
+	m_renderCount = m_sphereCount = m_cubeCount = m_pyramidCount = 
+		m_cylinderCount = m_houseCount = m_diamondCount = 0;
 	m_SphereAABB = m_CubeAABB = m_PyramidAABB = 0;
 
 	m_skyDome = 0;
@@ -138,6 +138,24 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 	result = m_PyramidAABB->Initialize(Direct3D->GetDevice(), m_PyramidModel->GetVertexList(), m_PyramidModel->GetVertexCount());
 
+
+	m_CylinderModel = new CylinderModel;
+	if (!m_CylinderModel) {
+		return false;
+	}
+	result = m_CylinderModel->Initialize(Direct3D->GetDevice());
+	if (!result) {
+		MessageBox(hwnd, L"Could not initialize CylinderModel object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_CylinderAABB = new AxisAlignedBoundingBox;
+	if (!m_CylinderAABB)
+	{
+		return false;
+	}
+	result = m_CylinderAABB->Initialize(Direct3D->GetDevice(), m_CylinderModel->GetVertexList(), m_CylinderModel->GetVertexCount());
+
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
 	if (!m_ModelList)
@@ -223,6 +241,13 @@ void Graphics::Shutdown()
 		m_PyramidModel->Shutdown();
 		delete m_PyramidModel;
 		m_PyramidModel = 0;
+	}
+
+	if (m_CylinderModel)
+	{
+		m_CylinderModel->Shutdown();
+		delete m_CylinderModel;
+		m_CylinderModel = 0;
 	}
 
 	if (m_ModelList)
@@ -404,7 +429,8 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	// Get the number of models that will be rendered.
 	modelCount = m_ModelList->GetModelCount();
 
-	m_renderCount = m_sphereCount = m_cubeCount = m_pyramidCount = 0;
+	m_renderCount = m_sphereCount = m_cubeCount = m_pyramidCount =
+		m_cylinderCount = m_houseCount = m_diamondCount = 0;
 
 	bool isInsideFrustum;
 	// Go through all the models and render them only if they can be seen by the camera view.
@@ -417,9 +443,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		switch (modelType) {
 			break; case PrimitiveType::SPHERE:
 				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case PrimitiveType::CUBE:
-				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case PrimitiveType::PYRAMID:
+			break; default:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		}
 
@@ -463,6 +487,15 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 				{
 					m_PyramidAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
+			break; case PrimitiveType::CYLINDER:
+				m_PyramidModel->Render(Direct3D->GetDeviceContext());
+				m_pyramidCount++;
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CylinderModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				if (m_displayAABBs)
+				{
+					m_PyramidAABB->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CylinderAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 			}			
 		}
