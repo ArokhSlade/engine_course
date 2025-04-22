@@ -98,7 +98,7 @@ int ModelListClass::GetModelCount()
 }
 
 
-void ModelListClass::GetData(int index, PrimitiveType& modelType, float& positionX, float& positionY, float& positionZ, float& rotationY, XMFLOAT4& color)
+void ModelListClass::GetData(int index, PrimitiveType& modelType, float& positionX, float& positionY, float& positionZ, float& rotationY, float& scale, XMFLOAT4& color)
 {
 	auto& model = m_ModelInfoList[index];
 

@@ -414,7 +414,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, baseViewMatrix, orthoMatrix;
 	bool result;
 	int modelCount, index;
-	float positionX, positionY, positionZ, rotationY, radius;
+	float positionX, positionY, positionZ, rotationY, radius, scale;
 	XMFLOAT4 color;
 	PrimitiveType modelType;
 	
@@ -474,7 +474,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	for (index = 0; index < modelCount; index++)
 	{
 		// Get the position and color of the sphere model at this index.
-		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, color);
+		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, scale, color);
 		rotationY *= 0.0174532925f;
 
 		switch (modelType) {
@@ -491,7 +491,10 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			radius = 1.0f;
 
 			// Move the model to the location it should be rendered at.
+
 			worldMatrix = XMMatrixRotationY(rotationY);
+			XMMATRIX scaleMatrix = XMMatrixScaling(scale, scale, scale);
+			worldMatrix = XMMatrixMultiply(worldMatrix, scaleMatrix);
 			XMMATRIX translationMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 			worldMatrix = XMMatrixMultiply(worldMatrix, translationMatrix);
 		

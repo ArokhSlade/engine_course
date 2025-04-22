@@ -32,7 +32,7 @@ public:
 	void Shutdown();
 
 	int GetModelCount();
-	void GetData(int, PrimitiveType&, float&, float&, float&, float&, XMFLOAT4&);
+	void GetData(int, PrimitiveType&, float&, float&, float&, float&, float&, XMFLOAT4&);
 
 private:
 	int m_modelCount;
