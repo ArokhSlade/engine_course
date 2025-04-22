@@ -80,16 +80,16 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 	const float angle_segment = XM_2PI / circleVertexCount;
 	// Bottom
 	{
-		phi = XM_2PI;
-		nextPhi = phi - angle_segment;
+		phi = 0.f;
+		nextPhi = phi + angle_segment;
 
 		//TODO(Gerald):last vertex separately
 		for ( int i =  0; i < circleVertexCount; ++i) 
 		{
 			float x = cos(phi);
 			float z = sin(phi);
-			float nextX = cos(phi);
-			float nextZ = sin(phi);
+			float nextX = cos(nextPhi);
+			float nextZ = sin(nextPhi);
 
 			
 			vertices[index].position = XMFLOAT3(0, -1, 0);
@@ -106,25 +106,9 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 			vertices[index].color = COLOR_YELLOW;
 			indices[index] = index;
 			index++;
-			
-
-			//vertices[index].position = XMFLOAT3(-1, -1, 1);
-			//vertices[index].color = COLOR_YELLOW;
-			//indices[index] = index;
-			//index++;
-
-			//vertices[index].position = XMFLOAT3(-1, -1, -1); 
-			//vertices[index].color = COLOR_YELLOW;
-			//indices[index] = index;
-			//index++;
-
-			//vertices[index].position = XMFLOAT3(1, -1, -1);
-			//vertices[index].color = COLOR_YELLOW;
-			//indices[index] = index;
-			//index++;
 
 			phi = nextPhi;
-			nextPhi -= angle_segment; //alternatively, swap order of vertices and do minus
+			nextPhi += angle_segment; //alternatively, swap order of vertices and do minus
 		}
 	}
 
@@ -132,16 +116,16 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 
 	// Top
 	{
-		phi = 0.f;
-		nextPhi = phi + angle_segment;
+		phi = XM_2PI;
+		nextPhi = phi - angle_segment;
 
 		//TODO(Gerald):last vertex separately
 		for (int i = 0; i < circleVertexCount; ++i)
 		{
 			float x = cos(phi);
 			float z = sin(phi);
-			float nextX = cos(phi);
-			float nextZ = sin(phi);
+			float nextX = cos(nextPhi);
+			float nextZ = sin(nextPhi);
 
 			vertices[index].position = XMFLOAT3(0, 1.f, 0);
 			vertices[index].color = COLOR_YELLOW;
@@ -159,7 +143,7 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 			index++;
 
 			phi = nextPhi;
-			nextPhi += angle_segment; 
+			nextPhi -= angle_segment; 
 		}
 	}
 
@@ -172,8 +156,8 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 		{
 			float x = cos(phi);
 			float z = sin(phi);
-			float nextX = cos(phi);
-			float nextZ = sin(phi);
+			float nextX = cos(nextPhi);
+			float nextZ = sin(nextPhi);
 
 			//top triangle
 			vertices[index].position = XMFLOAT3(x, 1.f, z);
@@ -193,17 +177,17 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 
 			//bottom triangle
 			vertices[index].position = XMFLOAT3(x, 1.f, z);
-			vertices[index].color = COLOR_RED;
+			vertices[index].color = COLOR_GREEN;
 			indices[index] = index;
 			index++;
 
 			vertices[index].position = XMFLOAT3(x, -1.f, z);
-			vertices[index].color = COLOR_RED;
+			vertices[index].color = COLOR_GREEN;
 			indices[index] = index;
 			index++;
 
 			vertices[index].position = XMFLOAT3(nextX, -1.f, nextZ);
-			vertices[index].color = COLOR_RED;
+			vertices[index].color = COLOR_GREEN;
 			indices[index] = index;
 			index++;
 
