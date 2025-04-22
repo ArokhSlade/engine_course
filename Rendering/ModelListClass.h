@@ -8,14 +8,6 @@
 #include <directxmath.h>
 using namespace DirectX;
 
-enum class PrimitiveType {
-	INVALID = -1,
-	SPHERE,
-	CUBE,
-	PYRAMID,
-	ENUM_SIZE
-};
-
 class ModelListClass
 {
 private:
