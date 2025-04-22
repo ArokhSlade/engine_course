@@ -371,6 +371,10 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 	//skydome start
 
+	//trick direct3d into drawing our skydome sphere from inside
+	Direct3D->TurnOffCulling();
+	Direct3D->TurnZBufferOff();
+
 	XMFLOAT3 cameraPosition = m_Camera->GetPosition();
 	worldMatrix = XMMatrixTranslation(cameraPosition.x, cameraPosition.y, cameraPosition.z);
 
@@ -380,6 +384,9 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 	Direct3D->GetWorldMatrix(worldMatrix);
 
+
+	Direct3D->TurnOnCulling();
+	Direct3D->TurnZBufferOn();
 	//skydome end
 
 	// Render the terrain grid using the color shader.
