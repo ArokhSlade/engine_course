@@ -17,7 +17,7 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids, i
 
 
 	// Store the number of models.
-	m_modelCount = numSpheres + numCubes + numPyramids;
+	m_modelCount = numSpheres + numCubes + numPyramids + cylinderCount + houseCount + diamondCount;
 
 	// Create a list array of the model information.
 	m_ModelInfoList = new ModelInfoType[m_modelCount];
@@ -30,13 +30,17 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids, i
 	srand((unsigned int)time(NULL));
 
 	const int modelTypeCount = static_cast<int>(PrimitiveType::ENUM_SIZE);
-	int modelCounts[modelTypeCount] = { numSpheres, numCubes, numPyramids };
+	int modelCounts[modelTypeCount] = { numSpheres, numCubes, numPyramids, cylinderCount, houseCount, diamondCount};
 	// Go through all the models and randomly generate the model color and position.
 	int totalModelIndex = 0;
 	for (int i_modelTypeIndex = 0 ; i_modelTypeIndex < modelTypeCount ; i_modelTypeIndex++)
 	{
 		for (int j_modelIndex = 0 ; j_modelIndex < modelCounts[i_modelTypeIndex]; j_modelIndex++, totalModelIndex++)
 		{
+			if (totalModelIndex > m_modelCount) {
+				return false;
+			}
+
 			auto& currentModel = m_ModelInfoList[totalModelIndex];
 			currentModel.modelType = static_cast<PrimitiveType>(i_modelTypeIndex);
 

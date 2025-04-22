@@ -91,6 +91,7 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 			float nextX = cos(phi);
 			float nextZ = sin(phi);
 
+			
 			vertices[index].position = XMFLOAT3(0, -1, 0);
 			vertices[index].color = COLOR_YELLOW;
 			indices[index] = index;
@@ -105,6 +106,22 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 			vertices[index].color = COLOR_YELLOW;
 			indices[index] = index;
 			index++;
+			
+
+			//vertices[index].position = XMFLOAT3(-1, -1, 1);
+			//vertices[index].color = COLOR_YELLOW;
+			//indices[index] = index;
+			//index++;
+
+			//vertices[index].position = XMFLOAT3(-1, -1, -1); 
+			//vertices[index].color = COLOR_YELLOW;
+			//indices[index] = index;
+			//index++;
+
+			//vertices[index].position = XMFLOAT3(1, -1, -1);
+			//vertices[index].color = COLOR_YELLOW;
+			//indices[index] = index;
+			//index++;
 
 			phi = nextPhi;
 			nextPhi -= angle_segment; //alternatively, swap order of vertices and do minus

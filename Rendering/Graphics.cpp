@@ -443,6 +443,8 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		switch (modelType) {
 			break; case PrimitiveType::SPHERE:
 				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
+			break; case PrimitiveType::CYLINDER:
+				isInsideFrustum = true;
 			break; default:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		}
@@ -489,12 +491,12 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 			break; case PrimitiveType::CYLINDER:
-				m_PyramidModel->Render(Direct3D->GetDeviceContext());
-				m_pyramidCount++;
+				m_CylinderModel->Render(Direct3D->GetDeviceContext());
+				m_cylinderCount++;
 				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CylinderModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				if (m_displayAABBs)
 				{
-					m_PyramidAABB->Render(Direct3D->GetDeviceContext());
+					m_CylinderAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CylinderAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 			}			
