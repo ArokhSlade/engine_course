@@ -370,9 +370,16 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 
 	//skydome start
+
+	XMFLOAT3 cameraPosition = m_Camera->GetPosition();
+	worldMatrix = XMMatrixTranslation(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+
 	m_skyDome->Render(Direct3D->GetDeviceContext());
 	result = ShaderManager->RenderSkyDomeShader(Direct3D->GetDeviceContext(), m_Terrain->GetIndexCount(), worldMatrix, viewMatrix,
 		projectionMatrix, m_skyDome->GetApexColor(), m_skyDome->GetCenterColor());
+
+	Direct3D->GetWorldMatrix(worldMatrix);
+
 	//skydome end
 
 	// Render the terrain grid using the color shader.
