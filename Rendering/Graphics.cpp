@@ -534,6 +534,24 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					m_CylinderAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CylinderAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
+			break; case PrimitiveType::HOUSE:
+				m_HouseModel->Render(Direct3D->GetDeviceContext());
+				m_houseCount++;
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_HouseModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				if (m_displayAABBs)
+				{
+					m_HouseAABB->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_HouseAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
+			break; case PrimitiveType::DIAMOND:
+				//m_DiamondModel->Render(Direct3D->GetDeviceContext());
+				m_diamondCount++;
+				//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_DiamondModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				if (m_displayAABBs)
+				{
+					m_DiamondAABB->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_DiamondAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
 			}
 		}
 
