@@ -31,14 +31,18 @@ Bewegt die Objekte zwischen zwei Punkten (oder Zufällig) hin und her.
 Lasst die Objekte sich um ihre eigene Achse rotieren.
 
 Neue Primitives
-Allgemein: Alle folgenden neuen Objekte müssen gerendert werden. Erweitere die Modellist so, das die
+0 Allgemein: Alle folgenden neuen Objekte müssen gerendert werden. Erweitere die Modellist so, das die
 Initialize als Argumente die Anzahl jedes Typen bekommt. ---> Beispiel: m_ModelList->Initialize(1000,
 2000, 3000, 5, 40, 70);
-Erstelle mittels code einen Zylinder. Dabei soll die Höhe und der Radius gegeben sein um diese zu
+
+1 Erstelle mittels code einen Zylinder. Dabei soll die Höhe und der Radius gegeben sein um diese zu
 erstellen.
-Erstelle mittels code ein Haus. Dieses Haus besteht aus Quadrat und Pyramide
+
+2 Erstelle mittels code ein Haus. Dieses Haus besteht aus Quadrat und Pyramide
 (zusammengesteckt) aber ohne die Flächen, welche beim zusammenstecken verschwinden. 
-Erstelle Eine "Pyramide", welche nach oben und unten hin eine Spitze besitzt. Quasi gespiegelt / ein
+
+3 Erstelle Eine "Pyramide", welche nach oben und unten hin eine Spitze besitzt. Quasi gespiegelt / ein
 "Diamant".
-Die Cubes sollen nun unterschiedlich groß sein. Nehme hierzu für jeden Cube einen zufälligen
+
+4 Die Cubes sollen nun unterschiedlich groß sein. Nehme hierzu für jeden Cube einen zufälligen
 Wert zwischen 0.5f und 5.0f sodass viele unterschiedliche Größen entstehen.

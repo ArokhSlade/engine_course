@@ -493,10 +493,14 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			// Move the model to the location it should be rendered at.
 
 			worldMatrix = XMMatrixRotationY(rotationY);
+			
 			XMMATRIX scaleMatrix = XMMatrixScaling(scale, scale, scale);
-			worldMatrix = XMMatrixMultiply(worldMatrix, scaleMatrix);
+			if (scale != 1.0)
+				XMMATRIX scaleMatrix = XMMatrixScaling(scale, scale, scale);
 			XMMATRIX translationMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+
 			worldMatrix = XMMatrixMultiply(worldMatrix, translationMatrix);
+			worldMatrix = XMMatrixMultiply(worldMatrix, scaleMatrix);
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 			switch (modelType) {
