@@ -14,6 +14,7 @@ bool SkyDome::Initialize(ID3D11Device* device)
 	{
 		return false;
 	}
+
 	result = InitializeBuffers(device);
 	if (!result)
 	{

@@ -12,7 +12,6 @@ class SkyDome
 {
 public:
 	SkyDome();
-	~SkyDome();
 
 	bool Initialize(ID3D11Device* device);
 	void Shutdown();

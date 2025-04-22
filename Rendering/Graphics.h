@@ -15,6 +15,7 @@
 #include "CubeModel.h"
 #include "PyramidModel.h"
 #include "AxisAlignedBoundingBox.h"
+#include "SkyDome.h"
 
 class Graphics
 {
@@ -47,6 +48,8 @@ private:
 	bool m_displayAABBs;
 
 	int m_renderCount, m_sphereCount, m_cubeCount, m_pyramidCount;
+
+	SkyDome* m_skyDome;
 };
 
 #endif

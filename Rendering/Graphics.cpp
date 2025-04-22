@@ -12,6 +12,8 @@ Graphics::Graphics()
 	m_renderCount = m_sphereCount = m_cubeCount = 0;
 
 	m_SphereAABB = m_CubeAABB = m_PyramidAABB = 0;
+
+	m_skyDome = 0;
 }
 
 Graphics::~Graphics()
@@ -161,6 +163,19 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 	m_Frustum->Initialize(screenDepth);
 
+	m_skyDome = new SkyDome;
+	if (!m_skyDome)
+	{
+		return false;
+	}
+
+	result = m_skyDome->Initialize(Direct3D->GetDevice());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the sky dome.", L"Error", MB_OK);
+		return false;
+	}
+
 	// Set the UI to display by default.
 	m_displayUI = true;
 
@@ -169,6 +184,14 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 void Graphics::Shutdown()
 {
+	// Release the SkyDome object.
+	if (m_skyDome)
+	{
+		m_skyDome->Shutdown();
+		delete m_skyDome;
+		m_skyDome = 0;
+	}
+
 	// Release the terrain object.
 	if(m_Terrain)
 	{
