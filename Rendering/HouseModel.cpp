@@ -234,6 +234,79 @@ bool HouseModel::Initialize(ID3D11Device* device)
 		indices[index] = index;
 		index++;
 	}
+
+	//PARMID
+	// Front
+	{
+		vertices[index].position = XMFLOAT3(0, 2, 0);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(1, 1, -1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(-1, 1, -1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+	}
+
+	// Back
+	{
+		vertices[index].position = XMFLOAT3(0, 2, 0);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(-1, 1, 1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(1, 1, 1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+	}
+
+	// Left
+	{
+		vertices[index].position = XMFLOAT3(0, 2, 0);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(-1, 11, -1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(-1, 1, 1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+	}
+
+	// Right
+	{
+		vertices[index].position = XMFLOAT3(0, 2, 0);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(1, 1, 1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+
+		vertices[index].position = XMFLOAT3(1, 1, -1);
+		vertices[index].color = COLOR_RED;
+		indices[index] = index;
+		index++;
+	}
 	
 
 	// FUN ENDS HERE :(
