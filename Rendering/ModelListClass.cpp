@@ -108,6 +108,8 @@ void ModelListClass::GetData(int index, PrimitiveType& modelType, float& positio
 	positionY = lerp(model.posA.y, model.posB.y, model.ratio);
 	positionZ = lerp(model.posA.z, model.posB.z, model.ratio);
 
+	
+
 	color = m_ModelInfoList[index].color;
 
 	modelType = m_ModelInfoList[index].modelType;
@@ -115,6 +117,13 @@ void ModelListClass::GetData(int index, PrimitiveType& modelType, float& positio
 	model.rotationY += 360.f * secondsPerFrame;
 	if (model.rotationY > 360.f) model.rotationY -= 360.f;
 	rotationY = model.rotationY;
+
+
+	//TODO(Gerald): this is only for debugging
+	positionX = model.posA.x;
+	positionY = model.posA.y;
+	positionZ = model.posA.z;
+	rotationY = 0.f;
 
 	return;
 }
