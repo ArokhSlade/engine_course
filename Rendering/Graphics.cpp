@@ -148,8 +148,11 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	const int sphereCount = 250;
 	const int cubeCount = 250;
 	const int pyramidCount = 250;
+	const int cylinderCount = 250;
+	const int houseCount = 250;
+	const int diamondCount = 250;
 	// Initialize the model list object.
-	result = m_ModelList->Initialize(sphereCount, cubeCount, pyramidCount);
+	result = m_ModelList->Initialize(sphereCount, cubeCount, pyramidCount, cylinderCount, houseCount, diamondCount);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);

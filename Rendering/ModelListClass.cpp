@@ -11,7 +11,7 @@ ModelListClass::~ModelListClass()
 {
 }
 
-bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
+bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids, int cylinderCount, int houseCount, int diamondCount)
 {
 	float red, green, blue;
 

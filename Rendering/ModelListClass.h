@@ -33,7 +33,7 @@ public:
 	ModelListClass();
 	~ModelListClass();
 
-	bool Initialize(int,int,int);
+	bool Initialize(int,int,int, int, int, int);
 	void Shutdown();
 
 	int GetModelCount();
