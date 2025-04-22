@@ -18,7 +18,7 @@
 #include "SkyDome.h"
 #include "CylinderModel.h"
 #include "HouseModel.h"
-//#include "DiamondModel.h"
+#include "DiamondModel.h"
 
 class Graphics
 {
@@ -48,7 +48,7 @@ private:
 	PyramidModel* m_PyramidModel;
 	CylinderModel* m_CylinderModel;
 	HouseModel* m_HouseModel;
-	//DiamondModel* m_DiamondModel;
+	DiamondModel* m_DiamondModel;
 
 	AxisAlignedBoundingBox* m_SphereAABB, *m_CubeAABB, *m_PyramidAABB, *m_CylinderAABB,
 		* m_HouseAABB, * m_DiamondAABB;

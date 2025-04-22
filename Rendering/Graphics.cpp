@@ -174,22 +174,22 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	result = m_HouseAABB->Initialize(Direct3D->GetDevice(), m_HouseModel->GetVertexList(), m_HouseModel->GetVertexCount());
 
 
-	//m_DiamondModel = new DiamondModel;
-	//if (!m_DiamondModel) {
-	//	return false;
-	//}
-	//result = m_DiamondModel->Initialize(Direct3D->GetDevice());
-	//if (!result) {
-	//	MessageBox(hwnd, L"Could not initialize DiamondModel object.", L"Error", MB_OK);
-	//	return false;
-	//}
+	m_DiamondModel = new DiamondModel;
+	if (!m_DiamondModel) {
+		return false;
+	}
+	result = m_DiamondModel->Initialize(Direct3D->GetDevice());
+	if (!result) {
+		MessageBox(hwnd, L"Could not initialize DiamondModel object.", L"Error", MB_OK);
+		return false;
+	}
 
 	m_DiamondAABB = new AxisAlignedBoundingBox;
 	if (!m_DiamondAABB)
 	{
 		return false;
 	}
-	//result = m_DiamondAABB->Initialize(Direct3D->GetDevice(), m_DiamondModel->GetVertexList(), m_DiamondModel->GetVertexCount());
+	result = m_DiamondAABB->Initialize(Direct3D->GetDevice(), m_DiamondModel->GetVertexList(), m_DiamondModel->GetVertexCount());
 
 
 
@@ -544,9 +544,9 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_HouseAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 			break; case PrimitiveType::DIAMOND:break;
-				//m_DiamondModel->Render(Direct3D->GetDeviceContext());
+				m_DiamondModel->Render(Direct3D->GetDeviceContext());
 				m_diamondCount++;
-				//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_DiamondModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_DiamondModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				if (m_displayAABBs)
 				{
 					m_DiamondAABB->Render(Direct3D->GetDeviceContext());
