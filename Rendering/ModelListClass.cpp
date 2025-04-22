@@ -64,6 +64,14 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids, i
 			currentModel.movingBackward = false;
 
 			currentModel.rotationY = 0.f;
+
+			currentModel.scale = 1.0;
+
+			if (currentModel.modelType == PrimitiveType::CUBE)
+			{
+				currentModel.scale = (float)rand() / RAND_MAX;
+			}
+			
 		}
 	}
 

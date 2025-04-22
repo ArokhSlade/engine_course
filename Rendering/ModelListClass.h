@@ -21,6 +21,7 @@ private:
 		float ratio;
 		bool movingBackward;
 		float rotationY;
+		float scale;
 	};
 
 public:
