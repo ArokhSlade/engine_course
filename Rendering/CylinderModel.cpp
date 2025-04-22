@@ -69,114 +69,132 @@ bool CylinderModel::Initialize(ID3D11Device* device)
 
 	index = 0;
 
+	float phi = 0.f;
+	float nextPhi = 0.f;
+
+	float x;
+	float y;
+	float nextX;
+	float nextZ;
+
+	const float angle_segment = XM_2PI / circleVertexCount;
 	// Bottom
 	{
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+		phi = XM_2PI;
+		nextPhi = phi - angle_segment;
 
-		vertices[index].position = XMFLOAT3(-1, -1, -1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+		//TODO(Gerald):last vertex separately
+		for ( int i =  0; i < circleVertexCount; ++i) 
+		{
+			float x = cos(phi);
+			float z = sin(phi);
+			float nextX = cos(phi);
+			float nextZ = sin(phi);
 
-		vertices[index].position = XMFLOAT3(1, -1, -1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+			vertices[index].position = XMFLOAT3(0, -1, 0);
+			vertices[index].color = COLOR_YELLOW;
+			indices[index] = index;
+			index++;
 
-		vertices[index].position = XMFLOAT3(1, -1, -1);
-		vertices[index].color = COLOR_BLUE;
-		indices[index] = index;
-		index++;
+			vertices[index].position = XMFLOAT3(x, -1, z);
+			vertices[index].color = COLOR_YELLOW;
+			indices[index] = index;
+			index++;
 
-		vertices[index].position = XMFLOAT3(1, -1, 1);
-		vertices[index].color = COLOR_BLUE;
-		indices[index] = index;
-		index++;
+			vertices[index].position = XMFLOAT3(nextX, -1, nextZ);
+			vertices[index].color = COLOR_YELLOW;
+			indices[index] = index;
+			index++;
 
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
-		vertices[index].color = COLOR_BLUE;
-		indices[index] = index;
-		index++;
+			phi = nextPhi;
+			nextPhi -= angle_segment; //alternatively, swap order of vertices and do minus
+		}
 	}
 
 
 
-	// Front
+	// Top
 	{
-		vertices[index].position = XMFLOAT3(0, 1, 0);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+		phi = 0.f;
+		nextPhi = phi + angle_segment;
 
-		vertices[index].position = XMFLOAT3(1, -1, -1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+		//TODO(Gerald):last vertex separately
+		for (int i = 0; i < circleVertexCount; ++i)
+		{
+			float x = cos(phi);
+			float z = sin(phi);
+			float nextX = cos(phi);
+			float nextZ = sin(phi);
 
-		vertices[index].position = XMFLOAT3(-1, -1, -1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+			vertices[index].position = XMFLOAT3(0, 1.f, 0);
+			vertices[index].color = COLOR_YELLOW;
+			indices[index] = index;
+			index++;
+
+			vertices[index].position = XMFLOAT3(x, 1.f, z);
+			vertices[index].color = COLOR_YELLOW;
+			indices[index] = index;
+			index++;
+
+			vertices[index].position = XMFLOAT3(nextX, 1.f, nextZ);
+			vertices[index].color = COLOR_YELLOW;
+			indices[index] = index;
+			index++;
+
+			phi = nextPhi;
+			nextPhi += angle_segment; 
+		}
 	}
 
-	// Back
 	{
-		vertices[index].position = XMFLOAT3(0, 1, 0);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+		phi = 0.f;
+		nextPhi = phi + angle_segment;
 
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+		//TODO(Gerald):last vertex separately
+		for (int i = 0; i < circleVertexCount; ++i)
+		{
+			float x = cos(phi);
+			float z = sin(phi);
+			float nextX = cos(phi);
+			float nextZ = sin(phi);
 
-		vertices[index].position = XMFLOAT3(1, -1, 1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
+			//top triangle
+			vertices[index].position = XMFLOAT3(x, 1.f, z);
+			vertices[index].color = COLOR_RED;
+			indices[index] = index;
+			index++;
+
+			vertices[index].position = XMFLOAT3(nextX, -1.f, nextZ);
+			vertices[index].color = COLOR_RED;
+			indices[index] = index;
+			index++;
+
+			vertices[index].position = XMFLOAT3(nextX, 1.f, nextZ);
+			vertices[index].color = COLOR_RED;
+			indices[index] = index;
+			index++;
+
+			//bottom triangle
+			vertices[index].position = XMFLOAT3(x, 1.f, z);
+			vertices[index].color = COLOR_RED;
+			indices[index] = index;
+			index++;
+
+			vertices[index].position = XMFLOAT3(x, -1.f, z);
+			vertices[index].color = COLOR_RED;
+			indices[index] = index;
+			index++;
+
+			vertices[index].position = XMFLOAT3(nextX, -1.f, nextZ);
+			vertices[index].color = COLOR_RED;
+			indices[index] = index;
+			index++;
+
+
+			phi = nextPhi;
+			nextPhi += angle_segment;
+		}
 	}
-
-	// Left
-	{
-		vertices[index].position = XMFLOAT3(0, 1, 0);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(-1, -1, -1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(-1, -1, 1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
-	}
-
-	// Right
-	{
-		vertices[index].position = XMFLOAT3(0, 1, 0);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(1, -1, 1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
-
-		vertices[index].position = XMFLOAT3(1, -1, -1);
-		vertices[index].color = COLOR_RED;
-		indices[index] = index;
-		index++;
-	}
-
-
 
 	// FUN ENDS HERE :(
 
