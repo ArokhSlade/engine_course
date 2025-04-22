@@ -328,7 +328,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	int modelCount, index;
 	float positionX, positionY, positionZ, rotationY, radius;
 	XMFLOAT4 color;
-	ModelType modelType;
+	PrimitiveType modelType;
 	
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
@@ -368,11 +368,11 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		rotationY *= 0.0174532925f;
 
 		switch (modelType) {
-			break; case ModelType::SPHERE:
+			break; case PrimitiveType::SPHERE:
 				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case ModelType::CUBE:
+			break; case PrimitiveType::CUBE:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
-			break; case ModelType::PYRAMID:
+			break; case PrimitiveType::PYRAMID:
 				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
 		}
 
@@ -389,7 +389,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 			switch (modelType) {
-			break; case ModelType::SPHERE:
+			break; case PrimitiveType::SPHERE:
 				m_Model->Render(Direct3D->GetDeviceContext());				
 				m_sphereCount++;
 				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
@@ -398,7 +398,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					m_SphereAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
-			break; case ModelType::CUBE:
+			break; case PrimitiveType::CUBE:
 				//m_CubeModel->Rotate(rotationY);
 				m_CubeModel->Render(Direct3D->GetDeviceContext());
 				m_cubeCount++;
@@ -408,7 +408,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 					m_CubeAABB->Render(Direct3D->GetDeviceContext());
 					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeAABB->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
-			break; case ModelType::PYRAMID:
+			break; case PrimitiveType::PYRAMID:
 				m_PyramidModel->Render(Direct3D->GetDeviceContext());
 				m_pyramidCount++;
 				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);

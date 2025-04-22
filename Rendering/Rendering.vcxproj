@@ -166,6 +166,7 @@
     <ClCompile Include="PositionClass.cpp" />
     <ClCompile Include="PyramidModel.cpp" />
     <ClCompile Include="ShaderManagerClass.cpp" />
+    <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="SystemClass.cpp" />
     <ClCompile Include="TerrainClass.cpp" />
     <ClCompile Include="TextClass.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="PositionClass.h" />
     <ClInclude Include="PyramidModel.h" />
     <ClInclude Include="ShaderManagerClass.h" />
+    <ClInclude Include="SkyDome.h" />
     <ClInclude Include="SystemClass.h" />
     <ClInclude Include="TerrainClass.h" />
     <ClInclude Include="TextClass.h" />

@@ -29,7 +29,7 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 	// Seed the random generator with the current time.
 	srand((unsigned int)time(NULL));
 
-	const int modelTypeCount = static_cast<int>(ModelType::ENUM_SIZE);
+	const int modelTypeCount = static_cast<int>(PrimitiveType::ENUM_SIZE);
 	int modelCounts[modelTypeCount] = { numSpheres, numCubes, numPyramids };
 	// Go through all the models and randomly generate the model color and position.
 	int totalModelIndex = 0;
@@ -38,7 +38,7 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids)
 		for (int j_modelIndex = 0 ; j_modelIndex < modelCounts[i_modelTypeIndex]; j_modelIndex++, totalModelIndex++)
 		{
 			auto& currentModel = m_ModelInfoList[totalModelIndex];
-			currentModel.modelType = static_cast<ModelType>(i_modelTypeIndex);
+			currentModel.modelType = static_cast<PrimitiveType>(i_modelTypeIndex);
 
 			// Generate a random color for the model.
 			red = (float)rand() / RAND_MAX;
@@ -86,7 +86,7 @@ int ModelListClass::GetModelCount()
 }
 
 
-void ModelListClass::GetData(int index, ModelType& modelType, float& positionX, float& positionY, float& positionZ, float& rotationY, XMFLOAT4& color)
+void ModelListClass::GetData(int index, PrimitiveType& modelType, float& positionX, float& positionY, float& positionZ, float& rotationY, XMFLOAT4& color)
 {
 	auto& model = m_ModelInfoList[index];
 

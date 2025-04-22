@@ -8,7 +8,7 @@
 #include <directxmath.h>
 using namespace DirectX;
 
-enum class ModelType {
+enum class PrimitiveType {
 	INVALID = -1,
 	SPHERE,
 	CUBE,
@@ -23,7 +23,7 @@ private:
 	{
 		XMFLOAT4 color;
 		VectorType posA, posB;
-		ModelType modelType;
+		PrimitiveType modelType;
 		float ratio;
 		bool movingBackward;
 		float rotationY;
@@ -37,7 +37,7 @@ public:
 	void Shutdown();
 
 	int GetModelCount();
-	void GetData(int, ModelType&, float&, float&, float&, float&, XMFLOAT4&);
+	void GetData(int, PrimitiveType&, float&, float&, float&, float&, XMFLOAT4&);
 
 private:
 	int m_modelCount;
