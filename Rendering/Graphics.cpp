@@ -477,7 +477,24 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, scale, color);
 		rotationY *= 0.0174532925f;
 
-		//scale = 5.f;
+		// Move the model to the location it should be rendered at.
+		XMMATRIX translationMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+
+		XMMATRIX scaleMatrix = XMMatrixScaling(scale, scale, scale);
+
+		rotationY = XM_PI * .25f;
+		XMMATRIX rotationMatrix = XMMatrixRotationY(rotationY);
+
+		worldMatrix = rotationMatrix;
+
+		worldMatrix = XMMatrixMultiply(worldMatrix, scaleMatrix);
+
+		worldMatrix = XMMatrixMultiply(worldMatrix, translationMatrix);
+
+		XMFLOAT3 myFloat3{ 1.f,0.f,1.f };
+		XMVECTOR myVector = XMLoadFloat3(&myFloat3);
+
+		myVector = XMVector3Transform(myVector, rotationMatrix);
 
 		switch (modelType) {
 			break; case PrimitiveType::SPHERE:
@@ -488,20 +505,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 		if (isInsideFrustum) {
 			m_renderCount++;
-
-			// Set the radius of the sphere to 1.0 since this is already known.
-			radius = 1.0f;
-
-			// Move the model to the location it should be rendered at.
-			XMMATRIX translationMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
-
-			XMMATRIX scaleMatrix = XMMatrixScaling(scale, scale, scale);
-
-			worldMatrix = XMMatrixRotationY(rotationY);
-
-			worldMatrix = XMMatrixMultiply(worldMatrix, scaleMatrix);
-
-			worldMatrix = XMMatrixMultiply(worldMatrix, translationMatrix);
+			
 		
 			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 			switch (modelType) {
