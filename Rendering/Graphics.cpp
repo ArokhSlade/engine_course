@@ -477,11 +477,13 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, scale, color);
 		rotationY *= 0.0174532925f;
 
+		scale = 5.f;
+
 		switch (modelType) {
 			break; case PrimitiveType::SPHERE:
-				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f);
+				isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, 1.0f*scale);
 			break; default:
-				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f);
+				isInsideFrustum = m_Frustum->IsCubeInsideFrustum(positionX, positionY, positionZ, 1.0f*scale);
 		}
 
 		if (isInsideFrustum) {
@@ -493,7 +495,6 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 			// Move the model to the location it should be rendered at.
 			XMMATRIX translationMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
-			scale = 5.f;
 			XMMATRIX scaleMatrix = XMMatrixScaling(scale, scale, scale);
 
 			worldMatrix = XMMatrixRotationY(rotationY);
