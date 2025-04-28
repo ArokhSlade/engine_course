@@ -477,7 +477,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		m_ModelList->GetData(index, modelType, positionX, positionY, positionZ, rotationY, scale, color);
 		rotationY *= 0.0174532925f;
 
-		scale = 5.f;
+		//scale = 5.f;
 
 		switch (modelType) {
 			break; case PrimitiveType::SPHERE:

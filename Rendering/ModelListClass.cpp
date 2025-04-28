@@ -69,6 +69,7 @@ bool ModelListClass::Initialize(int numSpheres, int numCubes, int numPyramids, i
 			float scale = (float)rand() / RAND_MAX;
 			if (currentModel.modelType == PrimitiveType::CUBE)
 			{
+				scale = lerp(.5f, 5.f, scale);
 				currentModel.scale = scale;
 			}
 			
