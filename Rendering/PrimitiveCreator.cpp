@@ -33,7 +33,10 @@ void PrimitiveCreator::Shutdown()
 	ShutdownAndDelete(m_CubeModel);
 }
 
-bool PrimitiveCreator::Render()
+bool PrimitiveCreator::Render(ID3D11DeviceContext* deviceContext, ShaderManagerClass* ShaderManager, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix)
 {
+	m_CubeModel->Render(deviceContext);
+	ShaderManager->RenderColorShader(deviceContext, m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+
 	return true;
 }

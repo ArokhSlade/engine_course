@@ -1,4 +1,5 @@
 #pragma once
+#include "ShaderManagerClass.h"
 
 #include "ModelListClass.h"
 
@@ -13,7 +14,7 @@ public :
 	~PrimitiveCreator();
 	bool Initialize(HWND hwnd, ID3D11Device* device);
 	void Shutdown();
-	bool Render();
+	bool Render(ID3D11DeviceContext* deviceContext, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX);
 private:
 	ModelListClass* m_ModelList;
 

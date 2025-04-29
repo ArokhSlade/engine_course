@@ -389,6 +389,8 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	XMFLOAT4 color;
 	PrimitiveType primitiveType;
 
+	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
+
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 
@@ -485,9 +487,10 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 				// Move the model to the location it should be rendered at.
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
+				m_PrimitiveCreator->Render(deviceContext, ShaderManager, worldMatrix, viewMatrix, projectionMatrix);
 				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-				m_CubeModel->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				//m_CubeModel->Render(Direct3D->GetDeviceContext());
+				//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 
 				if (m_displayAABBs)
 				{
