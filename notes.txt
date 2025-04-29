@@ -1,0 +1,21 @@
+TODO:
+- isInsideFrustum() for other classes
+- "templates" for similar ui-code for new classes
+- clarify ModelClass -> m_SphereModel 
+- consolidate CubeModel,PyramidModel etc... (replac copy-pasta with common base)
+
+- write a shader to transform vertices in array 
+ -> use it two compute a true aabb
+ -> use it for proper culling of transformed (rotated) objects 
+
+NOTES:
+-XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
+
+EXAM PRESET:
+- uses IsSphereInsideFrustum() for all types
+
+- #include <d3dx10math.h> 
+ - in LightClass.h
+ - not found 
+ - doesn't exist in current windows sdk
+ -> vs: exclude from project
