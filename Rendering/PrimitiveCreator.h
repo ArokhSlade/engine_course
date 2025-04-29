@@ -1,4 +1,5 @@
 #pragma once
+#include "D3DClass.h"
 #include "ShaderManagerClass.h"
 
 #include "Frustum.h"
@@ -12,9 +13,9 @@ class PrimitiveCreator
 public :
 	PrimitiveCreator();
 	~PrimitiveCreator();
-	bool Initialize(HWND hwnd, ID3D11Device* device);
+	bool Initialize(HWND hwnd, ID3D11Device* device, ModelListClass* modelList);
 	void Shutdown();
-	bool Render(ID3D11DeviceContext* deviceContext, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX);
+	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX, bool displayAABBs);
 private:
 	Frustum* m_Frustum;
 
