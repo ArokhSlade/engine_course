@@ -41,8 +41,9 @@ private:
 	bool m_displayUI;
 	bool m_displayAABBs;
 
-	ModelClass* m_SphereModel;
 	ModelListClass* m_ModelList;
+
+	ModelClass* m_SphereModel;
 	Frustum* m_Frustum;
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
