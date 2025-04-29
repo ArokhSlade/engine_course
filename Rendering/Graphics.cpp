@@ -82,7 +82,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	result = ConstructAndInitialize(m_PrimitiveCreator);
+	result = ConstructAndInitialize(hwnd, m_PrimitiveCreator);
 
 	// Create the model object.
 	m_SphereModel = new ModelClass;
