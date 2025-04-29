@@ -3,15 +3,15 @@
 
 #include <d3d11.h> //HWND
 
-template <typename TPtr, typename... TArgs>
-bool ConstructAndInitialize(HWND hwnd, TPtr*& tObjPtr, TArgs&&... args)
+template <typename T, typename... TArgs>
+bool ConstructAndInitialize(HWND hwnd, T*& tObjPtr, TArgs&&... args)
 {	
-	tObjPtr = new TPtr;
+	tObjPtr = new T;
 	if (!tObjPtr)
 	{
 		return false;
 	}
-	// Initialize the TPtr object.
+	// Initialize the T object.
 	bool result = tObjPtr->Initialize(std::forward<TArgs>(args)...);
 	if (!result)
 	{
@@ -19,6 +19,15 @@ bool ConstructAndInitialize(HWND hwnd, TPtr*& tObjPtr, TArgs&&... args)
 		return false;
 	}
 	return result;
+}
+template <typename T>
+void ShutdownAndDelete(T* tObj) {
+	if (tObj)
+	{
+		tObj->Shutdown();
+		delete tObj;
+		tObj = 0;
+	}
 }
 
 #endif // !__CUSTOM_TEMPLATES_H__

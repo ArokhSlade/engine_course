@@ -3,6 +3,7 @@ TODO:
 - "templates" for similar ui-code for new classes
 - clarify ModelClass -> m_SphereModel 
 - consolidate CubeModel,PyramidModel etc... (replac copy-pasta with common base)
+- split the window message off ConstructAndInitialize
 
 - write a shader to transform vertices in array 
  -> use it two compute a true aabb
@@ -19,3 +20,4 @@ EXAM PRESET:
  - not found 
  - doesn't exist in current windows sdk
  -> vs: exclude from project
+ 

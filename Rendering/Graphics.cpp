@@ -266,6 +266,8 @@ void Graphics::Shutdown()
 		m_ModelList = 0;
 	}
 
+	ShutdownAndDelete(m_PrimitiveCreator);
+
 	// Release the position object.
 	if(m_Position)
 	{

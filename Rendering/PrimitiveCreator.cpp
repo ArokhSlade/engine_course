@@ -15,6 +15,7 @@ PrimitiveCreator::PrimitiveCreator()
 
 PrimitiveCreator::~PrimitiveCreator()
 {
+
 }
 
 bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device)
@@ -29,6 +30,7 @@ bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device)
 
 void PrimitiveCreator::Shutdown()
 {
+	ShutdownAndDelete(m_CubeModel);
 }
 
 bool PrimitiveCreator::Render()
