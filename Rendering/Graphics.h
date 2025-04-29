@@ -37,17 +37,17 @@ private:
 	CameraClass* m_Camera;
 	PositionClass* m_Position;
 	TerrainClass* m_Terrain;
-	ModelClass* m_Model;
-	ModelListClass* m_ModelList;
 	
 	bool m_displayUI;
 	bool m_displayAABBs;
 
+	ModelClass* m_SphereModel;
+	ModelListClass* m_ModelList;
 	Frustum* m_Frustum;
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
 
-	AxisAlignedBoundingBox* m_aabb;
+	AxisAlignedBoundingBox* m_aabbSphere;
 	AxisAlignedBoundingBox* m_aabbCube;
 	AxisAlignedBoundingBox* m_aabbPyramid;
 

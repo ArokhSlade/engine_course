@@ -6,14 +6,14 @@ Graphics::Graphics()
 	m_Camera = 0;
 	m_Position = 0;
 	m_Terrain = 0;
-	m_Model = 0;
+	m_SphereModel = 0;
 	m_ModelList = 0;
 
 	m_Frustum = 0; // todo nullptr
 	m_CubeModel = 0;
 	m_PyramidModel = 0;
 
-	m_aabb = 0;
+	m_aabbSphere = 0;
 	m_aabbCube = 0;
 	m_aabbPyramid = 0;
 
@@ -82,27 +82,27 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	// Create the model object.
-	m_Model = new ModelClass;
-	if (!m_Model)
+	m_SphereModel = new ModelClass;
+	if (!m_SphereModel)
 	{
 		return false;
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), "../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt");
+	result = m_SphereModel->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), "../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the Model object.", L"Error", MB_OK);
 		return false;
 	}
 
-	m_aabb = new AxisAlignedBoundingBox;
-	if (!m_aabb)
+	m_aabbSphere = new AxisAlignedBoundingBox;
+	if (!m_aabbSphere)
 	{
 		return false;
 	}
 
-	result = m_aabb->Initialize(Direct3D->GetDevice(), m_Model->GetVertexList(), m_Model->GetVertexCount());
+	result = m_aabbSphere->Initialize(Direct3D->GetDevice(), m_SphereModel->GetVertexList(), m_SphereModel->GetVertexCount());
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the Model AABB object.", L"Error", MB_OK);
@@ -232,18 +232,18 @@ void Graphics::Shutdown()
 	}
 
 	// Release the terrain object.
-	if (m_Model)
+	if (m_SphereModel)
 	{
-		m_Model->Shutdown();
-		delete m_Model;
-		m_Model = 0;
+		m_SphereModel->Shutdown();
+		delete m_SphereModel;
+		m_SphereModel = 0;
 	}
 
-	if (m_aabb)
+	if (m_aabbSphere)
 	{
-		m_aabb->Shutdown();
-		delete m_aabb;
-		m_aabb = 0;
+		m_aabbSphere->Shutdown();
+		delete m_aabbSphere;
+		m_aabbSphere = 0;
 	}
 
 	// Release the cube model object.
@@ -481,13 +481,13 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
 				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-				m_Model->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				m_SphereModel->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 
 				if (m_displayAABBs)
 				{
-					m_aabb->Render(Direct3D->GetDeviceContext());
-					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabb->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+					m_aabbSphere->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbSphere->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 				}
 				
 				m_renderCountSpheres++;

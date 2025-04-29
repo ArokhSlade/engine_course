@@ -78,22 +78,25 @@
     <ClCompile Include="Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AxisAlignedBoundingBox.cpp">
+    <ClCompile Include="Frustum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CubeModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Frustum.cpp">
+    <ClCompile Include="PyramidModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PyramidModel.cpp">
+    <ClCompile Include="AxisAlignedBoundingBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SkyDome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SkyDomeShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimitiveCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,28 +158,31 @@
     <ClInclude Include="Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AxisAlignedBoundingBox.h">
+    <ClInclude Include="Frustum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CubeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CustomEnums.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CustomStructs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Frustum.h">
+    <ClInclude Include="CustomEnums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PyramidModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AxisAlignedBoundingBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SkyDome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SkyDomeShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
