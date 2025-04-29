@@ -13,12 +13,10 @@ class PrimitiveCreator
 public :
 	PrimitiveCreator();
 	~PrimitiveCreator();
-	bool Initialize(HWND hwnd, ID3D11Device* device, ModelListClass* modelList);
+	bool Initialize(HWND hwnd, ID3D11Device* device, int modelCount);
 	void Shutdown();
-	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX, bool displayAABBs);
+	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX, Frustum* frustum, bool displayAABBs);
 private:
-	Frustum* m_Frustum;
-
 	ModelListClass* m_ModelList;
 
 	ModelClass* m_SphereModel;

@@ -1,12 +1,18 @@
 TODO:
-- delete placeholder hack constructor
+- construct model list inside primitive creator?
+- pass frustum or create locally?
 - figure out where and how to track render counts.
  - dataflow back from primitive creator to graphics?
 - isInsideFrustum() for other classes
 - "templates" for similar ui-code for new classes
+- where to put desiredModelCount(s)?
 - clarify ModelClass -> m_SphereModel 
-- consolidate CubeModel,PyramidModel etc... (replac copy-pasta with common base)
-- split the window message off ConstructAndInitialize
+- consolidate CubeModel,PyramidModel etc... (replace copy-pasta with common base)
+
+- break up ConstructAndInitialize template
+ - split the window message off 
+ - lambda to combine repetitve code blocks
+  - communicates: local refinement for readability
 
 - write a shader to transform vertices in array 
  -> use it two compute a true aabb

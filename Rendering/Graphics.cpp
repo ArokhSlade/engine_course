@@ -9,7 +9,6 @@ Graphics::Graphics()
 	m_Terrain = 0;
 
 	m_PrimitiveCreator = 0;
-	m_ModelList = 0;
 	m_SphereModel = 0;
 	m_Frustum = 0; // todo nullptr
 	m_CubeModel = 0;
@@ -144,24 +143,9 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	// Create the model list object.
-	m_ModelList = new ModelListClass;
-	if (!m_ModelList)
-	{
-		return false;
-	}
-
-	// Initialize the model list object.
-	result = m_ModelList->Initialize(750);
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
-		return false;
-	}
-
-
 	ID3D11Device* device = Direct3D->GetDevice();
-	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator, hwnd, device, m_ModelList))
+	const int desiredModelCount = 750;
+	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator, hwnd, device, desiredModelCount))
 	{
 		return false;
 	}
@@ -261,13 +245,6 @@ void Graphics::Shutdown()
 		m_aabbPyramid->Shutdown();
 		delete m_aabbPyramid;
 		m_aabbPyramid = 0;
-	}
-
-	if (m_ModelList)
-	{
-		m_ModelList->Shutdown();
-		delete m_ModelList;
-		m_ModelList = 0;
 	}
 
 	ShutdownAndDelete(m_PrimitiveCreator);
@@ -444,16 +421,13 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		return false;
 	}
 
-	// Get the number of models that will be rendered.
-	modelCount = m_ModelList->GetModelCount();
+	// Get the number of models that will be rendered.	
 
 	m_renderCountSpheres = 0;
 	m_renderCountCubes = 0;
 	m_renderCountPyramids = 0;
 
-	bool isInsideFrustum;
-
-	m_PrimitiveCreator->Render(Direct3D, ShaderManager, worldMatrix, viewMatrix, projectionMatrix, m_displayAABBs);
+	m_PrimitiveCreator->Render(Direct3D, ShaderManager, worldMatrix, viewMatrix, projectionMatrix, m_Frustum, m_displayAABBs);
 	// Go through all the models and render them only if they can be seen by the camera view.
 	//for (index = 0; index<modelCount; index++)
 	//{

@@ -7,8 +7,7 @@
 
 
 PrimitiveCreator::PrimitiveCreator()
-	:m_Frustum{nullptr}
-	,m_ModelList{nullptr}
+	:m_ModelList{nullptr}
 	,m_CubeModel{nullptr}
 	,m_PyramidModel{nullptr}
 	,m_SphereModel{nullptr}
@@ -21,12 +20,19 @@ PrimitiveCreator::~PrimitiveCreator()
 
 }
 
-bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device, ModelListClass* modelList)
+bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device, int modelCount)
 {
 	bool result = true;
-	m_ModelList = modelList;
+
+	if (!ConstructAndInitialize(hwnd, m_ModelList, modelCount))
+	{
+		return false;
+	}
+
 	if (!ConstructAndInitialize(hwnd, m_CubeModel, device))
-	{ return false; }
+	{ 
+		return false; 
+	}
 
 	return true;
 }
@@ -34,9 +40,10 @@ bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device, ModelListClas
 void PrimitiveCreator::Shutdown()
 {
 	ShutdownAndDelete(m_CubeModel);
+	ShutdownAndDelete(m_ModelList);
 }
 
-bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, bool displayAABBs)
+bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, Frustum* frustum, bool displayAABBs)
 {
 	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
 	// Get the number of models that will be rendered.
@@ -85,8 +92,8 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 			//}
 			break;
 		case Cube:
-			//isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
-			//if (isInsideFrustum)
+			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
 			{
 				// Move the model to the location it should be rendered at.
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);

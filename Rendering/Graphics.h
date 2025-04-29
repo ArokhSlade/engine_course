@@ -49,8 +49,6 @@ private:
 	PrimitiveCreator* m_PrimitiveCreator;
 	Frustum* m_Frustum;
 
-	ModelListClass* m_ModelList;
-
 	ModelClass* m_SphereModel;
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
