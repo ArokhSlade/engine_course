@@ -9,13 +9,18 @@
 #include "CameraClass.h"
 #include "PositionClass.h"
 #include "TerrainClass.h"
-#include "ModelClass.h"
-#include "ModelListClass.h"
 
 #include "Frustum.h"
+#include "PrimitiveCreator.h"
+
+#include "ModelListClass.h"
+
+#include "ModelClass.h"
 #include "CubeModel.h"
 #include "PyramidModel.h"
+
 #include "AxisAlignedBoundingBox.h"
+
 #include "SkyDome.h"
 
 class Graphics
@@ -40,6 +45,8 @@ private:
 	
 	bool m_displayUI;
 	bool m_displayAABBs;
+
+	PrimitiveCreator m_PrimitiveCreator;
 
 	ModelListClass* m_ModelList;
 
