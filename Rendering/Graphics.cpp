@@ -67,54 +67,15 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	m_Position->SetPosition(0.0f, 0.0f, -10.0f);
 	m_Position->SetRotation(0.0f, 0.0f, 0.0f);
 
-	// Create the terrain object.
-	m_Terrain = new TerrainClass;
-	if(!m_Terrain)
-	{
-		return false;
-	}
-
-
-	//// Initialize the terrain object.
-	//result = m_Terrain->Initialize(Direct3D->GetDevice());
-	//if(!result)
-	//{
-	//	MessageBox(hwnd, L"Could not initialize the terrain object.", L"Error", MB_OK);
-	//	return false;
-	//}
-
 	if (!ConstructAndInitialize(hwnd, m_Terrain, Direct3D->GetDevice()))
-	{
-		return false;
-	}
-
-
+	{ return false; }
 
 	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator))
-	{
-		return false;
-	}
+	{ return false; }
 
-
-	if (!ConstructAndInitialize(hwnd, m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(), "../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
-	{
-		return false;
-	}
-
-	//// Create the model object.
-	//m_SphereModel = new ModelClass;
-	//if (!m_SphereModel)
-	//{
-	//	return false;
-	//}
-
-	//// Initialize the model object.
-	//result = m_SphereModel->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), "../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt");
-	//if (!result)
-	//{
-	//	MessageBox(hwnd, L"Could not initialize the Model object.", L"Error", MB_OK);
-	//	return false;
-	//}
+	if (!ConstructAndInitialize(hwnd, m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(), 
+								"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
+	{ return false; }
 
 	m_aabbSphere = new AxisAlignedBoundingBox;
 	if (!m_aabbSphere)
