@@ -12,6 +12,12 @@
 #include "ModelClass.h"
 #include "ModelListClass.h"
 
+#include "Frustum.h"
+#include "CubeModel.h"
+#include "PyramidModel.h"
+#include "AxisAlignedBoundingBox.h"
+#include "SkyDome.h"
+
 class Graphics
 {
 public:
@@ -33,7 +39,23 @@ private:
 	TerrainClass* m_Terrain;
 	ModelClass* m_Model;
 	ModelListClass* m_ModelList;
+	
 	bool m_displayUI;
+	bool m_displayAABBs;
+
+	Frustum* m_Frustum;
+	CubeModel* m_CubeModel;
+	PyramidModel* m_PyramidModel;
+
+	AxisAlignedBoundingBox* m_aabb;
+	AxisAlignedBoundingBox* m_aabbCube;
+	AxisAlignedBoundingBox* m_aabbPyramid;
+
+	int m_renderCountSpheres;
+	int m_renderCountCubes;
+	int m_renderCountPyramids;
+
+	SkyDome* m_skyDome;
 };
 
 #endif

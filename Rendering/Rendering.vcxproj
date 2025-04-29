@@ -150,18 +150,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ApplicationClass.cpp" />
+    <ClCompile Include="AxisAlignedBoundingBox.cpp" />
     <ClCompile Include="CameraClass.cpp" />
     <ClCompile Include="ColorShaderClass.cpp" />
+    <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="D3DClass.cpp" />
     <ClCompile Include="FontClass.cpp" />
     <ClCompile Include="FontShaderClass.cpp" />
     <ClCompile Include="FpsClass.cpp" />
+    <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="InputClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelClass.cpp" />
     <ClCompile Include="ModelListClass.cpp" />
     <ClCompile Include="PositionClass.cpp" />
+    <ClCompile Include="PyramidModel.cpp" />
     <ClCompile Include="ShaderManagerClass.cpp" />
+    <ClCompile Include="SkyDome.cpp" />
+    <ClCompile Include="SkyDomeShader.cpp" />
     <ClCompile Include="SystemClass.cpp" />
     <ClCompile Include="TerrainClass.cpp" />
     <ClCompile Include="TextClass.cpp" />
@@ -172,17 +178,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationClass.h" />
+    <ClInclude Include="AxisAlignedBoundingBox.h" />
     <ClInclude Include="CameraClass.h" />
     <ClInclude Include="ColorShaderClass.h" />
+    <ClInclude Include="CubeModel.h" />
+    <ClInclude Include="CustomEnums.h" />
+    <ClInclude Include="CustomStructs.h" />
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="FontClass.h" />
     <ClInclude Include="FontShaderClass.h" />
     <ClInclude Include="FpsClass.h" />
+    <ClInclude Include="Frustum.h" />
     <ClInclude Include="InputClass.h" />
     <ClInclude Include="ModelClass.h" />
     <ClInclude Include="ModelListClass.h" />
     <ClInclude Include="PositionClass.h" />
+    <ClInclude Include="PyramidModel.h" />
     <ClInclude Include="ShaderManagerClass.h" />
+    <ClInclude Include="SkyDome.h" />
+    <ClInclude Include="SkyDomeShader.h" />
     <ClInclude Include="SystemClass.h" />
     <ClInclude Include="TerrainClass.h" />
     <ClInclude Include="TextClass.h" />

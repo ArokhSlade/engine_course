@@ -28,6 +28,10 @@ bool ModelListClass::Initialize(int numModels)
 	// Seed the random generator with the current time.
 	srand((unsigned int)time(NULL));
 
+	int numSpheres = m_modelCount / 3;
+	int numCubes = m_modelCount / 3;
+	int numPyramids = m_modelCount / 3;
+
 	// Go through all the models and randomly generate the model color and position.
 	for (i = 0; i<m_modelCount; i++)
 	{
@@ -39,9 +43,22 @@ bool ModelListClass::Initialize(int numModels)
 		m_ModelInfoList[i].color = XMFLOAT4(red, green, blue, 1.0f);
 
 		// Generate a random position in front of the viewer for the mode.
-		m_ModelInfoList[i].positionX = 0.0f;
-		m_ModelInfoList[i].positionY = 0.0f;
-		m_ModelInfoList[i].positionZ = 0.0f;
+		m_ModelInfoList[i].positionX = (float)rand() / 100;
+		m_ModelInfoList[i].positionY = (float)rand() / 100;
+		m_ModelInfoList[i].positionZ = (float)rand() / 100;
+
+		if (i < numSpheres)
+		{
+			m_ModelInfoList[i].type = Sphere;
+		}
+		else if( i < numSpheres + numCubes)
+		{
+			m_ModelInfoList[i].type = Cube;
+		}
+		else
+		{
+			m_ModelInfoList[i].type = Pyramid;
+		}
 	}
 
 	return true;
@@ -67,7 +84,7 @@ int ModelListClass::GetModelCount()
 }
 
 
-void ModelListClass::GetData(int index, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color)
+void ModelListClass::GetData(int index, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color, PrimitiveType& type)
 {
 	positionX = m_ModelInfoList[index].positionX;
 	positionY = m_ModelInfoList[index].positionY;
@@ -75,5 +92,5 @@ void ModelListClass::GetData(int index, float& positionX, float& positionY, floa
 
 	color = m_ModelInfoList[index].color;
 
-	return;
+	type = m_ModelInfoList[index].type;
 }

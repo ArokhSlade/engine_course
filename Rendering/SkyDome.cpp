@@ -1,90 +1,62 @@
-#include "ModelClass.h"
+#include "SkyDome.h"
 
-ModelClass::ModelClass()
+SkyDome::SkyDome()
 {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
-	m_Texture = 0;
 	m_model = 0;
 }
 
-ModelClass::~ModelClass()
+bool SkyDome::Initialize(ID3D11Device* device)
 {
-}
-
-bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* textureFilename, char* modelFilename)
-{
-	bool result;
-
-	// Load in the model data.
-	result = LoadModel(modelFilename);
+	//bool result = LoadModel("C:/Users/docent/Desktop/Rendering 22.04.25/Rendering/data/Skydome/skydome.txt");
+	bool result = LoadModel("../Rendering/data/Skydome/skydome.txt");
 	if (!result)
 	{
 		return false;
 	}
 
-	// Initialize the vertex and index buffer that hold the geometry for the triangle.
 	result = InitializeBuffers(device);
 	if (!result)
 	{
 		return false;
 	}
 
-	// Load the texture for this model.
-	result = LoadTexture(device, deviceContext, textureFilename);
-	if (!result)
-	{
-		return false;
-	}
+	m_apexColor = XMFLOAT4(0, 0.5f, 0.6f, 1);
+	m_centerColor = XMFLOAT4(0, 0.5f, 0.8f,1);
 
 	return true;
 }
 
-void ModelClass::Shutdown()
+void SkyDome::Shutdown()
 {
-	// Release the model texture.
-	ReleaseTexture();
-
-	// Release the vertex and index buffers.
 	ShutdownBuffers();
-
-	// Release the model data.
 	ReleaseModel();
-
-	return;
 }
 
-void ModelClass::Render(ID3D11DeviceContext* device)
+void SkyDome::Render(ID3D11DeviceContext* deviceContext)
 {
-	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	RenderBuffers(device);
-
-	return;
+	RenderBuffers(deviceContext);
 }
 
-int ModelClass::GetIndexCount()
+int SkyDome::GetIndexCount()
 {
 	return m_indexCount;
 }
 
-int ModelClass::GetVertexCount()
+XMFLOAT4 SkyDome::GetApexColor()
 {
-	return m_vertexCount;
+	return m_apexColor;
 }
 
-VectorType* ModelClass::GetVertexList()
+XMFLOAT4 SkyDome::GetCenterColor()
 {
-	return m_vertexList;
+	return m_centerColor;
 }
 
-ID3D11ShaderResourceView* ModelClass::GetTexture()
+bool SkyDome::InitializeBuffers(ID3D11Device* device)
 {
-	return m_Texture->GetTexture();
-}
-
-bool ModelClass::InitializeBuffers(ID3D11Device* device)
-{
-	VertexType* vertices;
+	VertexPositionType* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -92,7 +64,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	int i;
 
 	// Create the vertex array.
-	vertices = new VertexType[m_vertexCount];
+	vertices = new VertexPositionType[m_vertexCount];
 	if (!vertices)
 	{
 		return false;
@@ -105,29 +77,16 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 		return false;
 	}
 
-	m_vertexList = new VectorType[m_vertexCount];
-	if (!m_vertexList)
-	{
-		return false;
-	}
-
 	// Load the vertex array and index array with data.
-	for (i = 0; i<m_vertexCount; i++)
+	for (i = 0; i < m_vertexCount; i++)
 	{
 		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
-		vertices[i].texture = XMFLOAT2(m_model[i].tu, m_model[i].tv);
-		vertices[i].normal = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
-		
-		m_vertexList[i].x = m_model[i].x;
-		m_vertexList[i].y = m_model[i].y;
-		m_vertexList[i].z = m_model[i].z;
-
 		indices[i] = i;
 	}
 
 	// Set up the description of the vertex buffer.
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(VertexPositionType) * m_vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
@@ -169,88 +128,48 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	return true;
 }
 
-void ModelClass::ShutdownBuffers()
+void SkyDome::ShutdownBuffers()
 {
-	// Release the index buffer.
 	if (m_indexBuffer)
 	{
 		m_indexBuffer->Release();
 		m_indexBuffer = 0;
 	}
 
-	// Release the vertex buffer.
 	if (m_vertexBuffer)
 	{
 		m_vertexBuffer->Release();
 		m_vertexBuffer = 0;
 	}
-
-	return;
 }
 
-void ModelClass::RenderBuffers(ID3D11DeviceContext* device)
+void SkyDome::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
 	unsigned int stride;
 	unsigned int offset;
 
 	// Set vertex buffer stride and offset.
-	stride = sizeof(VertexType);
+	stride = sizeof(VertexPositionType);
 	offset = 0;
 
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	device->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 
 	// Set the index buffer to active in the input assembler so it can be rendered.
-	device->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
-	device->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	return;
+	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* filename)
-{
-	bool result;
-
-	// Create the texture object.
-	m_Texture = new TextureClass;
-	if (!m_Texture)
-	{
-		return false;
-	}
-
-	// Initialize the texture object.
-	result = m_Texture->Initialize(device, deviceContext, filename);
-	if (!result)
-	{
-		return false;
-	}
-
-	return true;
-}
-
-void ModelClass::ReleaseTexture()
-{
-	// Release the texture object.
-	if (m_Texture)
-	{
-		m_Texture->Shutdown();
-		delete m_Texture;
-		m_Texture = 0;
-	}
-
-	return;
-}
-
-bool ModelClass::LoadModel(char* filename)
+bool SkyDome::LoadModel(char* filePath)
 {
 	ifstream fin;
 	char input;
 	int i;
 
 	// Open the model file.  If it could not open the file then exit.
-	fin.open(filename);
+	fin.open(filePath);
 	if (fin.fail())
 	{
 		return false;
@@ -286,7 +205,7 @@ bool ModelClass::LoadModel(char* filename)
 	fin.get(input);
 
 	// Read in the vertex data.
-	for (i = 0; i<m_vertexCount; i++)
+	for (i = 0; i < m_vertexCount; i++)
 	{
 		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
 		fin >> m_model[i].tu >> m_model[i].tv;
@@ -299,13 +218,11 @@ bool ModelClass::LoadModel(char* filename)
 	return true;
 }
 
-void ModelClass::ReleaseModel()
+void SkyDome::ReleaseModel()
 {
 	if (m_model)
 	{
 		delete[] m_model;
 		m_model = 0;
 	}
-
-	return;
 }

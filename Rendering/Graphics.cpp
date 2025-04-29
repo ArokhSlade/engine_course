@@ -8,6 +8,16 @@ Graphics::Graphics()
 	m_Terrain = 0;
 	m_Model = 0;
 	m_ModelList = 0;
+
+	m_Frustum = 0; // todo nullptr
+	m_CubeModel = 0;
+	m_PyramidModel = 0;
+
+	m_aabb = 0;
+	m_aabbCube = 0;
+	m_aabbPyramid = 0;
+
+	m_skyDome = 0;
 }
 
 Graphics::~Graphics()
@@ -53,7 +63,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	// Set the initial position and rotation.
-	m_Position->SetPosition(0.0f, 0.0f, 0.0f);
+	m_Position->SetPosition(0.0f, 0.0f, -10.0f);
 	m_Position->SetRotation(0.0f, 0.0f, 0.0f);
 
 	// Create the terrain object.
@@ -86,6 +96,75 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
+	m_aabb = new AxisAlignedBoundingBox;
+	if (!m_aabb)
+	{
+		return false;
+	}
+
+	result = m_aabb->Initialize(Direct3D->GetDevice(), m_Model->GetVertexList(), m_Model->GetVertexCount());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the Model AABB object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// create the cube model object
+	m_CubeModel = new CubeModel;
+	if (!m_CubeModel)
+	{
+		return false;
+	}
+
+	// initialize the cube model object
+	result = m_CubeModel->Initialize(Direct3D->GetDevice());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the Cube Model Object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_aabbCube = new AxisAlignedBoundingBox;
+	if (!m_aabbCube)
+	{
+		return false;
+	}
+
+	result = m_aabbCube->Initialize(Direct3D->GetDevice(), m_CubeModel->GetVertexList(), m_CubeModel->GetVertexCount());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the Cube AABB object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// create the cube model object
+	m_PyramidModel = new PyramidModel;
+	if (!m_PyramidModel)
+	{
+		return false;
+	}
+
+	// initialize the cube model object
+	result = m_PyramidModel->Initialize(Direct3D->GetDevice());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the Pyramid Model Object.", L"Error", MB_OK);
+		return false;
+	}
+
+	m_aabbPyramid = new AxisAlignedBoundingBox;
+	if (!m_aabbPyramid)
+	{
+		return false;
+	}
+
+	result = m_aabbPyramid->Initialize(Direct3D->GetDevice(), m_PyramidModel->GetVertexList(), m_PyramidModel->GetVertexCount());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the Pyramid AABB object.", L"Error", MB_OK);
+		return false;
+	}
+
 	// Create the model list object.
 	m_ModelList = new ModelListClass;
 	if (!m_ModelList)
@@ -94,21 +173,56 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	// Initialize the model list object.
-	result = m_ModelList->Initialize(1);
+	result = m_ModelList->Initialize(750);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model list object.", L"Error", MB_OK);
 		return false;
 	}
 
+	m_Frustum = new Frustum;
+	if (!m_Frustum)
+	{
+		return false;
+	}
+
+	// initialize frustum
+	m_Frustum->Initialize(screenDepth);
+	
+	m_skyDome = new SkyDome;
+	if (!m_skyDome)
+	{
+		return false;
+	}
+
+	result = m_skyDome->Initialize(Direct3D->GetDevice());
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the Skydome.", L"Error", MB_OK);
+		return false;
+	}
+
 	// Set the UI to display by default.
 	m_displayUI = true;
+
+	m_displayAABBs = false;
+
+	m_renderCountSpheres = 0;
+	m_renderCountCubes = 0;
+	m_renderCountPyramids = 0;
 
 	return true;
 }
 
 void Graphics::Shutdown()
 {
+	if (m_skyDome)
+	{
+		m_skyDome->Shutdown();
+		delete m_skyDome;
+		m_skyDome = 0;
+	}
+
 	// Release the terrain object.
 	if(m_Terrain)
 	{
@@ -123,6 +237,43 @@ void Graphics::Shutdown()
 		m_Model->Shutdown();
 		delete m_Model;
 		m_Model = 0;
+	}
+
+	if (m_aabb)
+	{
+		m_aabb->Shutdown();
+		delete m_aabb;
+		m_aabb = 0;
+	}
+
+	// Release the cube model object.
+	if (m_CubeModel)
+	{
+		m_CubeModel->Shutdown();
+		delete m_CubeModel;
+		m_CubeModel = 0;
+	}
+
+	if (m_aabbCube)
+	{
+		m_aabbCube->Shutdown();
+		delete m_aabbCube;
+		m_aabbCube = 0;
+	}
+	
+	// Release the pyramid model object.
+	if (m_PyramidModel)
+	{
+		m_PyramidModel->Shutdown();
+		delete m_PyramidModel;
+		m_PyramidModel = 0;
+	}
+
+	if (m_aabbPyramid)
+	{
+		m_aabbPyramid->Shutdown();
+		delete m_aabbPyramid;
+		m_aabbPyramid = 0;
 	}
 
 	if (m_ModelList)
@@ -170,7 +321,9 @@ bool Graphics::Frame(D3DClass* Direct3D, InputClass* Input, ShaderManagerClass* 
 	m_Position->GetRotation(rotX, rotY, rotZ);
 
 	// Do the frame processing for the user interface.
-	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), fps, posX, posY, posZ, rotX, rotY, rotZ);
+	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_renderCountSpheres + m_renderCountCubes + m_renderCountPyramids,
+									m_renderCountSpheres, m_renderCountCubes, m_renderCountPyramids,
+									fps, posX, posY, posZ, rotX, rotY, rotZ);	
 	if(!result)
 	{
 		return false;
@@ -234,6 +387,11 @@ void Graphics::HandleMovementInput(InputClass* Input, float frameTime)
 		m_displayUI = !m_displayUI;
 	}
 
+	if (Input->IsF2Toggled())
+	{
+		m_displayAABBs = !m_displayAABBs;
+	}
+
 	return;
 }
 
@@ -244,7 +402,8 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	int modelCount, index;
 	float positionX, positionY, positionZ, radius;
 	XMFLOAT4 color;
-	
+	PrimitiveType primitiveType;
+
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 
@@ -255,8 +414,35 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	m_Camera->GetBaseViewMatrix(baseViewMatrix);
 	Direct3D->GetOrthoMatrix(orthoMatrix);
 	
+	m_Frustum->ConstructFrustum(projectionMatrix, viewMatrix);
+
 	// Clear the buffers to begin the scene.
 	Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+
+
+	// skydome start
+
+	Direct3D->TurnOffCulling();
+	Direct3D->TurnZBufferOff();
+
+	XMFLOAT3 cameraPosition = m_Camera->GetPosition();
+	worldMatrix = XMMatrixTranslation(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+
+	m_skyDome->Render(Direct3D->GetDeviceContext());
+	result = ShaderManager->RenderSkyDomeShader(Direct3D->GetDeviceContext(), m_skyDome->GetIndexCount(),
+												worldMatrix, viewMatrix, projectionMatrix, 
+												m_skyDome->GetApexColor(), m_skyDome->GetCenterColor());
+	if (!result)
+	{
+		return false;
+	}
+
+	Direct3D->GetWorldMatrix(worldMatrix);
+	
+	Direct3D->TurnZBufferOn();
+	Direct3D->TurnOnCulling();
+	
+	// skydome end
 
 	// Render the terrain grid using the color shader.
 	m_Terrain->Render(Direct3D->GetDeviceContext());
@@ -270,23 +456,87 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	// Get the number of models that will be rendered.
 	modelCount = m_ModelList->GetModelCount();
 
+	m_renderCountSpheres = 0;
+	m_renderCountCubes = 0;
+	m_renderCountPyramids = 0;
+
+	bool isInsideFrustum;
+
 	// Go through all the models and render them only if they can be seen by the camera view.
 	for (index = 0; index<modelCount; index++)
 	{
 		// Get the position and color of the sphere model at this index.
-		m_ModelList->GetData(index, positionX, positionY, positionZ, color);
+		m_ModelList->GetData(index, positionX, positionY, positionZ, color, primitiveType);
 
 		// Set the radius of the sphere to 1.0 since this is already known.
 		radius = 1.0f;
 
-		// Move the model to the location it should be rendered at.
-		worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+		switch (primitiveType)
+		{
+		case Sphere:
+			isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
+			{
+				// Move the model to the location it should be rendered at.
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+
+				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+				m_Model->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+
+				if (m_displayAABBs)
+				{
+					m_aabb->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabb->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
+				
+				m_renderCountSpheres++;
+			}
+			break;
+		case Cube:
+			isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
+			{
+				// Move the model to the location it should be rendered at.
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+
+				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+				m_CubeModel->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+
+				if (m_displayAABBs)
+				{
+					m_aabbCube->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbCube->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
+				
+				m_renderCountCubes++;
+			}
+			break;
+		case Pyramid:
+			isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
+			{
+				// Move the model to the location it should be rendered at.
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+
+				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+				m_PyramidModel->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+
+				if (m_displayAABBs)
+				{
+					m_aabbPyramid->Render(Direct3D->GetDeviceContext());
+					ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbPyramid->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				}
+				
+				m_renderCountPyramids++;
+			}
+			break;
+		}
+
 		
-		// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-		m_Model->Render(Direct3D->GetDeviceContext());
-
-		ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-
+		
 		// Reset to the original world matrix.
 		Direct3D->GetWorldMatrix(worldMatrix);
 	}

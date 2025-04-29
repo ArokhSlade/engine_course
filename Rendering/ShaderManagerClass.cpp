@@ -4,6 +4,7 @@ ShaderManagerClass::ShaderManagerClass()
 {
 	m_ColorShader = 0;
 	m_FontShader = 0;
+	m_skyDomeShader = 0;
 }
 
 ShaderManagerClass::~ShaderManagerClass()
@@ -13,7 +14,6 @@ ShaderManagerClass::~ShaderManagerClass()
 bool ShaderManagerClass::Initialize(ID3D11Device* device, HWND hwnd)
 {
 	bool result;
-
 
 	// Create the color shader object.
 	m_ColorShader = new ColorShaderClass;
@@ -43,6 +43,18 @@ bool ShaderManagerClass::Initialize(ID3D11Device* device, HWND hwnd)
 		return false;
 	}
 
+	m_skyDomeShader = new SkyDomeShader;
+	if (!m_skyDomeShader)
+	{
+		return false;
+	}
+
+	result = m_skyDomeShader->Initialize(device, hwnd);
+	if (!result)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -65,7 +77,12 @@ void ShaderManagerClass::Shutdown()
 		m_ColorShader = 0;
 	}
 
-	return;
+	if (m_skyDomeShader)
+	{
+		m_skyDomeShader->Shutdown();
+		delete m_skyDomeShader;
+		m_skyDomeShader = 0;
+	}
 }
 
 
@@ -75,6 +92,10 @@ bool ShaderManagerClass::RenderColorShader(ID3D11DeviceContext* deviceContext, i
 	return m_ColorShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix);
 }
 
+bool ShaderManagerClass::RenderSkyDomeShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMFLOAT4 apexColor, XMFLOAT4 centerColor)
+{
+	return m_skyDomeShader->Render(deviceContext, indexCount, worldMatrix, viewMatrix, projectionMatrix, apexColor, centerColor);
+}
 
 bool ShaderManagerClass::RenderFontShader(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, 
 										  XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT4 color)

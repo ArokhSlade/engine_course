@@ -172,6 +172,11 @@ bool ApplicationClass::Frame()
 		return false;
 	}
 
+	if (m_Input->IsEscPressed())
+	{
+		return false;
+	}
+
 	// Do the Graphics frame processing.
 	result = m_Graphics->Frame(m_Direct3D, m_Input, m_ShaderManager, m_Timer->GetTime(), m_Fps->GetFps());
 	if (!result)

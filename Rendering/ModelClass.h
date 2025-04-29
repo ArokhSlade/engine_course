@@ -6,8 +6,7 @@
 using namespace std;
 
 #include "TextureClass.h"
-#include <directxmath.h>
-using namespace DirectX;
+#include "CustomStructs.h"
 
 class ModelClass
 {
@@ -19,13 +18,6 @@ private:
 		XMFLOAT3 normal;
 	};
 
-	struct ModelType
-	{
-		float x, y, z;
-		float tu, tv;
-		float nx, ny, nz;
-	};
-
 public:
 	ModelClass();
 	~ModelClass();
@@ -35,6 +27,8 @@ public:
 	void Render(ID3D11DeviceContext*);
 
 	int GetIndexCount();
+	int GetVertexCount();
+	VectorType* GetVertexList();
 	ID3D11ShaderResourceView* GetTexture();
 
 private:
@@ -53,6 +47,8 @@ private:
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
 	ModelType* m_model;
+
+	VectorType* m_vertexList;
 };
 
 #endif

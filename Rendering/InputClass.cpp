@@ -316,6 +316,16 @@ bool InputClass::IsPgDownPressed()
 	return false;
 }
 
+bool InputClass::IsEscPressed() 
+{
+	if (m_keyboardState[DIK_ESCAPE] & 0x80)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 bool InputClass::IsF1Toggled()
 {

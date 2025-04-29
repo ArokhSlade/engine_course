@@ -6,6 +6,11 @@ UserInterfaceClass::UserInterfaceClass()
 	m_FpsString = 0;
 	m_VideoStrings = 0;
 	m_PositionStrings = 0;
+
+	m_RenderCountString = 0;
+	m_RenderCountSpheresString = 0;
+	m_RenderCountCubesString = 0;
+	m_RenderCountPyramidsString = 0;
 }
 
 UserInterfaceClass::~UserInterfaceClass()
@@ -54,6 +59,66 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 
 	// Initial the previous frame fps.
 	m_previousFps = -1;
+
+	// Create the text object for the rendercount string.
+	m_RenderCountString = new TextClass;
+	if (!m_RenderCountString)
+	{
+		return false;
+	}
+
+	// Initialize the fps text string.
+	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Rendercount: 0", 10, 70, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountSpheresString = new TextClass;
+	if (!m_RenderCountSpheresString)
+	{
+		return false;
+	}
+
+	// Initialize the render count text string.
+	result = m_RenderCountSpheresString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Spheres Count: 0", 10, 90, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountCubesString = new TextClass;
+	if (!m_RenderCountCubesString)
+	{
+		return false;
+	}
+
+	// Initialize the render count text string.
+	result = m_RenderCountCubesString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Cubes Count: 0", 10, 110, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountPyramidsString = new TextClass;
+	if (!m_RenderCountPyramidsString)
+	{
+		return false;
+	}
+
+	// Initialize the render count text string.
+	result = m_RenderCountPyramidsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Pyramids Count: 0", 10, 130, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
 
 	// Setup the video card strings.
 	Direct3D->GetVideoCardInfo(videoCard, videoMemory);
@@ -182,6 +247,35 @@ void UserInterfaceClass::Shutdown()
 		m_FpsString = 0;
 	}
 
+	// Release the rendercount text string.
+	if (m_RenderCountString)
+	{
+		m_RenderCountString->Shutdown();
+		delete m_RenderCountString;
+		m_RenderCountString = 0;
+	}
+
+	if (m_RenderCountSpheresString)
+	{
+		m_RenderCountSpheresString->Shutdown();
+		delete m_RenderCountSpheresString;
+		m_RenderCountSpheresString = 0;
+	}
+
+	if (m_RenderCountCubesString)
+	{
+		m_RenderCountCubesString->Shutdown();
+		delete m_RenderCountCubesString;
+		m_RenderCountCubesString = 0;
+	}
+
+	if (m_RenderCountPyramidsString)
+	{
+		m_RenderCountPyramidsString->Shutdown();
+		delete m_RenderCountPyramidsString;
+		m_RenderCountPyramidsString = 0;
+	}
+
 	// Release the font object.
 	if(m_Font1)
 	{
@@ -193,14 +287,38 @@ void UserInterfaceClass::Shutdown()
 	return;
 }
 
-bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int fps, float posX, float posY, float posZ, 
-							   float rotX, float rotY, float rotZ)
+bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCount, int renderCountSpheres, int renderCountCubes, int renderCountPyramids,
+								int fps, float posX, float posY, float posZ, float rotX, float rotY, float rotZ)
 {
 	bool result;
 
 	// Update the fps string.
 	result = UpdateFpsString(deviceContext, fps);
 	if(!result)
+	{
+		return false;
+	}
+
+	result = UpdateRenderCountString(deviceContext, renderCount);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateRenderCountSpheresString(deviceContext, renderCountSpheres);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateRenderCountCubesString(deviceContext, renderCountCubes);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateRenderCountPyramidsString(deviceContext, renderCountPyramids);
+	if (!result)
 	{
 		return false;
 	}
@@ -226,6 +344,11 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 
 	// Render the fps string.
 	m_FpsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+
+	m_RenderCountString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_RenderCountSpheresString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_RenderCountCubesString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_RenderCountPyramidsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 
 	// Render the video card strings.
 	m_VideoStrings[0].Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
@@ -309,6 +432,99 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	return true;
 }
 
+
+bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceContext, int renderCount)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	// Convert the fps integer to string format.
+	_itoa_s(renderCount, tempString, 10);
+
+	// Setup the fps string.
+	strcpy_s(finalString, "RenderCount: ");
+	strcat_s(finalString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 70, 0, 1, 0);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateRenderCountSpheresString(ID3D11DeviceContext* deviceContext, int renderCountSpheres)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	// Convert the rendercount integer to string format.
+	_itoa_s(renderCountSpheres, tempString, 10);
+
+	// Setup the rendercount string.
+	strcpy_s(finalString, "Spheres Count: ");
+	strcat_s(finalString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = m_RenderCountSpheresString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 110, 1.0f, 1.0f, 1.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateRenderCountCubesString(ID3D11DeviceContext* deviceContext, int renderCountCubes)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	// Convert the rendercount integer to string format.
+	_itoa_s(renderCountCubes, tempString, 10);
+
+	// Setup the rendercount string.
+	strcpy_s(finalString, "Cubes Count: ");
+	strcat_s(finalString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = m_RenderCountCubesString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 130, 1.0f, 1.0f, 1.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateRenderCountPyramidsString(ID3D11DeviceContext* deviceContext, int renderCountPyramids)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	// Convert the rendercount integer to string format.
+	_itoa_s(renderCountPyramids, tempString, 10);
+
+	// Setup the rendercount string.
+	strcpy_s(finalString, "Pyramids Count: ");
+	strcat_s(finalString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = m_RenderCountPyramidsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 150, 1.0f, 1.0f, 1.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContext, float posX, float posY, float posZ, 
 											   float rotX, float rotY, float rotZ)
 {
@@ -333,7 +549,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionX, tempString, 10);
 		strcpy_s(finalString, "X: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, 100, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, 200, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
@@ -343,7 +559,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionY, tempString, 10);
 		strcpy_s(finalString, "Y: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, 120, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, 220, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
@@ -353,7 +569,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(positionZ, tempString, 10);
 		strcpy_s(finalString, "Z: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, 140, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, 240, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
@@ -363,7 +579,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationX, tempString, 10);
 		strcpy_s(finalString, "rX: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, 180, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, 280, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
@@ -373,7 +589,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationY, tempString, 10);
 		strcpy_s(finalString, "rY: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, 200, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, 300, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
@@ -383,7 +599,7 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 		_itoa_s(rotationZ, tempString, 10);
 		strcpy_s(finalString, "rZ: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, 220, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, 320, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
