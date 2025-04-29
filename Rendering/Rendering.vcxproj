@@ -185,6 +185,7 @@
     <ClInclude Include="CubeModel.h" />
     <ClInclude Include="CustomEnums.h" />
     <ClInclude Include="CustomStructs.h" />
+    <ClInclude Include="CustomTemplates.h" />
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="FontClass.h" />
     <ClInclude Include="FontShaderClass.h" />

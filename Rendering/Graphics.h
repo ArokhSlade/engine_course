@@ -46,7 +46,7 @@ private:
 	bool m_displayUI;
 	bool m_displayAABBs;
 
-	PrimitiveCreator m_PrimitiveCreator;
+	PrimitiveCreator* m_PrimitiveCreator;
 
 	ModelListClass* m_ModelList;
 

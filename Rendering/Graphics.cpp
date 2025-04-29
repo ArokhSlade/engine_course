@@ -1,4 +1,5 @@
 #include "Graphics.h"
+#include "CustomTemplates.h"
 
 Graphics::Graphics()
 {
@@ -80,6 +81,8 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		MessageBox(hwnd, L"Could not initialize the terrain object.", L"Error", MB_OK);
 		return false;
 	}
+
+	result = ConstructAndInitialize(m_PrimitiveCreator);
 
 	// Create the model object.
 	m_SphereModel = new ModelClass;
