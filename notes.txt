@@ -22,6 +22,11 @@ TODO:
  // Reset to the original world matrix.
  Direct3D->GetWorldMatrix(worldMatrix);
 
+-keep local copy of D3DClass?
+ -or use doled-out device and deviceContext?
+-shared_ptr<D3DClass> Direct3D for Graphics, PrimitiveCreator
+
+
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
 

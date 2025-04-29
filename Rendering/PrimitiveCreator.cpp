@@ -20,11 +20,19 @@ PrimitiveCreator::~PrimitiveCreator()
 
 }
 
-bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device, int modelCount)
+bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, int modelCount)
 {
 	bool result = true;
+	ID3D11Device* device = Direct3D->GetDevice();
+	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
 
 	if (!ConstructAndInitialize(hwnd, m_ModelList, modelCount))
+	{
+		return false;
+	}
+
+	if (!ConstructAndInitialize(hwnd, m_SphereModel, device, deviceContext,
+		"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
 	{
 		return false;
 	}
@@ -34,12 +42,19 @@ bool PrimitiveCreator::Initialize(HWND hwnd, ID3D11Device* device, int modelCoun
 		return false; 
 	}
 
+	if (!ConstructAndInitialize(hwnd, m_PyramidModel, device))
+	{
+		return false;
+	}
+
 	return true;
 }
 
 void PrimitiveCreator::Shutdown()
 {
+	ShutdownAndDelete(m_PyramidModel);
 	ShutdownAndDelete(m_CubeModel);
+	ShutdownAndDelete(m_SphereModel);
 	ShutdownAndDelete(m_ModelList);
 }
 
@@ -72,24 +87,24 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 		switch (primitiveType)
 		{
 		case Sphere:
-			//isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
-			//if (isInsideFrustum)
-			//{
-			//	// Move the model to the location it should be rendered at.
-			//	worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
+			{
+				// Move the model to the location it should be rendered at.
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
-			//	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			//	m_SphereModel->Render(Direct3D->GetDeviceContext());
-			//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+				m_SphereModel->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 
-			//	//if (displayAABBs)
-			//	//{
-			//	//	m_aabbSphere->Render(Direct3D->GetDeviceContext());
-			//	//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbSphere->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-			//	//}
+				//if (displayAABBs)
+				//{
+				//	m_aabbSphere->Render(Direct3D->GetDeviceContext());
+				//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbSphere->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				//}
 
-			//	m_renderCountSpheres++;
-			//}
+				renderCountSpheres++;
+			}
 			break;
 		case Cube:
 			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
@@ -112,24 +127,24 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 			}
 			break;
 		case Pyramid:
-			//isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
-			//if (isInsideFrustum)
-			//{
-			//	// Move the model to the location it should be rendered at.
-			//	worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
+			{
+				// Move the model to the location it should be rendered at.
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
-			//	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-			//	m_PyramidModel->Render(Direct3D->GetDeviceContext());
-			//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+				m_PyramidModel->Render(Direct3D->GetDeviceContext());
+				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 
-			//	if (m_displayAABBs)
-			//	{
-			//		m_aabbPyramid->Render(Direct3D->GetDeviceContext());
-			//		ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbPyramid->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-			//	}
+				//if (m_displayAABBs)
+				//{
+				//	m_aabbPyramid->Render(Direct3D->GetDeviceContext());
+				//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbPyramid->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				//}
 
-			//	m_renderCountPyramids++;
-			//}
+				renderCountPyramids++;
+			}
 			break;
 		}
 

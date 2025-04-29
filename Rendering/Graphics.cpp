@@ -70,9 +70,12 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	if (!ConstructAndInitialize(hwnd, m_Terrain, Direct3D->GetDevice()))
 	{ return false; }
 
-	if (!ConstructAndInitialize(hwnd, m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(), 
-								"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
-	{ return false; }
+
+	if (!ConstructAndInitialize(hwnd, m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(),
+		"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
+	{
+		return false;
+	}
 
 	m_aabbSphere = new AxisAlignedBoundingBox;
 	if (!m_aabbSphere)
@@ -143,9 +146,9 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	ID3D11Device* device = Direct3D->GetDevice();
+
 	const int desiredModelCount = 750;
-	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator, hwnd, device, desiredModelCount))
+	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator, hwnd, Direct3D, desiredModelCount))
 	{
 		return false;
 	}
