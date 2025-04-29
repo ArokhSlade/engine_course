@@ -1,8 +1,8 @@
 #pragma once
 #include "ShaderManagerClass.h"
 
+#include "Frustum.h"
 #include "ModelListClass.h"
-
 #include "ModelClass.h"
 #include "CubeModel.h"
 #include "PyramidModel.h"
@@ -16,6 +16,8 @@ public :
 	void Shutdown();
 	bool Render(ID3D11DeviceContext* deviceContext, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX);
 private:
+	Frustum* m_Frustum;
+
 	ModelListClass* m_ModelList;
 
 	ModelClass* m_SphereModel;

@@ -1,4 +1,6 @@
 TODO:
+- figure out where and how to track render counts.
+ - dataflow back from primitive creator to graphics?
 - isInsideFrustum() for other classes
 - "templates" for similar ui-code for new classes
 - clarify ModelClass -> m_SphereModel 

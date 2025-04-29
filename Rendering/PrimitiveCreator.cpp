@@ -7,6 +7,7 @@
 
 PrimitiveCreator::PrimitiveCreator()
 {
+	m_Frustum = nullptr;
 	m_ModelList = nullptr;
 	m_CubeModel = nullptr;
 	m_PyramidModel = nullptr;

@@ -46,8 +46,8 @@ private:
 	bool m_displayUI;
 	bool m_displayAABBs;
 
-	Frustum* m_Frustum;
 	PrimitiveCreator* m_PrimitiveCreator;
+	Frustum* m_Frustum;
 
 	ModelListClass* m_ModelList;
 
