@@ -26,6 +26,9 @@ TODO:
  -or use doled-out device and deviceContext?
 -shared_ptr<D3DClass> Direct3D for Graphics, PrimitiveCreator
 
+- is it feasible to have sphere model inherit base model?
+ - initialize function has a different signature
+  -> breaks liskov s.p.?
 
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
