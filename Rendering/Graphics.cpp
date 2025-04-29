@@ -7,9 +7,10 @@ Graphics::Graphics()
 	m_Camera = 0;
 	m_Position = 0;
 	m_Terrain = 0;
-	m_SphereModel = 0;
-	m_ModelList = 0;
 
+	m_PrimitiveCreator = 0;
+	m_ModelList = 0;
+	m_SphereModel = 0;
 	m_Frustum = 0; // todo nullptr
 	m_CubeModel = 0;
 	m_PyramidModel = 0;
@@ -70,7 +71,8 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	if (!ConstructAndInitialize(hwnd, m_Terrain, Direct3D->GetDevice()))
 	{ return false; }
 
-	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator))
+	ID3D11Device* device = Direct3D->GetDevice();
+	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator, hwnd, device))
 	{ return false; }
 
 	if (!ConstructAndInitialize(hwnd, m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(), 

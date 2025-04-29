@@ -46,12 +46,12 @@ private:
 	bool m_displayUI;
 	bool m_displayAABBs;
 
+	Frustum* m_Frustum;
 	PrimitiveCreator* m_PrimitiveCreator;
 
 	ModelListClass* m_ModelList;
 
 	ModelClass* m_SphereModel;
-	Frustum* m_Frustum;
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
 
