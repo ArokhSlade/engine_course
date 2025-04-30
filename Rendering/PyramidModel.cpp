@@ -1,13 +1,31 @@
 #include "PyramidModel.h"
+#include <stdexcept>
 
-PyramidModel::PyramidModel()
+AxisAlignedBoundingBox* PyramidModel::GetAABB()
 {
-	m_vertexBuffer = 0;
-	m_indexBuffer = 0;
+	return m_aabb;
+}
+
+bool PyramidModel::IsEmpty() 
+{
+	bool empty = true;
+	empty &= m_vertexBuffer == nullptr;
+	empty &= m_indexBuffer == nullptr;
+	empty &= m_vertexCount == 0;
+	empty &= m_indexCount == 0;
+	empty &= m_vertexList == nullptr;
+	empty &= m_aabb == nullptr;
+
+	return empty;
 }
 
 bool PyramidModel::Initialize(ID3D11Device* device)
 {
+	if (!IsEmpty())
+	{
+		throw std::runtime_error("pyramid not zero-initialized\n");
+	}
+
 	ColorVertexType* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;

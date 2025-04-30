@@ -6,11 +6,10 @@
 
 #include "CustomStructs.h"
 #include "d3d11.h"
-
+#include "AxisAlignedBoundingBox.h"
 class PyramidModel
 {
 public:
-	PyramidModel();
 
 	bool Initialize(ID3D11Device* device);
 	void Shutdown();
@@ -19,12 +18,15 @@ public:
 	int GetIndexCount();
 	int GetVertexCount();
 	VectorType* GetVertexList();
+	AxisAlignedBoundingBox* GetAABB();
+	bool IsEmpty();
 
 private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 
 	VectorType* m_vertexList;
+	AxisAlignedBoundingBox* m_aabb;
 };
 
 #endif

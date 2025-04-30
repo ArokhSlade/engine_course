@@ -119,7 +119,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	// create the cube model object
-	m_PyramidModel = new PyramidModel;
+	m_PyramidModel = new PyramidModel{};
 	if (!m_PyramidModel)
 	{
 		return false;

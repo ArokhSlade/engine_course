@@ -6,7 +6,7 @@
 template <typename T, typename... TArgs>
 bool ConstructAndInitialize(HWND hwnd, T*& tObjPtr, TArgs&&... args)
 {	
-	tObjPtr = new T;
+	tObjPtr = new T{};
 	if (!tObjPtr)
 	{
 		return false;
