@@ -1,4 +1,5 @@
 TODO:
+- inherited models: inherit shutdown fullsale
 - construct model list inside primitive creator?
 - fix m_vertexCount vs GetVertexCount, also indexCount
 - pass frustum or create locally?

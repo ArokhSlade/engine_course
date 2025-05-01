@@ -7,12 +7,14 @@
 class CubeModel : public SimpleModel
 {
 public:	
-	bool Initialize(ID3D11Device* device, fun_t initVerts=nullptr) override;
 	void Render(ID3D11DeviceContext* deviceContext) override;
 	void Shutdown() override;
 
 	virtual int GetIndexCount() override;
 	virtual int GetVertexCount() override;
+
+protected:
+	void InitializeVertices(ColorVertexType* vertices, unsigned long* indices) override;
 };
 
 #endif

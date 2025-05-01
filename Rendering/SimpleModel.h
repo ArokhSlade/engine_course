@@ -22,7 +22,7 @@ public:
 
 
 protected:
-	virtual void Initialize_DefineVertices() {};
+	virtual void InitializeVertices(ColorVertexType* vertices, unsigned long* indices) {};
 
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	int m_vertexCount, m_indexCount;
@@ -34,5 +34,5 @@ protected:
 public:
 	using fun_t = void (*)(ColorVertexType* vertices, unsigned long* indices);
 
-	virtual bool Initialize(ID3D11Device* device, fun_t initVerts = nullptr);
+	virtual bool Initialize(ID3D11Device* device);
 };

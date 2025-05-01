@@ -18,12 +18,8 @@ bool SimpleModel::IsEmpty()
 	return empty;
 }
 
-bool SimpleModel::Initialize(ID3D11Device* device, fun_t initVerts)
+bool SimpleModel::Initialize(ID3D11Device* device)
 {
-	if (!initVerts) {
-		return false;
-	}
-
 	ColorVertexType* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
@@ -76,9 +72,9 @@ bool SimpleModel::Initialize(ID3D11Device* device, fun_t initVerts)
 	indexData.pSysMem = indices;
 
 	// FUN STARTS HERE :)
-	// 
+
 	// STRATEGY PATTERN
-	initVerts(vertices, indices);
+	InitializeVertices(vertices, indices);
 
 	// FUN ENDS HERE :(
 
