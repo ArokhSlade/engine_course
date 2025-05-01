@@ -1,22 +1,5 @@
 #include "UserInterfaceClass.h"
 
-UserInterfaceClass::UserInterfaceClass()
-{
-	m_Font1 = 0;
-	m_FpsString = 0;
-	m_VideoStrings = 0;
-	m_PositionStrings = 0;
-
-	m_RenderCountString = 0;
-	m_RenderCountSpheresString = 0;
-	m_RenderCountCubesString = 0;
-	m_RenderCountPyramidsString = 0;
-}
-
-UserInterfaceClass::~UserInterfaceClass()
-{
-}
-
 bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int screenWidth)
 {
 	bool result;
@@ -287,7 +270,7 @@ void UserInterfaceClass::Shutdown()
 	return;
 }
 
-bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCount, int renderCountSpheres, int renderCountCubes, int renderCountPyramids,
+bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, const PrimitiveCounts& renderCounts,
 								int fps, float posX, float posY, float posZ, float rotX, float rotY, float rotZ)
 {
 	bool result;
@@ -299,25 +282,25 @@ bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, int renderCou
 		return false;
 	}
 
-	result = UpdateRenderCountString(deviceContext, renderCount);
+	result = UpdateRenderCountString(deviceContext, renderCounts.GetTotalCount());
 	if (!result)
 	{
 		return false;
 	}
 
-	result = UpdateRenderCountSpheresString(deviceContext, renderCountSpheres);
+	result = UpdateRenderCountSpheresString(deviceContext, renderCounts.sphereCount);
 	if (!result)
 	{
 		return false;
 	}
 
-	result = UpdateRenderCountCubesString(deviceContext, renderCountCubes);
+	result = UpdateRenderCountCubesString(deviceContext, renderCounts.cubeCount);
 	if (!result)
 	{
 		return false;
 	}
 
-	result = UpdateRenderCountPyramidsString(deviceContext, renderCountPyramids);
+	result = UpdateRenderCountPyramidsString(deviceContext, renderCounts.pyramidCount);
 	if (!result)
 	{
 		return false;
@@ -431,7 +414,6 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 
 	return true;
 }
-
 
 bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceContext, int renderCount)
 {

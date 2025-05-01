@@ -7,13 +7,15 @@
 #include "ModelClass.h"
 #include "CubeModel.h"
 #include "PyramidModel.h"
+#include "CustomStructs.h"
 
 class PrimitiveCreator
 {
 public :
 	bool Initialize(HWND hwnd, D3DClass* Direct3D, int modelCount);
 	void Shutdown();
-	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX, XMMATRIX, XMMATRIX, Frustum* frustum, bool displayAABBs);
+	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, PrimitiveCounts*, 
+				XMMATRIX, XMMATRIX, XMMATRIX, Frustum* frustum, bool displayAABBs);
 private:	
 	ModelListClass* m_ModelList;
 

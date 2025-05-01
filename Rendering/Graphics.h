@@ -46,13 +46,7 @@ private:
 	PrimitiveCreator* m_PrimitiveCreator;
 	Frustum* m_Frustum;
 
-	ModelClass* m_SphereModel;
-
-	AxisAlignedBoundingBox* m_aabbSphere;
-
-	int m_renderCountSpheres;
-	int m_renderCountCubes;
-	int m_renderCountPyramids;
+	PrimitiveCounts m_renderCounts;
 
 	SkyDome* m_SkyDome;
 };

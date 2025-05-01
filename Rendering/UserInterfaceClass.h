@@ -2,17 +2,16 @@
 #define _USERINTERFACECLASS_H_
 
 #include "TextClass.h"
+#include "CustomStructs.h"
 
 class UserInterfaceClass
 {
 public:
-	UserInterfaceClass();
-	~UserInterfaceClass();
 
 	bool Initialize(D3DClass*, int, int);
 	void Shutdown();
 
-	bool Frame(ID3D11DeviceContext*, int renderCount, int renderCountSpheres, int renderCountCubes, int renderCountPyramids, 
+	bool Frame(ID3D11DeviceContext*, const PrimitiveCounts& renderCounts,
 		int, float, float, float, float, float, float);
 	bool Render(D3DClass*, ShaderManagerClass*, XMMATRIX, XMMATRIX, XMMATRIX);
 

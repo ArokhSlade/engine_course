@@ -38,3 +38,17 @@ struct ColorBufferType
 	XMFLOAT4 apexColor;
 	XMFLOAT4 centerColor;
 };
+
+struct PrimitiveCounts {
+	int sphereCount, cubeCount, pyramidCount;
+
+	int GetTotalCount() const {
+		int total = 0;
+
+		total += sphereCount;
+		total += cubeCount;
+		total += pyramidCount;
+
+		return total;
+	}
+};

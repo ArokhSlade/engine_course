@@ -49,15 +49,13 @@ void PrimitiveCreator::Shutdown()
 	ShutdownAndDelete(m_ModelList);
 }
 
-bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, Frustum* frustum, bool displayAABBs)
+bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, PrimitiveCounts* renderCounts, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, Frustum* frustum, bool displayAABBs)
 {
 	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
 	// Get the number of models that will be rendered.
 	int modelCount = m_ModelList->GetModelCount();
 
-	int renderCountSpheres = 0;
-	int renderCountCubes = 0;
-	int renderCountPyramids = 0;
+	*renderCounts = {};
 
 	bool isInsideFrustum;
 
@@ -99,7 +97,7 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 					RenderColorShaderFtor(m_SphereModel->GetAABB(), worldMatrix);
 				}
 
-				renderCountSpheres++;
+				renderCounts->sphereCount++;
 			}
 			break;
 		case Cube:
@@ -116,7 +114,7 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 					RenderColorShaderFtor(m_CubeModel->GetAABB(), worldMatrix);
 				}
 
-				renderCountCubes++;
+				renderCounts->cubeCount++;
 			}
 			break;
 		case Pyramid:
@@ -133,12 +131,10 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 					RenderColorShaderFtor(m_PyramidModel->GetAABB(), worldMatrix);
 				}
 
-				renderCountPyramids++;
+				renderCounts->pyramidCount++;
 			}
 			break;
 		}
-
-
 
 		// Reset to the original world matrix.
 		Direct3D->GetWorldMatrix(worldMatrix);

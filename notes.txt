@@ -1,6 +1,7 @@
 TODO:
 - IMPORTANT: info about how many primitives and which in primitive creator
 - construct model list inside primitive creator?
+
 - fix m_vertexCount vs GetVertexCount, also indexCount
 - pass frustum or create locally?
 - figure out where and how to track render counts.
@@ -9,7 +10,7 @@ TODO:
 - "templates" for similar ui-code for new classes
 - where to put desiredModelCount(s)?
 - clarify ModelClass -> m_SphereModel 
-- consolidate CubeModel,PyramidModel etc... (replace copy-pasta with common base)
+- store ui message positions in one place (duplicated in init, update)
 - simplify ALL shutdown and initialize functions in the program
 - break up ConstructAndInitialize template
  - split the window message off 

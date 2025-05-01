@@ -76,10 +76,6 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 	m_displayAABBs = false;
 
-	m_renderCountSpheres = 0;
-	m_renderCountCubes = 0;
-	m_renderCountPyramids = 0;
-
 	return true;
 }
 
@@ -110,8 +106,7 @@ bool Graphics::Frame(D3DClass* Direct3D, InputClass* Input, ShaderManagerClass* 
 	m_Position->GetRotation(rotX, rotY, rotZ);
 
 	// Do the frame processing for the user interface.
-	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_renderCountSpheres + m_renderCountCubes + m_renderCountPyramids,
-									m_renderCountSpheres, m_renderCountCubes, m_renderCountPyramids,
+	result = m_UserInterface->Frame(Direct3D->GetDeviceContext(), m_renderCounts,
 									fps, posX, posY, posZ, rotX, rotY, rotZ);	
 	if(!result)
 	{
@@ -244,13 +239,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 		return false;
 	}
 
-	// Get the number of models that will be rendered.	
-
-	m_renderCountSpheres = 0;
-	m_renderCountCubes = 0;
-	m_renderCountPyramids = 0;
-
-	m_PrimitiveCreator->Render(Direct3D, ShaderManager, worldMatrix, viewMatrix, projectionMatrix, m_Frustum, m_displayAABBs);
+	m_PrimitiveCreator->Render(Direct3D, ShaderManager, &m_renderCounts, worldMatrix, viewMatrix, projectionMatrix, m_Frustum, m_displayAABBs);
 	
 	// Render the user interface.
 	if(m_displayUI)
