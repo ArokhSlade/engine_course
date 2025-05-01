@@ -219,25 +219,6 @@ void CubeModel::InitializeVertices(ColorVertexType* vertices, unsigned long* ind
 	}
 }
 
-void CubeModel::Shutdown()
-{
-	ShutdownAndDelete(m_aabb);
-
-	// Release the index buffer.
-	if (m_indexBuffer)
-	{
-		m_indexBuffer->Release();
-		m_indexBuffer = 0;
-	}
-
-	// Release the vertex buffer.
-	if (m_vertexBuffer)
-	{
-		m_vertexBuffer->Release();
-		m_vertexBuffer = 0;
-	}
-}
-
 void CubeModel::Render(ID3D11DeviceContext* deviceContext)
 {
 	unsigned int stride;

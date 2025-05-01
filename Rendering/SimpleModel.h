@@ -9,7 +9,8 @@
 class SimpleModel
 {
 public:
-	virtual void Shutdown();
+	bool Initialize(ID3D11Device* device);
+	void Shutdown();
 	virtual void Render(ID3D11DeviceContext* deviceContext) =0;
 	
 	void RenderAABB(ID3D11DeviceContext* deviceContext);
@@ -30,9 +31,6 @@ protected:
 
 	AxisAlignedBoundingBox* m_aabb;
 
-
 public:
-	using fun_t = void (*)(ColorVertexType* vertices, unsigned long* indices);
-
-	virtual bool Initialize(ID3D11Device* device);
+	
 };

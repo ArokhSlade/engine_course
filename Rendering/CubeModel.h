@@ -8,7 +8,6 @@ class CubeModel : public SimpleModel
 {
 public:	
 	void Render(ID3D11DeviceContext* deviceContext) override;
-	void Shutdown() override;
 
 	virtual int GetIndexCount() override;
 	virtual int GetVertexCount() override;
