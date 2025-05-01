@@ -10,14 +10,10 @@ Graphics::Graphics()
 	m_Terrain = 0;
 
 	m_PrimitiveCreator = 0;
-	m_SphereModel = 0;
 	m_Frustum = 0; // todo nullptr
-	m_CubeModel = 0;
-	m_PyramidModel = 0;
 
+	m_SphereModel = 0;
 	m_aabbSphere = 0;
-	m_aabbCube = 0;
-	m_aabbPyramid = 0;
 
 	m_skyDome = 0;
 }
@@ -95,62 +91,6 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-	// create the cube model object
-	m_CubeModel = new CubeModel;
-	if (!m_CubeModel)
-	{
-		return false;
-	}
-
-	// initialize the cube model object
-	result = m_CubeModel->Initialize(Direct3D->GetDevice());
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the Cube Model Object.", L"Error", MB_OK);
-		return false;
-	}
-
-	m_aabbCube = new AxisAlignedBoundingBox;
-	if (!m_aabbCube)
-	{
-		return false;
-	}
-
-	result = m_aabbCube->Initialize(Direct3D->GetDevice(), m_CubeModel->GetVertexList(), m_CubeModel->GetVertexCount());
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the Cube AABB object.", L"Error", MB_OK);
-		return false;
-	}
-
-	// create the cube model object
-	m_PyramidModel = new PyramidModel{};
-	if (!m_PyramidModel)
-	{
-		return false;
-	}
-
-	// initialize the cube model object
-	result = m_PyramidModel->Initialize(Direct3D->GetDevice());
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the Pyramid Model Object.", L"Error", MB_OK);
-		return false;
-	}
-
-	m_aabbPyramid = new AxisAlignedBoundingBox;
-	if (!m_aabbPyramid)
-	{
-		return false;
-	}
-
-	result = m_aabbPyramid->Initialize(Direct3D->GetDevice(), m_PyramidModel->GetVertexList(), m_PyramidModel->GetVertexCount());
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the Pyramid AABB object.", L"Error", MB_OK);
-		return false;
-	}
-
 
 	const int desiredModelCount = 750;
 	if (!ConstructAndInitialize(m_PrimitiveCreator, hwnd, Direct3D, desiredModelCount))
@@ -224,36 +164,6 @@ void Graphics::Shutdown()
 		m_aabbSphere->Shutdown();
 		delete m_aabbSphere;
 		m_aabbSphere = 0;
-	}
-
-	// Release the cube model object.
-	if (m_CubeModel)
-	{
-		m_CubeModel->Shutdown();
-		delete m_CubeModel;
-		m_CubeModel = 0;
-	}
-
-	if (m_aabbCube)
-	{
-		m_aabbCube->Shutdown();
-		delete m_aabbCube;
-		m_aabbCube = 0;
-	}
-	
-	// Release the pyramid model object.
-	if (m_PyramidModel)
-	{
-		m_PyramidModel->Shutdown();
-		delete m_PyramidModel;
-		m_PyramidModel = 0;
-	}
-
-	if (m_aabbPyramid)
-	{
-		m_aabbPyramid->Shutdown();
-		delete m_aabbPyramid;
-		m_aabbPyramid = 0;
 	}
 
 	ShutdownAndDelete(m_PrimitiveCreator);

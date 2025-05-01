@@ -50,12 +50,8 @@ private:
 	Frustum* m_Frustum;
 
 	ModelClass* m_SphereModel;
-	CubeModel* m_CubeModel;
-	PyramidModel* m_PyramidModel;
 
 	AxisAlignedBoundingBox* m_aabbSphere;
-	AxisAlignedBoundingBox* m_aabbCube;
-	AxisAlignedBoundingBox* m_aabbPyramid;
 
 	int m_renderCountSpheres;
 	int m_renderCountCubes;
