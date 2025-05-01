@@ -7,20 +7,6 @@
 
 
 
-PrimitiveCreator::PrimitiveCreator()
-	:m_ModelList{nullptr}
-	,m_CubeModel{nullptr}
-	,m_PyramidModel{nullptr}
-	,m_SphereModel{nullptr}
-{
-}
-
-
-PrimitiveCreator::~PrimitiveCreator()
-{
-
-}
-
 bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, int modelCount)
 {
 	bool result = true;
