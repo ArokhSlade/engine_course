@@ -197,6 +197,9 @@
     <ClInclude Include="CustomMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="font.fx">

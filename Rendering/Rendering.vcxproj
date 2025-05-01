@@ -182,6 +182,7 @@
     <ClInclude Include="ApplicationClass.h" />
     <ClInclude Include="AxisAlignedBoundingBox.h" />
     <ClInclude Include="CameraClass.h" />
+    <ClInclude Include="SimpleModel.h" />
     <ClInclude Include="ColorShaderClass.h" />
     <ClInclude Include="CubeModel.h" />
     <ClInclude Include="CustomEnums.h" />
