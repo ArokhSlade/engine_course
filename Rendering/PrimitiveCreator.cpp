@@ -125,16 +125,13 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 			{
 				// Move the model to the location it should be rendered at.
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
-								
-				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-				m_CubeModel->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 
-				//if (displayAABBs)
-				//{
-				//	m_aabbCube->Render(Direct3D->GetDeviceContext());
-				//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbCube->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-				//}
+				RenderColorShaderFtor(m_CubeModel, worldMatrix);
+
+				if (displayAABBs)
+				{
+					RenderColorShaderFtor(m_CubeModel->GetAABB(), worldMatrix);
+				}
 
 				renderCountCubes++;
 			}

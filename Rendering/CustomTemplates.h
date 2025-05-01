@@ -2,6 +2,7 @@
 #define __CUSTOM_TEMPLATES_H__
 
 #include <d3d11.h> //HWND
+#include <utility>
 
 template <typename T, typename... TArgs>
 bool ConstructAndInitialize(T*& tObjPtr, TArgs&&... args)

@@ -1,28 +1,15 @@
 #ifndef _CUBEMODEL_H_
 #define _CUBEMODEL_H_
 
-#include "CustomStructs.h"
-#include "d3d11.h"
+#include "SimpleModel.h"
+#include "CustomTemplates.h"
 
-class CubeModel
+class CubeModel : public SimpleModel
 {
 public:
-	CubeModel();
-	~CubeModel();
-
-	bool Initialize(ID3D11Device* device);
-	void Shutdown();
-	void Render(ID3D11DeviceContext* deviceContext);
-
-	int GetIndexCount();
-	int GetVertexCount();
-	VectorType* GetVertexList();
-
-private:
-	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
-	int m_vertexCount, m_indexCount;
-
-	VectorType* m_vertexList;
+	bool Initialize(ID3D11Device* device) override;
+	void Shutdown() override;
+	void Render(ID3D11DeviceContext* deviceContext) override;
 };
 
 #endif

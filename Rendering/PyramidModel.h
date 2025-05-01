@@ -6,10 +6,6 @@
 
 #include "SimpleModel.h"
 
-#include "CustomStructs.h"
-#include "d3d11.h"
-#include "AxisAlignedBoundingBox.h"
-
 class PyramidModel : public SimpleModel
 {
 public:

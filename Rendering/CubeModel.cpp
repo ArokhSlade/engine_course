@@ -1,14 +1,5 @@
 #include "CubeModel.h"
 
-CubeModel::CubeModel()
-{
-	m_vertexBuffer = 0;
-	m_indexBuffer = 0;
-}
-
-CubeModel::~CubeModel()
-{
-}
 
 bool CubeModel::Initialize(ID3D11Device* device)
 {
@@ -317,11 +308,18 @@ bool CubeModel::Initialize(ID3D11Device* device)
 	delete[] indices;
 	indices = 0;
 
+	if (!ConstructAndInitialize(m_aabb, device, m_vertexList, m_vertexCount))
+	{
+		return false;
+	}
+
 	return true;
 }
 
 void CubeModel::Shutdown()
 {
+	ShutdownAndDelete(m_aabb);
+
 	// Release the index buffer.
 	if (m_indexBuffer)
 	{
@@ -354,19 +352,4 @@ void CubeModel::Render(ID3D11DeviceContext* deviceContext)
 
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-}
-
-int CubeModel::GetIndexCount()
-{
-	return m_indexCount;
-}
-
-int CubeModel::GetVertexCount()
-{
-	return m_vertexCount;
-}
-
-VectorType* CubeModel::GetVertexList()
-{
-	return m_vertexList;
 }

@@ -18,6 +18,13 @@ bool SimpleModel::IsEmpty()
 	return empty;
 }
 
+void SimpleModel::Shutdown()
+{
+	ShutdownAndDelete(m_aabb);
+	ReleaseAndZero(m_indexBuffer);
+	ReleaseAndZero(m_vertexBuffer);
+}
+
 void SimpleModel::RenderAABB(ID3D11DeviceContext* deviceContext)
 {
 	m_aabb->Render(deviceContext);
