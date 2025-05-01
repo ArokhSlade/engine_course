@@ -18,6 +18,8 @@ TODO:
   - communicates: local refinement for readability
 - bug?: render count strings updated before frame is rendered
  -> counts outdated by one frame?
+- simplify ui message function interfaces: 
+ - initialize: ScreenDims, FloatColor
 - write a shader to transform vertices in array 
  -> use it two compute a true aabb
  -> use it for proper culling of transformed (rotated) objects 

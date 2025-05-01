@@ -25,83 +25,6 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	// Create the text object for the fps string.
-	m_FpsString = new TextClass;
-	if (!m_FpsString)
-	{
-		return false;
-	}
-
-	// Initialize the fps text string.
-	result = m_FpsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-									 "Fps: 0", 10, 50, 0.0f, 1.0f, 0.0f);
-	if (!result)
-	{
-		return false;
-	}
-
-	// Initial the previous frame fps.
-	m_previousFps = -1;
-
-	// Create the text object for the rendercount string.
-	m_RenderCountString = new TextClass;
-	if (!m_RenderCountString)
-	{
-		return false;
-	}
-
-	// Initialize the fps text string.
-	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
-		"Rendercount: 0", 10, 70, 1.0f, 1.0f, 0.0f);
-	if (!result)
-	{
-		return false;
-	}
-
-	// Create the text object for the render count string.
-	m_RenderCountSpheresString = new TextClass;
-	if (!m_RenderCountSpheresString)
-	{
-		return false;
-	}
-
-	// Initialize the render count text string.
-	result = m_RenderCountSpheresString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
-		"Spheres Count: 0", 10, 90, 1.0f, 1.0f, 0.0f);
-	if (!result)
-	{
-		return false;
-	}
-
-	// Create the text object for the render count string.
-	m_RenderCountCubesString = new TextClass;
-	if (!m_RenderCountCubesString)
-	{
-		return false;
-	}
-
-	// Initialize the render count text string.
-	result = m_RenderCountCubesString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
-		"Cubes Count: 0", 10, 110, 1.0f, 1.0f, 0.0f);
-	if (!result)
-	{
-		return false;
-	}
-
-	// Create the text object for the render count string.
-	m_RenderCountPyramidsString = new TextClass;
-	if (!m_RenderCountPyramidsString)
-	{
-		return false;
-	}
-
-	// Initialize the render count text string.
-	result = m_RenderCountPyramidsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
-		"Pyramids Count: 0", 10, 130, 1.0f, 1.0f, 0.0f);
-	if (!result)
-	{
-		return false;
-	}
 
 	// Setup the video card strings.
 	Direct3D->GetVideoCardInfo(videoCard, videoMemory);
@@ -114,6 +37,14 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	strcat_s(memoryString, tempString);
 	strcat_s(memoryString, " MB");
 
+
+	const int rowHeight = 20;
+	int row = 10;
+
+	////////////////////////////////////////////////////////////////////////////
+	// VIDEO & FPS STRINGS
+	////////////////////////////////////////////////////////////////////////////
+
 	// Create the text objects for the video strings.
 	m_VideoStrings = new TextClass[2];
 	if (!m_VideoStrings)
@@ -123,19 +54,114 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 
 	// Initialize the video text strings.
 	result = m_VideoStrings[0].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 256, false, m_Font1, 
-										  videoString, 10, 10, 1.0f, 1.0f, 1.0f);
+										  videoString, 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
 	{ 
 		return false; 
 	}
 
+	row += rowHeight;
 	result = m_VideoStrings[1].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1, 
-										  memoryString, 10, 30, 1.0f, 1.0f, 1.0f);
+										  memoryString, 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
 	{ 
 		return false;
 	}
 
+
+
+	// Create the text object for the fps string.
+	m_FpsString = new TextClass;
+	if (!m_FpsString)
+	{
+		return false;
+	}
+
+	row += rowHeight;
+	// Initialize the fps text string.
+	result = m_FpsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1,
+		"Fps: 0", 10, row, 0.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Initial the previous frame fps.
+	m_previousFps = -1;
+
+
+	
+	////////////////////////////////////////////////////////////////////////////
+	// RENDER COUNT STRINGS
+	////////////////////////////////////////////////////////////////////////////
+
+	// Create the text object for the rendercount string.
+	m_RenderCountString = new TextClass;
+	if (!m_RenderCountString)
+	{
+		return false;
+	}
+
+	row += rowHeight;
+	// Initialize the fps text string.
+	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Rendercount: 0", 10, row, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountSpheresString = new TextClass;
+	if (!m_RenderCountSpheresString)
+	{
+		return false;
+	}
+	
+	row += rowHeight;
+	// Initialize the render count text string.
+	result = m_RenderCountSpheresString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Spheres Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountCubesString = new TextClass;
+	if (!m_RenderCountCubesString)
+	{
+		return false;
+	}
+
+	row += rowHeight;
+	// Initialize the render count text string.
+	result = m_RenderCountCubesString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Cubes Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountPyramidsString = new TextClass;
+	if (!m_RenderCountPyramidsString)
+	{
+		return false;
+	}
+
+	row += rowHeight;
+	// Initialize the render count text string.
+	result = m_RenderCountPyramidsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Pyramids Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
+	// POSITION STRINGS
+	////////////////////////////////////////////////////////////////////////////
 	// Create the text objects for the position strings.
 	m_PositionStrings = new TextClass[6];
 	if(!m_PositionStrings)
@@ -144,43 +170,49 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	}
 
 	// Initialize the position text strings.
+	row = 310;	
 	result = m_PositionStrings[0].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-											 "X: 0",  10, 310, 1.0f, 1.0f, 1.0f);
+											 "X: 0",  10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
 	{ 
 		return false; 
 	}
 
+	row += rowHeight;
 	result = m_PositionStrings[1].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-											 "Y: 0",  10, 330, 1.0f, 1.0f, 1.0f);
+											 "Y: 0",  10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
 	{ 
 		return false; 
 	}
 
+	row += rowHeight;
 	result = m_PositionStrings[2].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-											 "Z: 0",  10, 350, 1.0f, 1.0f, 1.0f);  
+											 "Z: 0",  10, row, 1.0f, 1.0f, 1.0f);  
 	if(!result) 
 	{ 
 		return false; 
 	}
 
+	row += rowHeight;
 	result = m_PositionStrings[3].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-											 "rX: 0", 10, 370, 1.0f, 1.0f, 1.0f);
+											 "rX: 0", 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
 	{ 
 		return false;
 	}
 
+	row += rowHeight;
 	result = m_PositionStrings[4].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-											 "rY: 0", 10, 390, 1.0f, 1.0f, 1.0f);
+											 "rY: 0", 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
 	{ 
 		return false; 
 	}
 
+	row += rowHeight;
 	result = m_PositionStrings[5].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
-											 "rZ: 0", 10, 410, 1.0f, 1.0f, 1.0f);  
+											 "rZ: 0", 10, row, 1.0f, 1.0f, 1.0f);  
 	if(!result) 
 	{ 
 		return false; 
