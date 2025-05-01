@@ -7,7 +7,7 @@ class Frustum
 public:
 	Frustum();
 
-	void Initialize(float screenDepth);
+	bool Initialize(float screenDepth);
 	void ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix);
 
 	bool IsSphereInsideFrustum(float x, float y, float z, float radius);

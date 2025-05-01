@@ -2,9 +2,10 @@
 
 Frustum::Frustum() {}
 
-void Frustum::Initialize(float screenDepth)
+bool Frustum::Initialize(float screenDepth)
 {
 	m_screenDepth = screenDepth;
+	return true;
 }
 
 void Frustum::ConstructFrustum(XMMATRIX projectionMatrix, XMMATRIX viewMatrix)

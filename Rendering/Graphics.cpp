@@ -70,28 +70,6 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false; 
 	}
 
-
-	if (!ConstructAndInitialize(m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(),
-		"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
-	{
-		SHOW_INIT_ERROR_IN_HWND("SphereModel object");
-		return false;
-	}
-
-	m_aabbSphere = new AxisAlignedBoundingBox;
-	if (!m_aabbSphere)
-	{
-		return false;
-	}
-
-	result = m_aabbSphere->Initialize(Direct3D->GetDevice(), m_SphereModel->GetVertexList(), m_SphereModel->GetVertexCount());
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the Model AABB object.", L"Error", MB_OK);
-		return false;
-	}
-
-
 	const int desiredModelCount = 750;
 	if (!ConstructAndInitialize(m_PrimitiveCreator, hwnd, Direct3D, desiredModelCount))
 	{
@@ -99,15 +77,11 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		return false;
 	}
 
-
-	m_Frustum = new Frustum;
-	if (!m_Frustum)
+	if (!ConstructAndInitialize(m_Frustum, screenDepth))
 	{
+		SHOW_INIT_ERROR_IN_HWND("Frustum");
 		return false;
 	}
-
-	// initialize frustum
-	m_Frustum->Initialize(screenDepth);
 	
 	m_skyDome = new SkyDome;
 	if (!m_skyDome)
@@ -149,21 +123,6 @@ void Graphics::Shutdown()
 		m_Terrain->Shutdown();
 		delete m_Terrain;
 		m_Terrain = 0;
-	}
-
-	// Release the terrain object.
-	if (m_SphereModel)
-	{
-		m_SphereModel->Shutdown();
-		delete m_SphereModel;
-		m_SphereModel = 0;
-	}
-
-	if (m_aabbSphere)
-	{
-		m_aabbSphere->Shutdown();
-		delete m_aabbSphere;
-		m_aabbSphere = 0;
 	}
 
 	ShutdownAndDelete(m_PrimitiveCreator);
