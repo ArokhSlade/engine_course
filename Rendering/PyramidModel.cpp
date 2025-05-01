@@ -238,17 +238,9 @@ bool PyramidModel::Initialize(ID3D11Device* device)
 
 void PyramidModel::Shutdown()
 {
-	if (m_indexBuffer)
-	{
-		m_indexBuffer->Release();
-		m_indexBuffer = 0;
-	}
-
-	if (m_vertexBuffer)
-	{
-		m_vertexBuffer->Release();
-		m_vertexBuffer = 0;
-	}
+	ShutdownAndDelete(m_aabb);
+	ReleaseAndZero(m_indexBuffer);
+	ReleaseAndZero(m_vertexBuffer);
 }
 
 void PyramidModel::Render(ID3D11DeviceContext* deviceContext)
