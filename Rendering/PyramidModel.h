@@ -17,13 +17,6 @@ public:
 	bool Initialize(ID3D11Device* device) override;
 	void Shutdown() override;
 	void Render(ID3D11DeviceContext* deviceContext) override;
-	void RenderAABB(ID3D11DeviceContext* deviceContext) override;
-
-	int GetIndexCount() override;
-	int GetVertexCount() override;
-	VectorType* GetVertexList() override;
-	AxisAlignedBoundingBox* GetAABB() override;
-	bool IsEmpty() override;
 };
 
 #endif

@@ -10,14 +10,14 @@ public:
 	virtual bool Initialize(ID3D11Device* device)  =0;
 	virtual void Shutdown() =0;
 	virtual void Render(ID3D11DeviceContext* deviceContext) =0;
-	virtual void RenderAABB(ID3D11DeviceContext* deviceContext) =0;
+	
+	void RenderAABB(ID3D11DeviceContext* deviceContext);
+	int GetIndexCount();
+	int GetVertexCount();
+	VectorType* GetVertexList();
+	AxisAlignedBoundingBox* GetAABB();
 
-	virtual int GetIndexCount() =0;
-	virtual int GetVertexCount() =0;
-	virtual VectorType* GetVertexList() =0;
-	virtual AxisAlignedBoundingBox* GetAABB() =0;
-
-	virtual bool IsEmpty() =0;
+	bool IsEmpty();
 
 
 protected:

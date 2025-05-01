@@ -2,23 +2,8 @@
 #include "CustomTemplates.h"
 #include <stdexcept> //for debug throw statement
 
-AxisAlignedBoundingBox* PyramidModel::GetAABB()
-{
-	return m_aabb;
-}
 
-bool PyramidModel::IsEmpty() 
-{
-	bool empty = true;
-	empty &= m_vertexBuffer == nullptr;
-	empty &= m_indexBuffer == nullptr;
-	empty &= m_vertexCount == 0;
-	empty &= m_indexCount == 0;
-	empty &= m_vertexList == nullptr;
-	empty &= m_aabb == nullptr;
 
-	return empty;
-}
 
 bool PyramidModel::Initialize(ID3D11Device* device)
 {
@@ -262,22 +247,3 @@ void PyramidModel::Render(ID3D11DeviceContext* deviceContext)
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void PyramidModel::RenderAABB(ID3D11DeviceContext* deviceContext)
-{
-	m_aabb->Render(deviceContext);
-}
-
-int PyramidModel::GetIndexCount()
-{
-	return m_indexCount;
-}
-
-int PyramidModel::GetVertexCount()
-{
-	return m_vertexCount;
-}
-
-VectorType* PyramidModel::GetVertexList()
-{
-	return m_vertexList;
-}
