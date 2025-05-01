@@ -9,7 +9,6 @@
 class SimpleModel
 {
 public:
-	virtual bool Initialize(ID3D11Device* device)  =0;
 	virtual void Shutdown();
 	virtual void Render(ID3D11DeviceContext* deviceContext) =0;
 	
@@ -23,9 +22,17 @@ public:
 
 
 protected:
+	virtual void Initialize_DefineVertices() {};
+
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 	VectorType* m_vertexList;
 
 	AxisAlignedBoundingBox* m_aabb;
+
+
+public:
+	using fun_t = void (*)();
+
+	virtual bool Initialize(ID3D11Device* device, fun_t initVerts = nullptr);
 };

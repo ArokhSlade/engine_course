@@ -1,7 +1,7 @@
 #include "CubeModel.h"
 
 
-bool CubeModel::Initialize(ID3D11Device* device)
+bool CubeModel::Initialize(ID3D11Device* device, fun_t initVerts)
 {
 	ColorVertexType* vertices;
 	unsigned long* indices;

@@ -5,7 +5,7 @@
 
 
 
-bool PyramidModel::Initialize(ID3D11Device* device)
+bool PyramidModel::Initialize(ID3D11Device* device, fun_t initVerts)
 {
 	if (!IsEmpty())
 	{
