@@ -11,7 +11,7 @@ class SimpleModel
 public:
 	bool Initialize(ID3D11Device* device);
 	void Shutdown();
-	virtual void Render(ID3D11DeviceContext* deviceContext) =0;
+	void Render(ID3D11DeviceContext* deviceContext);
 	
 	void RenderAABB(ID3D11DeviceContext* deviceContext);
 	virtual int GetIndexCount();
