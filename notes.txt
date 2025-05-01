@@ -1,8 +1,9 @@
 TODO:
 - IMPORTANT: info about how many primitives and which in primitive creator
 - construct model list inside primitive creator?
-
+- is renderCountStringsCount even needed?
 - fix m_vertexCount vs GetVertexCount, also indexCount
+- PrimitiveType: enum -> enum class 
 - pass frustum or create locally?
 - figure out where and how to track render counts.
  - dataflow back from primitive creator to graphics?
@@ -38,7 +39,7 @@ TODO:
 - refactor all classes into aggregates? (as long as it makes sense)
 - hwnd error message for failed aabb initialization?
  -> pass hwnd to model class
- 
+- what if we make UI rowHeight was const?
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
 

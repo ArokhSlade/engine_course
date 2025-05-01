@@ -49,15 +49,15 @@ bool ModelListClass::Initialize(int numModels)
 
 		if (i < numSpheres)
 		{
-			m_ModelInfoList[i].type = Sphere;
+			m_ModelInfoList[i].type = PrimitiveType::Sphere;
 		}
 		else if( i < numSpheres + numCubes)
 		{
-			m_ModelInfoList[i].type = Cube;
+			m_ModelInfoList[i].type = PrimitiveType::Cube;
 		}
 		else
 		{
-			m_ModelInfoList[i].type = Pyramid;
+			m_ModelInfoList[i].type = PrimitiveType::Pyramid;
 		}
 	}
 

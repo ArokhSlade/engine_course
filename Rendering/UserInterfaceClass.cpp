@@ -1,6 +1,6 @@
 #include "UserInterfaceClass.h"
 
-bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int screenWidth)
+bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int screenWidth, int renderCountStringsCount)
 {
 	bool result;
 	char videoCard[128];
@@ -38,7 +38,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	strcat_s(memoryString, " MB");
 
 
-	const int rowHeight = 20;
+	m_rowHeight = 20;
 	int row = 10;
 
 	////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false; 
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	result = m_VideoStrings[1].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1, 
 										  memoryString, 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
@@ -77,10 +77,11 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
+	m_fpsRow = row;
 	// Initialize the fps text string.
 	result = m_FpsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1,
-		"Fps: 0", 10, row, 0.0f, 1.0f, 0.0f);
+		"Fps: 0", 10, m_fpsRow, 0.0f, 1.0f, 0.0f);
 	if (!result)
 	{
 		return false;
@@ -102,10 +103,11 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
+	m_firstRenderCountRow = row;
 	// Initialize the fps text string.
 	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
-		"Rendercount: 0", 10, row, 1.0f, 1.0f, 0.0f);
+		"Rendercount: 0", 10, m_firstPositionStringRow, 1.0f, 1.0f, 0.0f);
 	if (!result)
 	{
 		return false;
@@ -118,7 +120,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 	
-	row += rowHeight;
+	row += m_rowHeight;
 	// Initialize the render count text string.
 	result = m_RenderCountSpheresString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
 		"Spheres Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
@@ -134,7 +136,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	// Initialize the render count text string.
 	result = m_RenderCountCubesString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
 		"Cubes Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
@@ -150,7 +152,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	// Initialize the render count text string.
 	result = m_RenderCountPyramidsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
 		"Pyramids Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
@@ -158,6 +160,8 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	{
 		return false;
 	}
+
+	m_lastRenderCountRow = row;
 
 	////////////////////////////////////////////////////////////////////////////
 	// POSITION STRINGS
@@ -170,7 +174,8 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	}
 
 	// Initialize the position text strings.
-	row = 310;	
+	row = 200;	
+	m_firstPositionStringRow = row;
 	result = m_PositionStrings[0].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "X: 0",  10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
@@ -178,7 +183,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false; 
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	result = m_PositionStrings[1].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "Y: 0",  10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
@@ -186,7 +191,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false; 
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	result = m_PositionStrings[2].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "Z: 0",  10, row, 1.0f, 1.0f, 1.0f);  
 	if(!result) 
@@ -194,7 +199,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false; 
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	result = m_PositionStrings[3].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "rX: 0", 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
@@ -202,7 +207,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	result = m_PositionStrings[4].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "rY: 0", 10, row, 1.0f, 1.0f, 1.0f);
 	if(!result)
@@ -210,7 +215,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false; 
 	}
 
-	row += rowHeight;
+	row += m_rowHeight;
 	result = m_PositionStrings[5].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "rZ: 0", 10, row, 1.0f, 1.0f, 1.0f);  
 	if(!result) 
@@ -438,7 +443,7 @@ bool UserInterfaceClass::UpdateFpsString(ID3D11DeviceContext* deviceContext, int
 	}
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 50, red, green, blue);
+	result = m_FpsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, m_fpsRow, red, green, blue);
 	if(!result)
 	{
 		return false;
@@ -461,13 +466,19 @@ bool UserInterfaceClass::UpdateRenderCountString(ID3D11DeviceContext* deviceCont
 	strcat_s(finalString, tempString);
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 70, 0, 1, 0);
+	result = m_RenderCountString->UpdateSentence(deviceContext, m_Font1, finalString, 10, m_firstRenderCountRow, 0, 1, 0);
 	if (!result)
 	{
 		return false;
 	}
 
 	return true;
+}
+
+int UserInterfaceClass::GetRenderCountStringRow(PrimitiveType primitiveType)
+{
+	int result = m_firstRenderCountRow + (1 + static_cast<int>(primitiveType)) * m_rowHeight;
+	return result;
 }
 
 bool UserInterfaceClass::UpdateRenderCountSpheresString(ID3D11DeviceContext* deviceContext, int renderCountSpheres)
@@ -484,7 +495,8 @@ bool UserInterfaceClass::UpdateRenderCountSpheresString(ID3D11DeviceContext* dev
 	strcat_s(finalString, tempString);
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_RenderCountSpheresString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 110, 1.0f, 1.0f, 1.0f);
+	int row = GetRenderCountStringRow(PrimitiveType::Sphere);
+	result = m_RenderCountSpheresString->UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 	if (!result)
 	{
 		return false;
@@ -507,7 +519,8 @@ bool UserInterfaceClass::UpdateRenderCountCubesString(ID3D11DeviceContext* devic
 	strcat_s(finalString, tempString);
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_RenderCountCubesString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 130, 1.0f, 1.0f, 1.0f);
+	int row = GetRenderCountStringRow(PrimitiveType::Cube);
+	result = m_RenderCountCubesString->UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 	if (!result)
 	{
 		return false;
@@ -530,7 +543,8 @@ bool UserInterfaceClass::UpdateRenderCountPyramidsString(ID3D11DeviceContext* de
 	strcat_s(finalString, tempString);
 
 	// Update the sentence vertex buffer with the new string information.
-	result = m_RenderCountPyramidsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, 150, 1.0f, 1.0f, 1.0f);
+	int row = GetRenderCountStringRow(PrimitiveType::Pyramid);
+	result = m_RenderCountPyramidsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 	if (!result)
 	{
 		return false;
@@ -557,63 +571,70 @@ bool UserInterfaceClass::UpdatePositionStrings(ID3D11DeviceContext* deviceContex
 	rotationZ = (int)rotZ;
 
 	// Update the position strings if the value has changed since the last frame.
+	int row = m_firstPositionStringRow;
 	if(positionX != m_previousPosition[0])
 	{
 		m_previousPosition[0] = positionX;
 		_itoa_s(positionX, tempString, 10);
 		strcpy_s(finalString, "X: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, 200, 1.0f, 1.0f, 1.0f); 
+
+		result = m_PositionStrings[0].UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
+	row += m_rowHeight;
 	if(positionY != m_previousPosition[1])
 	{
 		m_previousPosition[1] = positionY;
 		_itoa_s(positionY, tempString, 10);
 		strcpy_s(finalString, "Y: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, 220, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[1].UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 	}
 
+	row += m_rowHeight;
 	if(positionZ != m_previousPosition[2])
 	{
 		m_previousPosition[2] = positionZ;
 		_itoa_s(positionZ, tempString, 10);
 		strcpy_s(finalString, "Z: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, 240, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[2].UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f); 
 		if(!result) { return false; }
 	}
 
+	row += 2 * m_rowHeight;
 	if(rotationX != m_previousPosition[3])
 	{
 		m_previousPosition[3] = rotationX;
 		_itoa_s(rotationX, tempString, 10);
 		strcpy_s(finalString, "rX: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, 280, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[3].UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 	}
 
+	row += m_rowHeight;
 	if(rotationY != m_previousPosition[4])
 	{
 		m_previousPosition[4] = rotationY;
 		_itoa_s(rotationY, tempString, 10);
 		strcpy_s(finalString, "rY: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, 300, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[4].UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 	}
 
+	row += m_rowHeight;
 	if(rotationZ != m_previousPosition[5])
 	{
 		m_previousPosition[5] = rotationZ;
 		_itoa_s(rotationZ, tempString, 10);
 		strcpy_s(finalString, "rZ: ");
 		strcat_s(finalString, tempString);
-		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, 320, 1.0f, 1.0f, 1.0f); 
+		result = m_PositionStrings[5].UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 		if(!result) { return false; }
 	}
 

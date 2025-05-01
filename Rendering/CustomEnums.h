@@ -1,9 +1,9 @@
 #ifndef _CUSTOMENUMS_H_
 #define _CUSTOMENUMS_H_
 
-enum PrimitiveType
+enum class PrimitiveType
 {
-	Sphere, Cube, Pyramid
+	Sphere, Cube, Pyramid, PRIMITIVES_COUNT
 };
 
 #endif

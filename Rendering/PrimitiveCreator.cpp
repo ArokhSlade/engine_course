@@ -83,7 +83,7 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 
 		switch (primitiveType)
 		{
-		case Sphere:
+		case PrimitiveType::Sphere:
 			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
 			if (isInsideFrustum)
 			{
@@ -100,7 +100,7 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 				renderCounts->sphereCount++;
 			}
 			break;
-		case Cube:
+		case PrimitiveType::Cube:
 			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
 			if (isInsideFrustum)
 			{
@@ -117,7 +117,7 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 				renderCounts->cubeCount++;
 			}
 			break;
-		case Pyramid:
+		case PrimitiveType::Pyramid:
 			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
 			if (isInsideFrustum)
 			{

@@ -1,7 +1,7 @@
 #include "Graphics.h"
 #include "CustomTemplates.h"
 #include "CustomMacros.h"
-
+#include "CustomEnums.h"
 
 bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int screenHeight, float screenDepth)
 {
@@ -16,7 +16,9 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	// Initialize the user interface object.
-	result = m_UserInterface->Initialize(Direct3D, screenHeight, screenWidth);
+
+	int renderCountStringsCount = static_cast<int>(PrimitiveType::PRIMITIVES_COUNT) + 1;
+	result = m_UserInterface->Initialize(Direct3D, screenHeight, screenWidth, renderCountStringsCount);
 	if(!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the user interface object.", L"Error", MB_OK);

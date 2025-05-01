@@ -3,12 +3,13 @@
 
 #include "TextClass.h"
 #include "CustomStructs.h"
+#include "CustomEnums.h"
 
 class UserInterfaceClass
 {
 public:
 
-	bool Initialize(D3DClass*, int, int);
+	bool Initialize(D3DClass*, int, int, int);
 	void Shutdown();
 
 	bool Frame(ID3D11DeviceContext*, const PrimitiveCounts& renderCounts,
@@ -19,6 +20,8 @@ private:
 	bool UpdateFpsString(ID3D11DeviceContext*, int);
 	bool UpdatePositionStrings(ID3D11DeviceContext*, float, float, float, float, float, float);
 
+
+	int GetRenderCountStringRow(PrimitiveType primitiveType);
 	bool UpdateRenderCountString(ID3D11DeviceContext*, int renderCount);
 	bool UpdateRenderCountSpheresString(ID3D11DeviceContext* deviceContext, int renderCountSpheres);
 	bool UpdateRenderCountCubesString(ID3D11DeviceContext* deviceContext, int renderCountCubes);
@@ -35,6 +38,12 @@ private:
 
 	int m_previousFps;
 	int m_previousPosition[6];
+
+	int m_rowHeight;
+	int m_fpsRow;
+	int m_firstRenderCountRow, m_lastRenderCountRow;
+	int m_firstPositionStringRow;
+
 };
 
 #endif
