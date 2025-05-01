@@ -104,44 +104,14 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 void Graphics::Shutdown()
 {
-	if (m_SkyDome)
-	{
-		m_SkyDome->Shutdown();
-		delete m_SkyDome;
-		m_SkyDome = 0;
-	}
-
-	// Release the terrain object.
-	if(m_Terrain)
-	{
-		m_Terrain->Shutdown();
-		delete m_Terrain;
-		m_Terrain = 0;
-	}
-
+	ShutdownAndDelete(m_SkyDome);
+	ShutdownAndDelete(m_Terrain);	
 	ShutdownAndDelete(m_PrimitiveCreator);
 
-	// Release the position object.
-	if(m_Position)
-	{
-		delete m_Position;
-		m_Position = 0;
-	}
+	DeleteAndZero(m_Position);
+	DeleteAndZero(m_Camera);
 
-	// Release the camera object.
-	if(m_Camera)
-	{
-		delete m_Camera;
-		m_Camera = 0;
-	}
-
-	// Release the user interface object.
-	if(m_UserInterface)
-	{
-		m_UserInterface->Shutdown();
-		delete m_UserInterface;
-		m_UserInterface = 0;
-	}
+	ShutdownAndDelete(m_UserInterface);
 
 	return;
 }

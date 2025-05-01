@@ -18,16 +18,24 @@ bool ConstructAndInitialize(T*& tObjPtr, TArgs&&... args)
 	return result;
 }
 
+
+template <typename T>
+void DeleteAndZero(T* tObj)
+{
+	delete tObj;
+	tObj = nullptr;
+}
+
 template <typename T>
 void ShutdownAndDelete(T* tObj) 
 {
 	if (tObj)
 	{
 		tObj->Shutdown();
-		delete tObj;
-		tObj = 0;
+		DeleteAndZero(tObj);
 	}
 }
+
 
 template <typename T>
 void ReleaseAndZero(T* what)
