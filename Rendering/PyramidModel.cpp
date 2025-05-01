@@ -1,5 +1,6 @@
 #include "PyramidModel.h"
-#include <stdexcept>
+#include "CustomTemplates.h"
+#include <stdexcept> //for debug throw statement
 
 AxisAlignedBoundingBox* PyramidModel::GetAABB()
 {
@@ -225,6 +226,12 @@ bool PyramidModel::Initialize(ID3D11Device* device)
 
 	delete[] indices;
 	indices = 0;
+
+
+	if (!ConstructAndInitialize(m_aabb, device, m_vertexList, m_vertexCount))
+	{
+		return false;
+	}
 
 	return true;
 }
