@@ -80,6 +80,14 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 	PrimitiveType primitiveType;
 	float radius;
 
+	// Helper function to render any model
+	// Put the model vertex and index buffers on the graphics pipeline 
+	// to prepare them for drawing.
+	auto RenderColorShaderFtor = [=, deviceContext = Direct3D->GetDeviceContext()](auto* model, auto worldMatrix) {
+		model->Render(deviceContext);
+		ShaderManager->RenderColorShader(deviceContext, model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+		};
+
 	// Go through all the models and render them only if they can be seen by the camera view.
 	for (int index = 0; index < modelCount; index++)
 	{
@@ -136,25 +144,13 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 			if (isInsideFrustum)
 			{
 				// Move the model to the location it should be rendered at.
-				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);							
 
-				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-				//m_PyramidModel->Render(Direct3D->GetDeviceContext());
-				//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-				
-				auto RenderColorShaderFtor = [=,deviceContext = Direct3D->GetDeviceContext()](auto* model) {
-					model->Render(deviceContext);
-					ShaderManager->RenderColorShader(deviceContext, model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-				};
-				RenderColorShaderFtor(m_PyramidModel);
+				RenderColorShaderFtor(m_PyramidModel, worldMatrix);
+
 				if (displayAABBs)
 				{
-					//auto* aabb = m_PyramidModel->GetAABB();
-					//aabb->Render(Direct3D->GetDeviceContext());
-					//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), aabb->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-					
-					RenderColorShaderFtor(m_PyramidModel->GetAABB());
-					
+					RenderColorShaderFtor(m_PyramidModel->GetAABB(), worldMatrix);
 				}
 
 				renderCountPyramids++;
