@@ -57,7 +57,7 @@ private:
 	int m_renderCountCubes;
 	int m_renderCountPyramids;
 
-	SkyDome* m_skyDome;
+	SkyDome* m_SkyDome;
 };
 
 #endif

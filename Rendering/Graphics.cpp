@@ -15,7 +15,7 @@ Graphics::Graphics()
 	m_SphereModel = 0;
 	m_aabbSphere = 0;
 
-	m_skyDome = 0;
+	m_SkyDome = 0;
 }
 
 Graphics::~Graphics()
@@ -25,6 +25,7 @@ Graphics::~Graphics()
 bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int screenHeight, float screenDepth)
 {
 	bool result;
+	ID3D11Device* device = Direct3D->GetDevice();
 
 	// Create the user interface object.
 	m_UserInterface = new UserInterfaceClass;
@@ -64,7 +65,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	m_Position->SetPosition(0.0f, 0.0f, -10.0f);
 	m_Position->SetRotation(0.0f, 0.0f, 0.0f);
 
-	if (!ConstructAndInitialize(m_Terrain, Direct3D->GetDevice()))
+	if (!ConstructAndInitialize(m_Terrain, device))
 	{ 
 		SHOW_INIT_ERROR_IN_HWND("TerrainClass object");
 		return false; 
@@ -82,20 +83,13 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 		SHOW_INIT_ERROR_IN_HWND("Frustum");
 		return false;
 	}
+
+	if (!ConstructAndInitialize(m_SkyDome, device))
+	{
+		SHOW_INIT_ERROR_IN_HWND("Frustum");
+		return false;
+	}
 	
-	m_skyDome = new SkyDome;
-	if (!m_skyDome)
-	{
-		return false;
-	}
-
-	result = m_skyDome->Initialize(Direct3D->GetDevice());
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the Skydome.", L"Error", MB_OK);
-		return false;
-	}
-
 	// Set the UI to display by default.
 	m_displayUI = true;
 
@@ -110,11 +104,11 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 void Graphics::Shutdown()
 {
-	if (m_skyDome)
+	if (m_SkyDome)
 	{
-		m_skyDome->Shutdown();
-		delete m_skyDome;
-		m_skyDome = 0;
+		m_SkyDome->Shutdown();
+		delete m_SkyDome;
+		m_SkyDome = 0;
 	}
 
 	// Release the terrain object.
@@ -274,10 +268,10 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	XMFLOAT3 cameraPosition = m_Camera->GetPosition();
 	worldMatrix = XMMatrixTranslation(cameraPosition.x, cameraPosition.y, cameraPosition.z);
 
-	m_skyDome->Render(Direct3D->GetDeviceContext());
-	result = ShaderManager->RenderSkyDomeShader(Direct3D->GetDeviceContext(), m_skyDome->GetIndexCount(),
+	m_SkyDome->Render(Direct3D->GetDeviceContext());
+	result = ShaderManager->RenderSkyDomeShader(Direct3D->GetDeviceContext(), m_SkyDome->GetIndexCount(),
 												worldMatrix, viewMatrix, projectionMatrix, 
-												m_skyDome->GetApexColor(), m_skyDome->GetCenterColor());
+												m_SkyDome->GetApexColor(), m_SkyDome->GetCenterColor());
 	if (!result)
 	{
 		return false;
