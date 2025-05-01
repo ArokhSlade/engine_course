@@ -26,9 +26,6 @@
 class Graphics
 {
 public:
-	Graphics();
-	~Graphics();
-
 	bool Initialize(D3DClass*, HWND, int, int, float);
 	void Shutdown();
 	bool Frame(D3DClass*, InputClass*, ShaderManagerClass*, float, int);

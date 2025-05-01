@@ -89,7 +89,7 @@ bool ApplicationClass::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidt
 	m_Fps->Initialize();
 
 	// Create the Graphics object.
-	m_Graphics = new Graphics;
+	m_Graphics = new Graphics{};
 	if(!m_Graphics)
 	{
 		return false;

@@ -2,25 +2,6 @@
 #include "CustomTemplates.h"
 #include "CustomMacros.h"
 
-Graphics::Graphics()
-{
-	m_UserInterface = 0;
-	m_Camera = 0;
-	m_Position = 0;
-	m_Terrain = 0;
-
-	m_PrimitiveCreator = 0;
-	m_Frustum = 0; // todo nullptr
-
-	m_SphereModel = 0;
-	m_aabbSphere = 0;
-
-	m_SkyDome = 0;
-}
-
-Graphics::~Graphics()
-{
-}
 
 bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int screenHeight, float screenDepth)
 {
@@ -270,86 +251,7 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 	m_renderCountPyramids = 0;
 
 	m_PrimitiveCreator->Render(Direct3D, ShaderManager, worldMatrix, viewMatrix, projectionMatrix, m_Frustum, m_displayAABBs);
-	// Go through all the models and render them only if they can be seen by the camera view.
-	//for (index = 0; index<modelCount; index++)
-	//{
-	//	// Get the position and color of the sphere model at this index.
-	//	m_ModelList->GetData(index, positionX, positionY, positionZ, color, primitiveType);
-
-	//	// Set the radius of the sphere to 1.0 since this is already known.
-	//	radius = 1.0f;
-
-	//	switch (primitiveType)
-	//	{
-	//	case Sphere:
-	//		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
-	//		if (isInsideFrustum)
-	//		{
-	//			// Move the model to the location it should be rendered at.
-	//			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
-
-	//			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//			m_SphereModel->Render(Direct3D->GetDeviceContext());
-	//			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-
-	//			if (m_displayAABBs)
-	//			{
-	//				m_aabbSphere->Render(Direct3D->GetDeviceContext());
-	//				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbSphere->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-	//			}
-	//			
-	//			m_renderCountSpheres++;
-	//		}
-	//		break;
-	//	case Cube:
-	//		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
-	//		if (isInsideFrustum)
-	//		{
-	//			// Move the model to the location it should be rendered at.
-	//			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
-
-	//			m_PrimitiveCreator->Render(Direct3D, ShaderManager, worldMatrix, viewMatrix, projectionMatrix, m_displayAABBs);
-	//			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//			//m_CubeModel->Render(Direct3D->GetDeviceContext());
-	//			//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_CubeModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-
-	//			if (m_displayAABBs)
-	//			{
-	//				m_aabbCube->Render(Direct3D->GetDeviceContext());
-	//				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbCube->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-	//			}
-	//			
-	//			m_renderCountCubes++;
-	//		}
-	//		break;
-	//	case Pyramid:
-	//		isInsideFrustum = m_Frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
-	//		if (isInsideFrustum)
-	//		{
-	//			// Move the model to the location it should be rendered at.
-	//			worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
-
-	//			// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//			m_PyramidModel->Render(Direct3D->GetDeviceContext());
-	//			ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-
-	//			if (m_displayAABBs)
-	//			{
-	//				m_aabbPyramid->Render(Direct3D->GetDeviceContext());
-	//				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbPyramid->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-	//			}
-	//			
-	//			m_renderCountPyramids++;
-	//		}
-	//		break;
-	//	}
-
-	//	
-	//	
-	//	// Reset to the original world matrix.
-	//	Direct3D->GetWorldMatrix(worldMatrix);
-	//}
-
+	
 	// Render the user interface.
 	if(m_displayUI)
 	{

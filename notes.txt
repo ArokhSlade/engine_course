@@ -1,4 +1,5 @@
 TODO:
+- IMPORTANT: info about how many primitives and which in primitive creator
 - construct model list inside primitive creator?
 - fix m_vertexCount vs GetVertexCount, also indexCount
 - pass frustum or create locally?
@@ -9,12 +10,13 @@ TODO:
 - where to put desiredModelCount(s)?
 - clarify ModelClass -> m_SphereModel 
 - consolidate CubeModel,PyramidModel etc... (replace copy-pasta with common base)
-
+- simplify ALL shutdown and initialize functions in the program
 - break up ConstructAndInitialize template
  - split the window message off 
  - lambda to combine repetitve code blocks
   - communicates: local refinement for readability
-
+- bug?: render count strings updated before frame is rendered
+ -> counts outdated by one frame?
 - write a shader to transform vertices in array 
  -> use it two compute a true aabb
  -> use it for proper culling of transformed (rotated) objects 
