@@ -29,6 +29,7 @@ TODO:
 - is it feasible to have sphere model inherit base model?
  - initialize function has a different signature
   -> breaks liskov s.p.?
+-refactor all classes into aggregates? (as long as it makes sense)
 
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum

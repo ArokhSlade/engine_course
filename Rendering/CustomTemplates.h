@@ -4,7 +4,7 @@
 #include <d3d11.h> //HWND
 
 template <typename T, typename... TArgs>
-bool ConstructAndInitialize(HWND hwnd, T*& tObjPtr, TArgs&&... args)
+bool ConstructAndInitialize(T*& tObjPtr, TArgs&&... args)
 {	
 	tObjPtr = new T{};
 	if (!tObjPtr)
@@ -13,11 +13,7 @@ bool ConstructAndInitialize(HWND hwnd, T*& tObjPtr, TArgs&&... args)
 	}
 	// Initialize the T object.
 	bool result = tObjPtr->Initialize(std::forward<TArgs>(args)...);
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the object.", L"Error", MB_OK);
-		return false;
-	}
+	
 	return result;
 }
 template <typename T>

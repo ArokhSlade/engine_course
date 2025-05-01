@@ -154,6 +154,7 @@
     <ClCompile Include="CameraClass.cpp" />
     <ClCompile Include="ColorShaderClass.cpp" />
     <ClCompile Include="CubeModel.cpp" />
+    <ClCompile Include="CustomFunctions.cpp" />
     <ClCompile Include="D3DClass.cpp" />
     <ClCompile Include="FontClass.cpp" />
     <ClCompile Include="FontShaderClass.cpp" />
@@ -184,6 +185,8 @@
     <ClInclude Include="ColorShaderClass.h" />
     <ClInclude Include="CubeModel.h" />
     <ClInclude Include="CustomEnums.h" />
+    <ClInclude Include="CustomFunctions.h" />
+    <ClInclude Include="CustomMacros.h" />
     <ClInclude Include="CustomStructs.h" />
     <ClInclude Include="CustomTemplates.h" />
     <ClInclude Include="D3DClass.h" />

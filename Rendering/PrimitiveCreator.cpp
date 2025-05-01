@@ -3,6 +3,7 @@
 #include "PrimitiveCreator.h"
 #include "CustomTemplates.h"
 #include "CustomEnums.h"
+#include "CustomMacros.h"
 
 
 
@@ -26,24 +27,28 @@ bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, int modelCount)
 	ID3D11Device* device = Direct3D->GetDevice();
 	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
 
-	if (!ConstructAndInitialize(hwnd, m_ModelList, modelCount))
+	if (!ConstructAndInitialize(m_ModelList, modelCount))
 	{
+		SHOW_INIT_ERROR_IN_HWND("ModelList");
 		return false;
 	}
 
-	if (!ConstructAndInitialize(hwnd, m_SphereModel, device, deviceContext,
+	if (!ConstructAndInitialize(m_SphereModel, device, deviceContext,
 		"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
 	{
+		SHOW_INIT_ERROR_IN_HWND("SphereModel");
 		return false;
 	}
 
-	if (!ConstructAndInitialize(hwnd, m_CubeModel, device))
-	{ 
+	if (!ConstructAndInitialize(m_CubeModel, device))
+	{
+		SHOW_INIT_ERROR_IN_HWND("CubeModel");
 		return false; 
 	}
 
-	if (!ConstructAndInitialize(hwnd, m_PyramidModel, device))
+	if (!ConstructAndInitialize(m_PyramidModel, device))
 	{
+		SHOW_INIT_ERROR_IN_HWND("PyramidModel");
 		return false;
 	}
 

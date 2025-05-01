@@ -1,5 +1,6 @@
 #include "Graphics.h"
 #include "CustomTemplates.h"
+#include "CustomMacros.h"
 
 Graphics::Graphics()
 {
@@ -67,13 +68,17 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	m_Position->SetPosition(0.0f, 0.0f, -10.0f);
 	m_Position->SetRotation(0.0f, 0.0f, 0.0f);
 
-	if (!ConstructAndInitialize(hwnd, m_Terrain, Direct3D->GetDevice()))
-	{ return false; }
+	if (!ConstructAndInitialize(m_Terrain, Direct3D->GetDevice()))
+	{ 
+		SHOW_INIT_ERROR_IN_HWND("TerrainClass object");
+		return false; 
+	}
 
 
-	if (!ConstructAndInitialize(hwnd, m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(),
+	if (!ConstructAndInitialize(m_SphereModel, Direct3D->GetDevice(), Direct3D->GetDeviceContext(),
 		"../Rendering/data/seafloor.tga", "../Rendering/data/sphere.txt"))
 	{
+		SHOW_INIT_ERROR_IN_HWND("SphereModel object");
 		return false;
 	}
 
@@ -148,8 +153,9 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 
 	const int desiredModelCount = 750;
-	if (!ConstructAndInitialize(hwnd, m_PrimitiveCreator, hwnd, Direct3D, desiredModelCount))
+	if (!ConstructAndInitialize(m_PrimitiveCreator, hwnd, Direct3D, desiredModelCount))
 	{
+		SHOW_INIT_ERROR_IN_HWND("PrimitiveCreator");
 		return false;
 	}
 
