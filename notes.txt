@@ -1,5 +1,6 @@
 TODO:
 - construct model list inside primitive creator?
+- fix m_vertexCount vs GetVertexCount, also indexCount
 - pass frustum or create locally?
 - figure out where and how to track render counts.
  - dataflow back from primitive creator to graphics?

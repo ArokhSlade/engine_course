@@ -20,6 +20,10 @@ bool SimpleModel::IsEmpty()
 
 bool SimpleModel::Initialize(ID3D11Device* device, fun_t initVerts)
 {
+	if (!initVerts) {
+		return false;
+	}
+
 	ColorVertexType* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
@@ -27,14 +31,14 @@ bool SimpleModel::Initialize(ID3D11Device* device, fun_t initVerts)
 	HRESULT result;
 
 
-	int index, vertexCount, indexCount;
+	int index, indexCount;
 
 	XMFLOAT4 colorRed = XMFLOAT4(1, 0, 0, 1);
 	XMFLOAT4 colorBlue = XMFLOAT4(0, 0, 1, 1);
 
-	vertexCount = 36;
-	m_vertexCount = vertexCount;
-	indexCount = vertexCount;
+	//TODO: fix this
+	m_vertexCount = GetVertexCount();
+	indexCount = GetIndexCount();
 	m_indexCount = indexCount;
 
 	// Create the vertex array.
@@ -72,10 +76,9 @@ bool SimpleModel::Initialize(ID3D11Device* device, fun_t initVerts)
 	indexData.pSysMem = indices;
 
 	// FUN STARTS HERE :)
-
-	if (initVerts) {
-		initVerts();
-	}
+	// 
+	// STRATEGY PATTERN
+	initVerts(vertices, indices);
 
 	// FUN ENDS HERE :(
 

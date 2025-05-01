@@ -13,8 +13,8 @@ public:
 	virtual void Render(ID3D11DeviceContext* deviceContext) =0;
 	
 	void RenderAABB(ID3D11DeviceContext* deviceContext);
-	int GetIndexCount();
-	int GetVertexCount();
+	virtual int GetIndexCount();
+	virtual int GetVertexCount();
 	VectorType* GetVertexList();
 	AxisAlignedBoundingBox* GetAABB();
 
@@ -32,7 +32,7 @@ protected:
 
 
 public:
-	using fun_t = void (*)();
+	using fun_t = void (*)(ColorVertexType* vertices, unsigned long* indices);
 
 	virtual bool Initialize(ID3D11Device* device, fun_t initVerts = nullptr);
 };

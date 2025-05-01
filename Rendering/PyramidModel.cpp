@@ -247,3 +247,13 @@ void PyramidModel::Render(ID3D11DeviceContext* deviceContext)
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
+
+int PyramidModel::GetVertexCount()
+{
+	return 18;
+}
+
+int PyramidModel::GetIndexCount()
+{
+	return 18;
+}
