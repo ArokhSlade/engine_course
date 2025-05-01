@@ -103,7 +103,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
-	row += m_rowHeight;
+	row += 2*m_rowHeight;
 	m_firstRenderCountRow = row;
 	// Initialize the fps text string.
 	result = m_RenderCountString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
@@ -174,7 +174,7 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 	}
 
 	// Initialize the position text strings.
-	row = 200;	
+	row += 2 * m_rowHeight;	
 	m_firstPositionStringRow = row;
 	result = m_PositionStrings[0].Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 16, false, m_Font1, 
 											 "X: 0",  10, row, 1.0f, 1.0f, 1.0f);
