@@ -4,7 +4,7 @@ SkyDome::SkyDome()
 {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
-	m_model = 0;
+	m_Model = 0;
 }
 
 bool SkyDome::Initialize(ID3D11Device* device)
@@ -80,7 +80,7 @@ bool SkyDome::InitializeBuffers(ID3D11Device* device)
 	// Load the vertex array and index array with data.
 	for (i = 0; i < m_vertexCount; i++)
 	{
-		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
+		vertices[i].position = XMFLOAT3(m_Model[i].x, m_Model[i].y, m_Model[i].z);
 		indices[i] = i;
 	}
 
@@ -189,8 +189,8 @@ bool SkyDome::LoadModel(char* filePath)
 	m_indexCount = m_vertexCount;
 
 	// Create the model using the vertex count that was read in.
-	m_model = new ModelType[m_vertexCount];
-	if (!m_model)
+	m_Model = new ModelType[m_vertexCount];
+	if (!m_Model)
 	{
 		return false;
 	}
@@ -207,9 +207,9 @@ bool SkyDome::LoadModel(char* filePath)
 	// Read in the vertex data.
 	for (i = 0; i < m_vertexCount; i++)
 	{
-		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
-		fin >> m_model[i].tu >> m_model[i].tv;
-		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
+		fin >> m_Model[i].x >> m_Model[i].y >> m_Model[i].z;
+		fin >> m_Model[i].tu >> m_Model[i].tv;
+		fin >> m_Model[i].nx >> m_Model[i].ny >> m_Model[i].nz;
 	}
 
 	// Close the model file.
@@ -220,9 +220,9 @@ bool SkyDome::LoadModel(char* filePath)
 
 void SkyDome::ReleaseModel()
 {
-	if (m_model)
+	if (m_Model)
 	{
-		delete[] m_model;
-		m_model = 0;
+		delete[] m_Model;
+		m_Model = 0;
 	}
 }

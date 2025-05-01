@@ -36,7 +36,7 @@ private:
 	XMFLOAT4 m_apexColor;
 	XMFLOAT4 m_centerColor;
 
-	ModelType* m_model;
+	ModelType* m_Model;
 };
 
 #endif

@@ -5,7 +5,7 @@ ModelClass::ModelClass()
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
 	m_Texture = 0;
-	m_model = 0;
+	m_Model = 0;
 }
 
 ModelClass::~ModelClass()
@@ -37,6 +37,11 @@ bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCon
 		return false;
 	}
 
+	if (!ConstructAndInitialize(m_aabb, device, m_vertexList, m_vertexCount))
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -62,6 +67,11 @@ void ModelClass::Render(ID3D11DeviceContext* device)
 	return;
 }
 
+void ModelClass::RenderAABB(ID3D11DeviceContext* deviceContext)
+{
+	m_aabb->Render(deviceContext);
+}
+
 int ModelClass::GetIndexCount()
 {
 	return m_indexCount;
@@ -80,6 +90,11 @@ VectorType* ModelClass::GetVertexList()
 ID3D11ShaderResourceView* ModelClass::GetTexture()
 {
 	return m_Texture->GetTexture();
+}
+
+AxisAlignedBoundingBox* ModelClass::GetAABB()
+{
+	return m_aabb;
 }
 
 bool ModelClass::InitializeBuffers(ID3D11Device* device)
@@ -114,13 +129,13 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 	// Load the vertex array and index array with data.
 	for (i = 0; i<m_vertexCount; i++)
 	{
-		vertices[i].position = XMFLOAT3(m_model[i].x, m_model[i].y, m_model[i].z);
-		vertices[i].texture = XMFLOAT2(m_model[i].tu, m_model[i].tv);
-		vertices[i].normal = XMFLOAT3(m_model[i].nx, m_model[i].ny, m_model[i].nz);
+		vertices[i].position = XMFLOAT3(m_Model[i].x, m_Model[i].y, m_Model[i].z);
+		vertices[i].texture = XMFLOAT2(m_Model[i].tu, m_Model[i].tv);
+		vertices[i].normal = XMFLOAT3(m_Model[i].nx, m_Model[i].ny, m_Model[i].nz);
 		
-		m_vertexList[i].x = m_model[i].x;
-		m_vertexList[i].y = m_model[i].y;
-		m_vertexList[i].z = m_model[i].z;
+		m_vertexList[i].x = m_Model[i].x;
+		m_vertexList[i].y = m_Model[i].y;
+		m_vertexList[i].z = m_Model[i].z;
 
 		indices[i] = i;
 	}
@@ -172,18 +187,10 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
 void ModelClass::ShutdownBuffers()
 {
 	// Release the index buffer.
-	if (m_indexBuffer)
-	{
-		m_indexBuffer->Release();
-		m_indexBuffer = 0;
-	}
+	ReleaseAndZero(m_indexBuffer);
 
 	// Release the vertex buffer.
-	if (m_vertexBuffer)
-	{
-		m_vertexBuffer->Release();
-		m_vertexBuffer = 0;
-	}
+	ReleaseAndZero(m_vertexBuffer);
 
 	return;
 }
@@ -211,36 +218,16 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* device)
 
 bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, const char* filename)
 {
-	bool result;
-
-	// Create the texture object.
-	m_Texture = new TextureClass;
-	if (!m_Texture)
-	{
-		return false;
-	}
-
+	// Create the texture object.	
 	// Initialize the texture object.
-	result = m_Texture->Initialize(device, deviceContext, filename);
-	if (!result)
-	{
-		return false;
-	}
-
-	return true;
+	bool result = ConstructAndInitialize(m_Texture, device, deviceContext, filename);
+	return result;
 }
 
 void ModelClass::ReleaseTexture()
 {
 	// Release the texture object.
-	if (m_Texture)
-	{
-		m_Texture->Shutdown();
-		delete m_Texture;
-		m_Texture = 0;
-	}
-
-	return;
+	ShutdownAndDelete(m_Texture);
 }
 
 bool ModelClass::LoadModel(const char* filename)
@@ -270,8 +257,8 @@ bool ModelClass::LoadModel(const char* filename)
 	m_indexCount = m_vertexCount;
 
 	// Create the model using the vertex count that was read in.
-	m_model = new ModelType[m_vertexCount];
-	if (!m_model)
+	m_Model = new ModelType[m_vertexCount];
+	if (!m_Model)
 	{
 		return false;
 	}
@@ -288,9 +275,9 @@ bool ModelClass::LoadModel(const char* filename)
 	// Read in the vertex data.
 	for (i = 0; i<m_vertexCount; i++)
 	{
-		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
-		fin >> m_model[i].tu >> m_model[i].tv;
-		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
+		fin >> m_Model[i].x >> m_Model[i].y >> m_Model[i].z;
+		fin >> m_Model[i].tu >> m_Model[i].tv;
+		fin >> m_Model[i].nx >> m_Model[i].ny >> m_Model[i].nz;
 	}
 
 	// Close the model file.
@@ -301,10 +288,10 @@ bool ModelClass::LoadModel(const char* filename)
 
 void ModelClass::ReleaseModel()
 {
-	if (m_model)
+	if (m_Model)
 	{
-		delete[] m_model;
-		m_model = 0;
+		delete[] m_Model;
+		m_Model = nullptr;
 	}
 
 	return;

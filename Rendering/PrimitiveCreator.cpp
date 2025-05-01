@@ -92,15 +92,12 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 				// Move the model to the location it should be rendered at.
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
-				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-				m_SphereModel->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_SphereModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				RenderColorShaderFtor(m_SphereModel, worldMatrix);
 
-				//if (displayAABBs)
-				//{
-				//	m_aabbSphere->Render(Direct3D->GetDeviceContext());
-				//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbSphere->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-				//}
+				if (displayAABBs)
+				{
+					RenderColorShaderFtor(m_SphereModel->GetAABB(), worldMatrix);
+				}
 
 				renderCountSpheres++;
 			}
