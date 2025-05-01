@@ -139,14 +139,23 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
 				// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-				m_PyramidModel->Render(Direct3D->GetDeviceContext());
-				ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-
-				//if (m_displayAABBs)
-				//{
-				//	m_aabbPyramid->Render(Direct3D->GetDeviceContext());
-				//	ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_aabbPyramid->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
-				//}
+				//m_PyramidModel->Render(Direct3D->GetDeviceContext());
+				//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_PyramidModel->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				
+				auto RenderColorShaderFtor = [=,deviceContext = Direct3D->GetDeviceContext()](auto* model) {
+					model->Render(deviceContext);
+					ShaderManager->RenderColorShader(deviceContext, model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+				};
+				RenderColorShaderFtor(m_PyramidModel);
+				if (displayAABBs)
+				{
+					//auto* aabb = m_PyramidModel->GetAABB();
+					//aabb->Render(Direct3D->GetDeviceContext());
+					//ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), aabb->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
+					
+					RenderColorShaderFtor(m_PyramidModel->GetAABB());
+					
+				}
 
 				renderCountPyramids++;
 			}

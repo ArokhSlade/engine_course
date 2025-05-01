@@ -36,6 +36,8 @@ TODO:
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
 
+-forced control flow: Graphics::Frame() is public, Graphics::Render() is private. Render() takes a D3DClass* but Graphics doesn't have a D3DClass member. Hence it follows that Render will be called be a public method, expecting a user of the class to provide the D3D instance.
+
 EXAM PRESET:
 - uses IsSphereInsideFrustum() for all types
 
