@@ -25,6 +25,7 @@ TODO:
  -> counts outdated by one frame?
 - simplify ui message function interfaces: 
  - initialize: ScreenDims, FloatColor
+- compress primitive creator's render code
 - write a shader to transform vertices in array 
  -> use it two compute a true aabb
  -> use it for proper culling of transformed (rotated) objects 

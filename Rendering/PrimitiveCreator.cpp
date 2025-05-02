@@ -134,6 +134,23 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 				renderCounts->pyramidCount++;
 			}
 			break;
+		case PrimitiveType::HexPrism:
+			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
+			if (isInsideFrustum)
+			{
+				// Move the model to the location it should be rendered at.
+				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
+
+				RenderColorShaderFtor(m_HexPrismModel, worldMatrix);
+
+				if (displayAABBs)
+				{
+					RenderColorShaderFtor(m_HexPrismModel->GetAABB(), worldMatrix);
+				}
+
+				renderCounts->pyramidCount++;
+			}
+			break;
 		}
 
 		// Reset to the original world matrix.

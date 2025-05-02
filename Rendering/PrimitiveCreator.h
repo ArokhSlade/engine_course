@@ -7,6 +7,7 @@
 #include "ModelClass.h"
 #include "CubeModel.h"
 #include "PyramidModel.h"
+#include "HexPrismModel.h"
 #include "CustomStructs.h"
 
 class PrimitiveCreator
@@ -22,5 +23,6 @@ private:
 	ModelClass* m_SphereModel;
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
+	HexPrismModel* m_HexPrismModel;
 };
 
