@@ -19,7 +19,6 @@ int ConeModel::GetVertexCount()
 
 void ConeModel::InitializeVertices(ColorVertexType* vertices, unsigned long* indices)
 {
-    int index = 0;
     XMFLOAT4 RED{1.f,0.f,0.f,1.f};
     XMFLOAT4 GREEN{0.f,1.f,0.f,1.f};
 
@@ -29,12 +28,12 @@ void ConeModel::InitializeVertices(ColorVertexType* vertices, unsigned long* ind
     float angleSegment = 2 * PI / m_circleSides;
     float nextAngle = angle + angleSegment;
 
-    using std::cos;
+    using std::cosf;
     using std::sinf;
 
     //BASE
     int vertIdx = 0;
-    for (int sideIdx = 0; sideIdx < m_circleSides; sideIdx++)
+    for (int sideIdx = 0; sideIdx < m_circleSides ; sideIdx++)
     {
         vertices[vertIdx].position = {};
         vertices[vertIdx +1].position = XMFLOAT3{ cosf(angle), 0.f, sinf(angle) };
