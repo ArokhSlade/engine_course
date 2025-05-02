@@ -23,13 +23,10 @@ private:
 public:
 	bool Initialize(const PrimitiveCounts&);
 	void Shutdown();
-
-	int GetTotalModelCount();
-	const PrimitiveCounts& GetModelCounts();
 	void GetData(int, float&, float&, float&, XMFLOAT4&, PrimitiveType& type);
 
 private:	
-	PrimitiveCounts m_modelCounts;
+	
 	ModelInfoType* m_ModelInfoList;
 
 };

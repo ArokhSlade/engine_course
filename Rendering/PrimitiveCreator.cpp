@@ -7,11 +7,13 @@
 
 
 
-bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, PrimitiveCounts modelCounts)
+bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, const PrimitiveCounts& modelCounts)
 {
 	bool result = true;
 	ID3D11Device* device = Direct3D->GetDevice();
 	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
+
+	m_modelCounts = modelCounts;
 
 	if (!ConstructAndInitialize(m_ModelList, modelCounts))
 	{
@@ -68,7 +70,7 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 {
 	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
 	// Get the number of models that will be rendered.
-	int modelCount = m_ModelList->GetTotalModelCount();
+	int modelCount = m_modelCounts.GetTotalCount();
 
 	*renderCounts = {};
 
@@ -193,4 +195,16 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 	
 
 	return true;
+}
+
+
+int PrimitiveCreator::GetTotalModelCount()
+{
+	int result = m_modelCounts.GetTotalCount();
+	return result;
+}
+
+const PrimitiveCounts& PrimitiveCreator::GetModelCounts()
+{
+	return m_modelCounts;
 }

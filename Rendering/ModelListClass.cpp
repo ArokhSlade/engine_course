@@ -5,12 +5,8 @@
 
 bool ModelListClass::Initialize(const PrimitiveCounts& modelCounts)
 {
-	
-	// Store the number of models.
-	m_modelCounts = modelCounts;
-
 	// Create a list array of the model information.	
-	int totalModelCount = GetTotalModelCount();
+	int totalModelCount = modelCounts.GetTotalCount();
 	m_ModelInfoList = new ModelInfoType[totalModelCount];
 	if (!m_ModelInfoList)
 	{
@@ -28,8 +24,8 @@ bool ModelListClass::Initialize(const PrimitiveCounts& modelCounts)
 		green = (float)rand() / RAND_MAX;
 		blue = (float)rand() / RAND_MAX;
 
-		//TODO(Gerald): brittle code, relies on m_modelCounts being structured like an array of ints
-		for (int curPrimIdx = 0; curPrimIdx < reinterpret_cast<int*>(&m_modelCounts)[primTypeIdx]; ++curPrimIdx)
+		//TODO(Gerald): brittle code, relies on modelCounts being structured like an array of ints
+		for (int curPrimIdx = 0; curPrimIdx < reinterpret_cast<const int*>(&modelCounts)[primTypeIdx]; ++curPrimIdx)
 		{
 			//DEBUG CHECK
 			if (total_index >= totalModelCount) {
@@ -63,19 +59,6 @@ void ModelListClass::Shutdown()
 
 	return;
 }
-
-
-int ModelListClass::GetTotalModelCount()
-{
-	int result = m_modelCounts.GetTotalCount();
-	return result;
-}
-
-const PrimitiveCounts& ModelListClass::GetModelCounts()
-{
-	return m_modelCounts;
-}
-
 
 void ModelListClass::GetData(int index, float& positionX, float& positionY, float& positionZ, XMFLOAT4& color, PrimitiveType& type)
 {

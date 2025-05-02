@@ -14,12 +14,17 @@
 class PrimitiveCreator
 {
 public :
-	bool Initialize(HWND hwnd, D3DClass* Direct3D, PrimitiveCounts modelCounts);
+	bool Initialize(HWND hwnd, D3DClass* Direct3D, const PrimitiveCounts& modelCounts);
 	void Shutdown();
-	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, PrimitiveCounts*, 
+	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, PrimitiveCounts* renderCounts, 
 				XMMATRIX, XMMATRIX, XMMATRIX, Frustum* frustum, bool displayAABBs);
+	int GetTotalModelCount();
+	const PrimitiveCounts& GetModelCounts();
+
 private:	
 	ModelListClass* m_ModelList;
+
+	PrimitiveCounts m_modelCounts;
 
 	ModelClass* m_SphereModel;
 	CubeModel* m_CubeModel;
