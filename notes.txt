@@ -10,7 +10,6 @@ TODO:
 - clean up superfluous virtual specifiers in ineriting models
 - PrimitiveType: enum -> enum class 
 - pass frustum or create locally?
-- rename pin to cone
 - figure out where and how to track render counts.
  - dataflow back from primitive creator to graphics?
 - isInsideFrustum() for other classes
