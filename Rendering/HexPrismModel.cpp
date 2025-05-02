@@ -19,30 +19,31 @@ void HexPrismModel::InitializeVertices(ColorVertexType* vertices, unsigned long*
     XMFLOAT4 YELLOW {1.f,1.f,0.f,1.f};
     XMFLOAT4 PURPLE{ 1.f,0.f,1.f,1.f };
     XMFLOAT4 WHITE{ 1.f,1.f,1.f,1.f };
+    XMFLOAT4 BLUE{ 0.f,0.f,1.f,1.f };
 
     int index = 0;
     //TOP QUAD
     vertices[index].position = { -1.f,1.f,1.f };
     vertices[index+1].position = { 1.f,1.f,1.f };
     vertices[index+2].position = { 1.f,1.f,-1.f };
-    vertices[index].color = vertices[index+1].color = vertices[index+2].color = WHITE;
+    vertices[index].color = vertices[index+1].color = vertices[index+2].color = BLUE;
     index += 3;
     vertices[index].position = { 1.f,1.f,-1.f }; 
     vertices[index + 1].position = { -1.f,1.f,-1.f };
     vertices[index + 2].position = { -1.f,1.f,1.f };
-    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = WHITE;
+    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = BLUE;
     index += 3;
     //TOP LEFT TRIANGLE
     vertices[index].position = { -1.f,1.f,1.f };
     vertices[index + 1].position = { -1.f,1.f,-1.f };
     vertices[index + 2].position = { -2.f,1.f,0.f }; 
-    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = WHITE;
+    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = BLUE;
     index += 3;
     //TOP RIGHT TRIANGLE
     vertices[index].position = { 1.f,1.f,-1.f }; 
     vertices[index + 1].position = { 1.f,1.f,1.f };
     vertices[index + 2].position = { 2.f,1.f,0.f };
-    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = WHITE;
+    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = BLUE;
     index += 3;
     //BOTTOM QUAD
     vertices[index].position = { -1.f,-1.f,1.f };
@@ -72,23 +73,26 @@ void HexPrismModel::InitializeVertices(ColorVertexType* vertices, unsigned long*
     struct XZ {
         float x, z;
     };
-    std::array<XZ,7> xzCoords = {
-        XZ{-2.f,0.f},{-1.f,-1.f},{1.f,-1.f},
-        {2.f,0.f},{1.f,1.f},{-1.f,1.f},
-        {-2.f,0.f} //duplicate first element to avoid iterating over bounds later
+    std::array<XZ,7> xz = {
+        XZ{-2.f,0.f},{-1.f,-1.f},{ 1.f,-1.f},
+          { 2.f,0.f},{ 1.f, 1.f}, {-1.f,1.f},
+          {-2.f,0.f} //duplicate first element to avoid iterating over bounds later
     };
 
-    for (int sideIdx = 0; sideIdx < 6; ++sideIdx)
+    for (int i = 0; i < 6; ++i) //side index
     {
         //DRAW QUAD
-        vertices[index].position = { xzCoords[sideIdx].x, 1.f, xzCoords[sideIdx].z };
-        vertices[index + 1].position = { xzCoords[sideIdx+1].x, 1.f, xzCoords[sideIdx+1].z};
-        vertices[index + 2].position = { xzCoords[sideIdx+1].x, -1.f, xzCoords[sideIdx+1].z };
+        vertices[index  ].position = { xz[i  ].x,  1.f, xz[i  ].z };
+        vertices[index+1].position = { xz[i+1].x,  1.f, xz[i+1].z};
+        vertices[index+2].position = { xz[i+1].x, -1.f, xz[i+1].z };
+
         vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = PURPLE;
         index += 3;
-        vertices[index].position = { xzCoords[sideIdx].x, 1.f, xzCoords[sideIdx].z };
-        vertices[index + 1].position = { xzCoords[sideIdx + 1].x, -1.f, xzCoords[sideIdx + 1].z }; 
-        vertices[index + 2].position = { xzCoords[sideIdx].x, -1.f, xzCoords[sideIdx].z };
+
+        vertices[index  ].position = { xz[i  ].x,  1.f, xz[i  ].z };
+        vertices[index+1].position = { xz[i+1].x, -1.f, xz[i+1].z }; 
+        vertices[index+2].position = { xz[i  ].x, -1.f, xz[i  ].z };
+
         vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = YELLOW;
         index += 3;
     }
