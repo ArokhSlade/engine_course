@@ -105,6 +105,9 @@
     <ClCompile Include="SimpleModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HexPrismModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SystemClass.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimpleModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HexPrismModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

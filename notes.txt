@@ -44,6 +44,10 @@ TODO:
 - hwnd error message for failed aabb initialization?
  -> pass hwnd to model class
 - what if we make UI rowHeight was const?
+
+- declarative primitive/geometry definition?
+- primitives are just strategies for the model class?
+ -> prototypes?
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
 
