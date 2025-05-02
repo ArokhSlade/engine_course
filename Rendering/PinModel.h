@@ -9,6 +9,6 @@ public:
 protected:
 	void InitializeVertices(ColorVertexType* vertices, unsigned long* indices) override;
 private: 
-	int m_circleSides = 32;
+	int m_circleSides = 4;
 };
 

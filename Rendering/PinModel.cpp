@@ -31,10 +31,32 @@ void PinModel::InitializeVertices(ColorVertexType* vertices, unsigned long* indi
 
     using std::cos;
     using std::sinf;
-    vertices[index].position = {};
-    vertices[index+1].position = XMFLOAT3{ cosf(angle), 0.f, sinf(angle) }; 
-    vertices[index+2].position = XMFLOAT3{ cosf(nextAngle), 0.f, sinf(nextAngle) };
-    vertices[index].color = vertices[index + 1].color = vertices[index + 2].color = GREEN;    
+
+    //BASE
+    int vertIdx = 0;
+    for (int sideIdx = 0; sideIdx < m_circleSides; sideIdx++)
+    {
+        vertices[vertIdx].position = {};
+        vertices[vertIdx +1].position = XMFLOAT3{ cosf(angle), 0.f, sinf(angle) };
+        vertices[vertIdx +2].position = XMFLOAT3{ cosf(nextAngle), 0.f, sinf(nextAngle) };
+        vertices[vertIdx].color = vertices[vertIdx + 1].color = vertices[vertIdx + 2].color = GREEN;
+        angle = nextAngle;
+        nextAngle += angleSegment;
+        vertIdx +=3;
+    }
+
+    //angle = 0.f;
+    //nextAngle = angle + angleSegment;
+    ////TOP
+    //for (int sideIdx = m_circleSides; sideIdx < 2*m_circleSides; sideIdx += 2)
+    //{
+    //    vertices[sideIdx].position = { 0.f, apex, 0.f }; 
+    //    vertices[sideIdx + 1].position = XMFLOAT3{ cosf(nextAngle), 0.f, sinf(nextAngle) }; 
+    //    vertices[sideIdx + 2].position = XMFLOAT3{ cosf(angle), 0.f, sinf(angle) };
+    //    vertices[sideIdx].color = vertices[sideIdx + 1].color = vertices[sideIdx + 2].color = RED;
+    //    angle = nextAngle;
+    //    nextAngle += angleSegment;
+    //}
 
     for (int i = 0; i < m_indexCount; ++i)
     {
