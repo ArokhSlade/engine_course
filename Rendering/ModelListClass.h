@@ -20,9 +20,6 @@ private:
 	};
 
 public:
-	ModelListClass();
-	~ModelListClass();
-
 	bool Initialize(int);
 	void Shutdown();
 
