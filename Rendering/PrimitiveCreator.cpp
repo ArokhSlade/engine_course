@@ -38,11 +38,18 @@ bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, PrimitiveCounts
 		return false;
 	}
 
+	if (!ConstructAndInitialize(m_HexPrismModel, device))
+	{
+		SHOW_INIT_ERROR_IN_HWND("HexPrismModel");
+		return false;
+	}
+
 	return true;
 }
 
 void PrimitiveCreator::Shutdown()
 {
+	ShutdownAndDelete(m_HexPrismModel);
 	ShutdownAndDelete(m_PyramidModel);
 	ShutdownAndDelete(m_CubeModel);
 	ShutdownAndDelete(m_SphereModel);

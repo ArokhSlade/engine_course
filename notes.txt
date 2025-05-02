@@ -54,6 +54,8 @@ TODO:
  -> prototypes?
  
  - do something about unused color params in model info list
+ - why do i have to manually update initialize,shutdown,render for every new primitive?
+  -> there's got to be a way to have the code automatically update itself
 NOTES:
 -XMStoreFloat4x4, XMLoadFloat4x4 used in Frustum
 
