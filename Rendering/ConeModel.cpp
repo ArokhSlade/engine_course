@@ -1,7 +1,7 @@
 #include "ConeModel.h"
 #include <cmath>
 
-constexpr double PI = 3.14159265358979323846;
+constexpr float PI = 3.14159265358979323846f;
 
 int ConeModel::GetIndexCount()
 {

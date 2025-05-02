@@ -187,10 +187,6 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 {
 	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, baseViewMatrix, orthoMatrix;
 	bool result;
-	int modelCount, index;
-	float positionX, positionY, positionZ, radius;
-	XMFLOAT4 color;
-	PrimitiveType primitiveType;
 
 	ID3D11DeviceContext* deviceContext = Direct3D->GetDeviceContext();
 
