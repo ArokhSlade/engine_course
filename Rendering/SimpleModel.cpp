@@ -26,16 +26,11 @@ bool SimpleModel::Initialize(ID3D11Device* device)
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 	HRESULT result;
 
-
-	int index, indexCount;
-
 	XMFLOAT4 colorRed = XMFLOAT4(1, 0, 0, 1);
 	XMFLOAT4 colorBlue = XMFLOAT4(0, 0, 1, 1);
-
-	//TODO: fix this
+		
 	m_vertexCount = GetVertexCount();
-	indexCount = GetIndexCount();
-	m_indexCount = indexCount;
+	m_indexCount = GetIndexCount();
 
 	// Create the vertex array.
 	vertices = new ColorVertexType[m_vertexCount];
