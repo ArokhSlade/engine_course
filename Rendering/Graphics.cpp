@@ -236,15 +236,18 @@ bool Graphics::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager)
 
 	// Render the terrain grid using the color shader.
 	m_Terrain->Render(Direct3D->GetDeviceContext());
-	result = ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Terrain->GetIndexCount(), worldMatrix, viewMatrix, 
-											  projectionMatrix);
+	result = ShaderManager->RenderColorShader(Direct3D->GetDeviceContext(), m_Terrain->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix);
 	if(!result)
 	{
 		return false;
 	}
 
-	m_PrimitiveCreator->Render(Direct3D, ShaderManager, &m_renderCounts, worldMatrix, viewMatrix, projectionMatrix, m_Frustum, m_displayAABBs);
-	
+	result = m_PrimitiveCreator->Render(Direct3D, ShaderManager, &m_renderCounts, worldMatrix, viewMatrix, projectionMatrix, m_Frustum, m_displayAABBs);
+	if (!result)
+	{
+		return false;
+	}
+
 	// Render the user interface.
 	if(m_displayUI)
 	{
