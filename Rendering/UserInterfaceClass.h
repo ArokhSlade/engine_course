@@ -38,7 +38,7 @@ private:
 	TextClass* m_RenderCountCubesString;
 	TextClass* m_RenderCountPyramidsString;
 	TextClass* m_RenderCountConesString;
-	TextClass* m_RenderCountHexPrismString;
+	TextClass* m_RenderCountHexPrismsString;
 
 	int m_previousFps;
 	int m_previousPosition[6];

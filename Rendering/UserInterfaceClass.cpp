@@ -1,4 +1,5 @@
 #include "UserInterfaceClass.h"
+#include "CustomTemplates.h"
 
 bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int screenWidth, int renderCountStringsCount)
 {
@@ -161,6 +162,38 @@ bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int sc
 		return false;
 	}
 
+	// Create the text object for the render count string.
+	m_RenderCountConesString = new TextClass;
+	if (!m_RenderCountConesString)
+	{
+		return false;
+	}
+
+	row += m_rowHeight;
+	// Initialize the render count text string.
+	result = m_RenderCountConesString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Cones Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Create the text object for the render count string.
+	m_RenderCountHexPrismsString = new TextClass;
+	if (!m_RenderCountHexPrismsString)
+	{
+		return false;
+	}
+
+	row += m_rowHeight;
+	// Initialize the render count text string.
+	result = m_RenderCountHexPrismsString->Initialize(Direct3D->GetDevice(), Direct3D->GetDeviceContext(), screenWidth, screenHeight, 32, false, m_Font1,
+		"Prisms Count: 0", 10, row, 1.0f, 1.0f, 0.0f);
+	if (!result)
+	{
+		return false;
+	}
+
 	m_lastRenderCountRow = row;
 
 	////////////////////////////////////////////////////////////////////////////
@@ -296,6 +329,9 @@ void UserInterfaceClass::Shutdown()
 		m_RenderCountPyramidsString = 0;
 	}
 
+	ShutdownAndDelete(m_RenderCountConesString);
+	ShutdownAndDelete(m_RenderCountHexPrismsString);
+
 	// Release the font object.
 	if(m_Font1)
 	{
@@ -343,6 +379,18 @@ bool UserInterfaceClass::Frame(ID3D11DeviceContext* deviceContext, const Primiti
 		return false;
 	}
 
+	result = UpdateRenderCountConesString(deviceContext, renderCounts.coneCount);
+	if (!result)
+	{
+		return false;
+	}
+
+	result = UpdateRenderCountHexPrismsString(deviceContext, renderCounts.hexPrismCount);
+	if (!result)
+	{
+		return false;
+	}
+
 	// Update the position strings.
 	result = UpdatePositionStrings(deviceContext, posX, posY, posZ, rotX, rotY, rotZ);
 	if(!result)
@@ -369,6 +417,8 @@ bool UserInterfaceClass::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMa
 	m_RenderCountSpheresString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 	m_RenderCountCubesString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 	m_RenderCountPyramidsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_RenderCountConesString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
+	m_RenderCountHexPrismsString->Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
 
 	// Render the video card strings.
 	m_VideoStrings[0].Render(Direct3D->GetDeviceContext(), ShaderManager, worldMatrix, viewMatrix, orthoMatrix, m_Font1->GetTexture());
@@ -545,6 +595,54 @@ bool UserInterfaceClass::UpdateRenderCountPyramidsString(ID3D11DeviceContext* de
 	// Update the sentence vertex buffer with the new string information.
 	int row = GetRenderCountStringRow(PrimitiveType::Pyramid);
 	result = m_RenderCountPyramidsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateRenderCountConesString(ID3D11DeviceContext* deviceContext, int renderCountCones)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	// Convert the rendercount integer to string format.
+	_itoa_s(renderCountCones, tempString, 10);
+
+	// Setup the rendercount string.
+	strcpy_s(finalString, "Cones Count: ");
+	strcat_s(finalString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	int row = GetRenderCountStringRow(PrimitiveType::Cone);
+	result = m_RenderCountConesString->UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool UserInterfaceClass::UpdateRenderCountHexPrismsString(ID3D11DeviceContext* deviceContext, int renderCountHexPrisms)
+{
+	char tempString[32];
+	char finalString[32];
+	bool result;
+
+	// Convert the rendercount integer to string format.
+	_itoa_s(renderCountHexPrisms, tempString, 10);
+
+	// Setup the rendercount string.
+	strcpy_s(finalString, "Prisms Count: ");
+	strcat_s(finalString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	int row = GetRenderCountStringRow(PrimitiveType::HexPrism);
+	result = m_RenderCountHexPrismsString->UpdateSentence(deviceContext, m_Font1, finalString, 10, row, 1.0f, 1.0f, 1.0f);
 	if (!result)
 	{
 		return false;
