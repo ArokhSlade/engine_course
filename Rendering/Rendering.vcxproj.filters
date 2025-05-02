@@ -108,7 +108,7 @@
     <ClCompile Include="HexPrismModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PinModel.cpp">
+    <ClCompile Include="ConeModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,7 +212,7 @@
     <ClInclude Include="HexPrismModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PinModel.h">
+    <ClInclude Include="ConeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

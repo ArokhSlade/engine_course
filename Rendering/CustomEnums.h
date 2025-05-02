@@ -3,7 +3,7 @@
 
 enum class PrimitiveType
 {
-	Sphere, Cube, Pyramid, Pin, HexPrism, PRIMITIVES_COUNT
+	Sphere, Cube, Pyramid, Cone, HexPrism, PRIMITIVES_COUNT
 };
 
 #endif

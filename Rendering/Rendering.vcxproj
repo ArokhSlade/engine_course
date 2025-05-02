@@ -165,7 +165,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModelClass.cpp" />
     <ClCompile Include="ModelListClass.cpp" />
-    <ClCompile Include="PinModel.cpp" />
+    <ClCompile Include="ConeModel.cpp" />
     <ClCompile Include="PositionClass.cpp" />
     <ClCompile Include="PrimitiveCreator.cpp" />
     <ClCompile Include="PyramidModel.cpp" />
@@ -186,7 +186,7 @@
     <ClInclude Include="AxisAlignedBoundingBox.h" />
     <ClInclude Include="CameraClass.h" />
     <ClInclude Include="HexPrismModel.h" />
-    <ClInclude Include="PinModel.h" />
+    <ClInclude Include="ConeModel.h" />
     <ClInclude Include="SimpleModel.h" />
     <ClInclude Include="ColorShaderClass.h" />
     <ClInclude Include="CubeModel.h" />

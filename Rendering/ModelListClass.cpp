@@ -5,10 +5,7 @@
 
 bool ModelListClass::Initialize(const PrimitiveCounts& modelCounts)
 {
-	int i;
-	float red, green, blue;
-
-
+	
 	// Store the number of models.
 	m_modelCounts = modelCounts;
 
@@ -26,6 +23,7 @@ bool ModelListClass::Initialize(const PrimitiveCounts& modelCounts)
 	int total_index = 0;
 
 	for (int primTypeIdx = 0; primTypeIdx < static_cast<int>(PrimitiveType::PRIMITIVES_COUNT); ++primTypeIdx) {
+		float red, green, blue;
 		red = (float)rand() / RAND_MAX;
 		green = (float)rand() / RAND_MAX;
 		blue = (float)rand() / RAND_MAX;

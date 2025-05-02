@@ -38,9 +38,9 @@ bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, PrimitiveCounts
 		return false;
 	}
 
-	if (!ConstructAndInitialize(m_PinModel, device))
+	if (!ConstructAndInitialize(m_ConeModel, device))
 	{
-		SHOW_INIT_ERROR_IN_HWND("PinModel");
+		SHOW_INIT_ERROR_IN_HWND("ConeModel");
 		return false;
 	}
 
@@ -57,7 +57,7 @@ bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, PrimitiveCounts
 void PrimitiveCreator::Shutdown()
 {
 	ShutdownAndDelete(m_HexPrismModel);
-	ShutdownAndDelete(m_PinModel);
+	ShutdownAndDelete(m_ConeModel);
 	ShutdownAndDelete(m_PyramidModel);
 	ShutdownAndDelete(m_CubeModel);
 	ShutdownAndDelete(m_SphereModel);
@@ -149,21 +149,21 @@ bool PrimitiveCreator::Render(D3DClass* Direct3D, ShaderManagerClass* ShaderMana
 				renderCounts->pyramidCount++;
 			}
 			break;
-		case PrimitiveType::Pin:
+		case PrimitiveType::Cone:
 			isInsideFrustum = frustum->IsSphereInsideFrustum(positionX, positionY, positionZ, radius);
 			if (isInsideFrustum)
 			{
 				// Move the model to the location it should be rendered at.
 				worldMatrix = XMMatrixTranslation(positionX, positionY, positionZ);
 
-				RenderColorShaderFtor(m_PinModel, worldMatrix);
+				RenderColorShaderFtor(m_ConeModel, worldMatrix);
 
 				if (displayAABBs)
 				{
-					RenderColorShaderFtor(m_PinModel->GetAABB(), worldMatrix);
+					RenderColorShaderFtor(m_ConeModel->GetAABB(), worldMatrix);
 				}
 
-				renderCounts->pinCount++;
+				renderCounts->coneCount++;
 			}
 			break; 
 		case PrimitiveType::HexPrism:

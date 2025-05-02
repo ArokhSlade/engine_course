@@ -10,6 +10,7 @@ TODO:
 - clean up superfluous virtual specifiers in ineriting models
 - PrimitiveType: enum -> enum class 
 - pass frustum or create locally?
+- rename pin to cone
 - figure out where and how to track render counts.
  - dataflow back from primitive creator to graphics?
 - isInsideFrustum() for other classes
@@ -38,6 +39,9 @@ TODO:
  - e.g. pin model: ctor that only sets circleSides?
  - static vertex counts?
 
+- nice random colors
+- nice color gradients
+- 
 - understand this:
  // Reset to the original world matrix.
  Direct3D->GetWorldMatrix(worldMatrix);

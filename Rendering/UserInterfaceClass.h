@@ -26,6 +26,8 @@ private:
 	bool UpdateRenderCountSpheresString(ID3D11DeviceContext* deviceContext, int renderCountSpheres);
 	bool UpdateRenderCountCubesString(ID3D11DeviceContext* deviceContext, int renderCountCubes);
 	bool UpdateRenderCountPyramidsString(ID3D11DeviceContext* deviceContext, int renderCountPyramids);
+	bool UpdateRenderCountConesString(ID3D11DeviceContext* deviceContext, int renderCountCones);
+	bool UpdateRenderCountHexPrismsString(ID3D11DeviceContext* deviceContext, int renderCountHexPrisms);
 
 private:
 	FontClass* m_Font1;
@@ -35,6 +37,8 @@ private:
 	TextClass* m_RenderCountSpheresString;
 	TextClass* m_RenderCountCubesString;
 	TextClass* m_RenderCountPyramidsString;
+	TextClass* m_RenderCountConesString;
+	TextClass* m_RenderCountHexPrismString;
 
 	int m_previousFps;
 	int m_previousPosition[6];
