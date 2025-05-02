@@ -1,7 +1,7 @@
 #include "UserInterfaceClass.h"
 #include "CustomTemplates.h"
 
-bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int screenWidth, int renderCountStringsCount)
+bool UserInterfaceClass::Initialize(D3DClass* Direct3D, int screenHeight, int screenWidth)
 {
 	bool result;
 	char videoCard[128];

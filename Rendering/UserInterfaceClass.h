@@ -9,7 +9,7 @@ class UserInterfaceClass
 {
 public:
 
-	bool Initialize(D3DClass*, int, int, int);
+	bool Initialize(D3DClass*, int, int);
 	void Shutdown();
 
 	bool Frame(ID3D11DeviceContext*, const PrimitiveCounts& renderCounts,

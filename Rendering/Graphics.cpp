@@ -17,8 +17,8 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 
 	// Initialize the user interface object.
 
-	int renderCountStringsCount = static_cast<int>(PrimitiveType::PRIMITIVES_COUNT) + 1;
-	result = m_UserInterface->Initialize(Direct3D, screenHeight, screenWidth, renderCountStringsCount);
+	
+	result = m_UserInterface->Initialize(Direct3D, screenHeight, screenWidth);
 	if(!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the user interface object.", L"Error", MB_OK);
