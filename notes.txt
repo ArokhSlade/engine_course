@@ -7,6 +7,7 @@ TODO:
 - construct model list inside primitive creator?
 - is renderCountStringsCount even needed?
 - fix m_vertexCount vs GetVertexCount, also indexCount
+- clean up superfluous virtual specifiers in ineriting models
 - PrimitiveType: enum -> enum class 
 - pass frustum or create locally?
 - figure out where and how to track render counts.
@@ -32,6 +33,10 @@ TODO:
 - is there a better/safer way to iterate over enum value count?
  -> init of model list class
 - move includes from header to impl where applicable
+
+-individual ctors/init:
+ - e.g. pin model: ctor that only sets circleSides?
+ - static vertex counts?
 
 - understand this:
  // Reset to the original world matrix.

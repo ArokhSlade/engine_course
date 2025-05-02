@@ -7,6 +7,7 @@
 #include "ModelClass.h"
 #include "CubeModel.h"
 #include "PyramidModel.h"
+#include "PinModel.h"
 #include "HexPrismModel.h"
 #include "CustomStructs.h"
 
@@ -24,5 +25,6 @@ private:
 	CubeModel* m_CubeModel;
 	PyramidModel* m_PyramidModel;
 	HexPrismModel* m_HexPrismModel;
+	PinModel* m_PinModel;
 };
 
