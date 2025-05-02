@@ -55,7 +55,7 @@ bool Graphics::Initialize(D3DClass* Direct3D, HWND hwnd, int screenWidth, int sc
 	}
 
 	PrimitiveCounts modelCounts{
-		1, 1, 1, 500, 500,
+		50, 100, 150, 200, 250,
 	};
 	if (!ConstructAndInitialize(m_PrimitiveCreator, hwnd, Direct3D, modelCounts))
 	{
