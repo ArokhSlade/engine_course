@@ -1,5 +1,4 @@
 TODO:
-- remove unused parameter from ui init
 - simplify ui code (more automated row computation)
 - construct model list inside primitive creator?
 - is renderCountStringsCount even needed?
