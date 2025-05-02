@@ -1,25 +1,20 @@
 #include "ModelListClass.h"
+#include "CustomTemplates.h"
+#include "CustomEnums.h"
+#include <stdexcept>
 
-ModelListClass::ModelListClass()
-{
-	m_ModelInfoList = 0;
-}
-
-ModelListClass::~ModelListClass()
-{
-}
-
-bool ModelListClass::Initialize(int numModels)
+bool ModelListClass::Initialize(const PrimitiveCounts& modelCounts)
 {
 	int i;
 	float red, green, blue;
 
 
 	// Store the number of models.
-	m_modelCount = numModels;
+	m_modelCounts = modelCounts;
 
-	// Create a list array of the model information.
-	m_ModelInfoList = new ModelInfoType[m_modelCount];
+	// Create a list array of the model information.	
+	int totalModelCount = GetTotalModelCount();
+	m_ModelInfoList = new ModelInfoType[totalModelCount];
 	if (!m_ModelInfoList)
 	{
 		return false;
@@ -28,36 +23,30 @@ bool ModelListClass::Initialize(int numModels)
 	// Seed the random generator with the current time.
 	srand((unsigned int)time(NULL));
 
-	int numSpheres = m_modelCount / 3;
-	int numCubes = m_modelCount / 3;
-	int numPyramids = m_modelCount / 3;
+	int total_index = 0;
 
-	// Go through all the models and randomly generate the model color and position.
-	for (i = 0; i<m_modelCount; i++)
-	{
-		// Generate a random color for the model.
+	for (int primTypeIdx = 0; primTypeIdx < static_cast<int>(PrimitiveType::PRIMITIVES_COUNT); ++primTypeIdx) {
 		red = (float)rand() / RAND_MAX;
 		green = (float)rand() / RAND_MAX;
 		blue = (float)rand() / RAND_MAX;
 
-		m_ModelInfoList[i].color = XMFLOAT4(red, green, blue, 1.0f);
+		//TODO(Gerald): brittle code, relies on m_modelCounts being structured like an array of ints
+		for (int curPrimIdx = 0; curPrimIdx < reinterpret_cast<int*>(&m_modelCounts)[primTypeIdx]; ++curPrimIdx)
+		{
+			//DEBUG CHECK
+			if (total_index >= totalModelCount) {
+				throw std::runtime_error("error: index exceeded model count");
+			}
 
-		// Generate a random position in front of the viewer for the mode.
-		m_ModelInfoList[i].positionX = (float)rand() / 100;
-		m_ModelInfoList[i].positionY = (float)rand() / 100;
-		m_ModelInfoList[i].positionZ = (float)rand() / 100;
+			m_ModelInfoList[total_index].color = XMFLOAT4(red, green, blue, 1.0f);
 
-		if (i < numSpheres)
-		{
-			m_ModelInfoList[i].type = PrimitiveType::Sphere;
-		}
-		else if( i < numSpheres + numCubes)
-		{
-			m_ModelInfoList[i].type = PrimitiveType::Cube;
-		}
-		else
-		{
-			m_ModelInfoList[i].type = PrimitiveType::Pyramid;
+			m_ModelInfoList[total_index].positionX = (float)rand() / 100;
+			m_ModelInfoList[total_index].positionY = (float)rand() / 100;
+			m_ModelInfoList[total_index].positionZ = (float)rand() / 100;
+
+			m_ModelInfoList[total_index].type = static_cast < PrimitiveType>(primTypeIdx);
+
+			total_index++;
 		}
 	}
 
@@ -78,9 +67,15 @@ void ModelListClass::Shutdown()
 }
 
 
-int ModelListClass::GetModelCount()
+int ModelListClass::GetTotalModelCount()
 {
-	return m_modelCount;
+	int result = m_modelCounts.GetTotalCount();
+	return result;
+}
+
+const PrimitiveCounts& ModelListClass::GetModelCounts()
+{
+	return m_modelCounts;
 }
 
 

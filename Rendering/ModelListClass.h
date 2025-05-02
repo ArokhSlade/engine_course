@@ -3,6 +3,7 @@
 #define _MODELLISTCLASS_H_
 
 #include "CustomEnums.h"
+#include "CustomStructs.h"
 
 #include <stdlib.h>
 #include <time.h>
@@ -20,15 +21,17 @@ private:
 	};
 
 public:
-	bool Initialize(int);
+	bool Initialize(const PrimitiveCounts&);
 	void Shutdown();
 
-	int GetModelCount();
+	int GetTotalModelCount();
+	const PrimitiveCounts& GetModelCounts();
 	void GetData(int, float&, float&, float&, XMFLOAT4&, PrimitiveType& type);
 
-private:
-	int m_modelCount;
+private:	
+	PrimitiveCounts m_modelCounts;
 	ModelInfoType* m_ModelInfoList;
+
 };
 
 #endif

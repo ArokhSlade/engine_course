@@ -12,7 +12,7 @@
 class PrimitiveCreator
 {
 public :
-	bool Initialize(HWND hwnd, D3DClass* Direct3D, int modelCount);
+	bool Initialize(HWND hwnd, D3DClass* Direct3D, PrimitiveCounts modelCounts);
 	void Shutdown();
 	bool Render(D3DClass* Direct3D, ShaderManagerClass* ShaderManager, PrimitiveCounts*, 
 				XMMATRIX, XMMATRIX, XMMATRIX, Frustum* frustum, bool displayAABBs);

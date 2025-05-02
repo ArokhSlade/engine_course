@@ -40,7 +40,7 @@ struct ColorBufferType
 };
 
 struct PrimitiveCounts {
-	int sphereCount, cubeCount, pyramidCount;
+	int sphereCount, cubeCount, pyramidCount, hexPrismCount;
 
 	int GetTotalCount() const {
 		int total = 0;
@@ -48,6 +48,7 @@ struct PrimitiveCounts {
 		total += sphereCount;
 		total += cubeCount;
 		total += pyramidCount;
+		total += hexPrismCount;
 
 		return total;
 	}
