@@ -7,6 +7,10 @@
 class CubeModel : public SimpleModel
 {
 public:
+	CubeModel(ID3D11Device* device)
+	{
+		Initialize(device);
+	}
 	int GetIndexCount() override;
 	int GetVertexCount() override;
 

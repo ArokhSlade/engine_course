@@ -9,6 +9,9 @@
 class SimpleModel
 {
 public:
+	SimpleModel(ID3D11Device* device);
+	SimpleModel();
+
 	bool Initialize(ID3D11Device* device);
 	void Render(ID3D11DeviceContext* deviceContext);
 	void RenderAABB(ID3D11DeviceContext* deviceContext);

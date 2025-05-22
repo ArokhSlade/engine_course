@@ -1,5 +1,18 @@
 #include "SimpleModel.h"
 
+SimpleModel::SimpleModel(ID3D11Device* device)
+{
+	this->Initialize(device);
+}
+
+SimpleModel::SimpleModel()
+{
+	m_vertexBuffer = m_indexBuffer = nullptr;
+	m_vertexCount = m_indexCount = 0;
+	m_vertexList = nullptr;
+	m_aabb = nullptr;
+}
+
 AxisAlignedBoundingBox* SimpleModel::GetAABB()
 {
 	return m_aabb;
