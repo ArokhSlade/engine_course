@@ -28,8 +28,8 @@ bool PrimitiveCreator::Initialize(HWND hwnd, D3DClass* Direct3D, const Primitive
 		return false;
 	}
 
-	m_CubeModel = new CubeModel{ device };
-	if (!m_CubeModel)
+	m_CubeModel = new CubeModel{ device, &result };
+	if (! (m_CubeModel && result ))
 	{
 		SHOW_INIT_ERROR_IN_HWND("CubeModel");
 		return false; 

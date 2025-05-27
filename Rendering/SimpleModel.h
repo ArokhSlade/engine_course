@@ -9,7 +9,7 @@
 class SimpleModel
 {
 public:
-	SimpleModel(ID3D11Device* device);
+	SimpleModel(ID3D11Device* device, bool* succeeded);
 	SimpleModel();
 
 	bool Initialize(ID3D11Device* device);

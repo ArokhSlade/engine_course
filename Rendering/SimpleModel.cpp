@@ -1,10 +1,5 @@
 #include "SimpleModel.h"
 
-SimpleModel::SimpleModel(ID3D11Device* device)
-{
-	this->Initialize(device);
-}
-
 SimpleModel::SimpleModel()
 {
 	m_vertexBuffer = m_indexBuffer = nullptr;
